@@ -15,3 +15,6 @@ __pycache__/
 
 # Configuration PyCharm
 .idea/
+
+.venv/
+
