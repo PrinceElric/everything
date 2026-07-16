@@ -1,0 +1,24 @@
+répertorification des capa de Tools.py:
+
+variables:
+	et mise en forme texte, (en couleur, surligné, gras, italic, sous-ligné)
+	mots_n qui contient n mots Français dans une liste
+
+
+fonctions:
+	trouver_nom(objet): qui renvoie le nom d'une variable
+	clear(): clear le terminal
+	shutdown(temps=40): shutdown le PC, avec des parts-feu et openning de cmd
+	formate_number(n): formate n en le return avec ' chaque pattern de 3 chiffres
+	detect_shutdown(n=2): test un n nb de fois si il y a un actif shutdown et le désactivant
+	slow_type(texte, tps_total=False, tps_btw_letters=False, color=""): tape les lettres 1 à 1 avec temps total ou par lettre
+	loading_bar(tps, symbol="#", len=7): mettre un temps et fais une barre de chargement de symbol et longueur len of symbol
+	start_timer(nom="default", entrées=False): définis un chrono sur un nom et renvoie le temps ecoule quand :
+	stop_timer(nom="default", entrées=False): invoqué avec le nom de départ
+	human_time(n): converti un nombre de sec en temps humain logique, max en heures
+	valid_input(type, phrase=''): demande un input de type type et avec phrase de base si pas definie, si entrée pas conforme redemande
+	clear_lines(n=1): delete la derniere ligne du terminal, de base 1 mais peut more
+	random_password(n=10, …): définis un passsword avec ou sans Maj, digits, punct… random_username et random_string fait la meme en paramétrant direct le random_password() pour les besoins de l'user
+	copier_txt(texte): copie le texte dans le presse-papier, tout simplement
+	faire_titre_section(texte, symbole="-", largeur=60): fais un titre, genre un ligne de size largeur de symbole, puis en dessous le texte en UPPER() centré et re sur une ligne apres une ligne de symbol
+	menu_options(options): entrer les options et fais un menu dinamyque avec, en surlignance de la réponse, return le choix
