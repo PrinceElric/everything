@@ -162,6 +162,10 @@ def copier_txt(texte):
     """copie texte dans presse-papier, need subprocess"""
     subprocess.run(["clip"], input=texte, text=True, check=True)
 
+def clear():
+    """Nettoie le terminal."""
+    os.system("cls")
+
 
 def trouver_nom(objet):
     for nom, valeur in globals().items():
@@ -169,29 +173,31 @@ def trouver_nom(objet):
             return nom
     return None
 
-
 def fonct_mots():
     global mots_921
     nom = trouver_nom(mots_921)
     print(f"{nom} = {len(mots_921)}")
     if nom != "mots_" + str(len(mots_921)):
-        # Utilisation de la nouvelle fusion ERROR
         print(f"{ERROR}Problem with the name of {nom}{RESET}")
-        sys.exit("Not good!")
     word = "science"
-    while not word not in mots_921:  # noqa: F821
-        word = input("Enter a word:    ")
+    while True:  # noqa: F821
+        word = input("Enter a word:    ").lower()
         if word == "clear":
-            os.system("cls")
+            clear()
             fonct_mots()
+        elif word == 'quit':
+            sys.exit()
         if word in mots_921:
             print(f"{ERROR}{word} is present!{RESET}")
+            continue
         else:
             print(f"{SUCCESS}{word} isn't present!{RESET}")
-            accept_enter = input(f"do you want the word : {word}, to be add?\n>>>  ")
+            accept_enter = input(f"do you want the word :  {word}, to be add?\n>>>  ")
             if accept_enter == "clear":
-                os.system("cls")
+                clear()
                 fonct_mots()
+            elif accept_enter.lower() == 'quit':
+                sys.exit()
             if accept_enter:
                 mots_921.append(word)
                 mots_921 = sorted(mots_921)
@@ -202,15 +208,12 @@ def fonct_mots():
                 a = a.lstrip("[")
                 a = a.rstrip("]")
                 copier_txt(a)
-                print(f"ligne: {27 +  index_debut // 10}")
-            else:
-                word = "vitrine"
-
+                print(f"ligne: {65 +  index_debut // 10}")
 
 # --- Fonctions ---
-def clear():
-    """Nettoie le terminal."""
-    os.system("cls")
+def cprint(texte, color):
+    """Affiche texte coloré puis réinitialise style."""
+    print(f"{color}{texte}{RESET}")
 
 
 def detect_shutdown():
@@ -227,14 +230,29 @@ def shutdown_A():
 def hach_word(word):
     return hashlib.sha256(word.encode()).hexdigest()
 
-
 def shutdown(temps=40, kill=False):
-    """Éteint l'ordi mais verif avant (40 sec de base)."""
-    with open("config.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-    password_reel = data["password"]
-    copier_txt("shutdown -a")
+    """Arrêt du PC avec protection par mot de passe et bien d'autres."""
+    def load_config(chemin="config.json"):
+        """Charge la configuration JSON en toute sécurité. Renvoie un dict vide si échec."""
+        if not os.path.exists(chemin):
+            return {}
+        try:
+            with open(chemin, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
 
+    def save_config(data, chemin="config.json"):
+        """Sauvegarde les données dans un fichier JSON. Renvoie un booléen de succès."""
+        try:
+            with open(chemin, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
+            return True
+        except Exception:
+            return False
+        copier_txt("shutdown -a")
+    config = load_config()
+    password_reel = config["password"]
     def launch_shutdown(temps):
         shutdown_A()
         clear()
@@ -243,7 +261,8 @@ def shutdown(temps=40, kill=False):
     def temps_stay():
         return timer - (time.time() - debut)
 
-    def force_shutdown(timer=6, mode_normal=True):
+    def force_shutdown(timer=6, mode_normal=True, password=''):  # noqa: F821
+        
         launch_shutdown(timer)
         print(f"{ALERTE_CRITIQUE}shutdown executed{RESET}")
         timer_final, cancelled = max(0, timer - 1.5), False
@@ -317,10 +336,12 @@ def shutdown(temps=40, kill=False):
         clear()
         print(f"password is {hide_password}")
         password = input("\nOne more chance:  ")
-
-        if password != " ":
+        if password == " ":
+            pass          # mot de passe spécial
+        else:
             password = password.strip()
-            password = hach_word(password)
+            if password:
+                password = hach_word(password)
 
         if password == password_reel:
             shutdown_A()
@@ -330,17 +351,14 @@ def shutdown(temps=40, kill=False):
             time.sleep(0.5)
             clear()
 
-            force_shutdown()
+            force_shutdown(password=password)
             print("")
     clear()
     print(f"{SUCCESS}Arrêt annulé.{RESET}")
     detect_shutdown()
     clear()
-    input("")
-
 
 #shutdown(kill=True)
-
 
 def format_number(n):
     """Formate un nombre en le sequencant en pattern de 3"""
@@ -359,19 +377,21 @@ def slow_type(texte, tps_total=False, tps_btw_letters=False, color=""):
             print(f"{color}{letter}{RESET}", end="", flush=True)
 
 
-def loading_bar(tps, symbol="#", len=7):
-    """Progress bar of symbol with time"""
-    barre, barre_fin = [], ["."] * len
-    for _ in range(len):
-        barre.append(symbol)
-        barre_fin.pop()
-        clear()
 
-        progress = "".join(barre) + "".join(barre_fin)
-        print(f"[{progress}]")
-        time.sleep(tps / len)
+def loading_bar(tps, symbol="#", lenght=10):
+    """Barre de progression avec étapes X/Y et pourcentage exact."""
+    pourc1 = 100 / lenght
+    for i in range(1, lenght + 1):
+        pourcentage = i * pourc1
+        barre = symbol * i
+        vide = "." * (lenght - i)
+        
+        clear()
+        print(f"[{barre}{vide}]    {i}/{lenght}  ({pourcentage:.1f}%)")
+        time.sleep(tps / lenght)
+        
     clear()
-    print(f"{VERT}[{progress}]{RESET}")
+    cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
 
 
 _timers = {}
@@ -413,39 +433,28 @@ def human_time(n):
     print(f"{h:02d}h:{minutes:02d}min:{sec:02d}s")
 
 
-def valid_input(type, phrase=""):
-    """User selcet a type and program ask input in this format. if not the good just ReAsk"""
-    a = ""
+def valid_input(type='int', phrase=""):
+    """Demande une entrée d'un type précis et boucle tant que l'entrée est invalide."""
     if type == "str":
-        if not phrase:
-            phrase = "enter a string"
-        a = str(input(f"{SOULIGN2}{phrase}:{RESET}    ")).strip()
-    elif type == "int":
-        if not phrase:
-            phrase = "enter a number"
-        while not a:
+        phrase = phrase or "enter a string"
+        return input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
+        
+    elif type in ["int", "float"]:
+        phrase = phrase or "enter a number"
+        while True:
+            entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
             try:
-                a = int(input(f"{SOULIGN2}{phrase}:{RESET}    "))
-            except:  # noqa: E722
+                return int(entree) if type == "int" else float(entree)
+            except ValueError:
                 print(f"{ERROR}Incorrect enter, try again{RESET}")
-                a = ""
-    elif type == "float":
-        if not phrase:
-            phrase = "enter a number"
-        while not a:
-            try:
-                a = float(input(f"{SOULIGN2}{phrase}:{RESET}    "))
-            except:  # noqa: E722
-                print(f"{ERROR}Incorrect enter, try again{RESET}")
-                a = ""
+                
     elif type == "bool":
-        if not phrase:
-            phrase = "enter True if you want True, else nothing"
-            a = bool(input(f"{SOULIGN2}{phrase}:{RESET}    "))
-    else:
-        print(f"{ERROR}INCORRECT TYPE!!!{RESET}")
-
-    return a
+        phrase = phrase or "enter True/Yes or False/No"
+        entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip().lower()
+        return entree in ["true", "t", "1", "y", "yes", "o", "oui"]
+        
+    print(f"{ERROR}INCORRECT TYPE!!!{RESET}")
+    return None
 
 
 def clear_lines(n=1):
@@ -567,7 +576,7 @@ def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\donnée
     ecrire_log(message, "ERROR", fichier)
 
 
-def afk_mouse(n=False):
+def afk_mouse(n=False, kill=False):
     """move mouse randomly and click, forever or in range n (len or digit)"""
     pag.FAILSAFE = False
 
@@ -577,15 +586,23 @@ def afk_mouse(n=False):
         pag.moveTo(x, y, 0.5)
         time.sleep(0.5)
         pag.click()
+    def kill_terminal():
+        x, y = 1745, 666
+        pag.moveTo(x, y, 0.5)
+        time.sleep(0.5)
+        pag.click()
 
-    if not n:
-        while True:
-            main()
-    else:
-        try:
-            n = int(n)
-        except:  # noqa: E722
-            n = len(n)
-        finally:
-            for _ in range(n):
+    if not kill:
+        if not n:
+            while True:
                 main()
+        else:
+            try:
+                n = int(n)
+            except:  # noqa: E722
+                n = len(n)
+            finally:
+                for _ in range(n):
+                    main()
+    else:
+        kill_terminal()
