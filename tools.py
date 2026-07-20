@@ -1,6 +1,10 @@
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib  # noqa: E401
-import pyautogui as pag  # noqa: F401
 from datetime import datetime
+try:
+    import pyautogui as pag
+except ImportError:
+    pag = None  # Évite le plantage si absent
+
 
 # --- Réinitialisation automatique du fichier temporaire au démarrage ---
 PATH_TEMP = r"C:\Users\elric\Desktop\vs code\all that\tempo diary.md"
