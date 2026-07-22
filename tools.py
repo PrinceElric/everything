@@ -161,6 +161,8 @@ mots_921 = [
     "vitrine", "volcan", "voleur", "voiture", "wagon", "yacht", "yak", "zèbre", "zeppelin", "zinc"
 ]
 
+def clear():
+    os.system('cls')
 
 def copier_txt(texte):
     """copie texte dans presse-papier, need subprocess"""
