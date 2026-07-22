@@ -1,4 +1,4 @@
-import os, time, sys, subprocess, random, string, msvcrt, json, hashlib  # noqa: E401
+import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata  # noqa: E401
 from datetime import datetime
 try:
     import pyautogui as pag
@@ -464,7 +464,7 @@ def valid_input(type='int', phrase=""):
 def clear_lines(n=1):
     """Efface un nombre de lignes donne dans le terminal."""
     for _ in range(n):
-        sys.stdout.write("\033[F\033[K")
+        sys.stdout.write("\033[1F\033[2K")
     sys.stdout.flush()
 
 
@@ -610,3 +610,27 @@ def afk_mouse(n=False, kill=False):
                     main()
     else:
         kill_terminal()
+
+
+def kanekicount(number, base):
+    n =0
+    while number > base:
+        number, n = number - base, n +1
+        print(f'{number}    {n}')
+
+
+def enlever_accents(texte: str) -> str:
+    return "".join(
+        c
+        for c in unicodedata.normalize("NFD", texte)
+        if unicodedata.category(c) != "Mn"
+    )
+
+def formate_collections(*args):
+    if isinstance(*args, list):
+        return str(*args).replace('[', '').replace(']', '').replace("'", '')
+    elif isinstance(*args, tuple):
+        return str(*args).replace('(', '').replace(')', '').replace("'", '')
+    elif isinstance(*args, set):
+        return str(*args).replace('{', '').replace('}', '').replace("'", '')
+
