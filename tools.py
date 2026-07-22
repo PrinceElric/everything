@@ -166,10 +166,6 @@ def copier_txt(texte):
     """copie texte dans presse-papier, need subprocess"""
     subprocess.run(["clip"], input=texte, text=True, check=True)
 
-def clear():
-    """Nettoie le terminal."""
-    os.system("cls")
-
 
 def trouver_nom(objet):
     for nom, valeur in globals().items():
@@ -596,41 +592,14 @@ def afk_mouse(n=False, kill=False):
         time.sleep(0.5)
         pag.click()
 
-    if not kill:
-        if not n:
-            while True:
-                main()
-        else:
-            try:
-                n = int(n)
-            except:  # noqa: E722
-                n = len(n)
-            finally:
-                for _ in range(n):
-                    main()
+    if not n:
+        while True:
+            main()
     else:
-        kill_terminal()
-
-
-def kanekicount(number, base):
-    n =0
-    while number > base:
-        number, n = number - base, n +1
-        print(f'{number}    {n}')
-
-
-def enlever_accents(texte: str) -> str:
-    return "".join(
-        c
-        for c in unicodedata.normalize("NFD", texte)
-        if unicodedata.category(c) != "Mn"
-    )
-
-def formate_collections(*args):
-    if isinstance(*args, list):
-        return str(*args).replace('[', '').replace(']', '').replace("'", '')
-    elif isinstance(*args, tuple):
-        return str(*args).replace('(', '').replace(')', '').replace("'", '')
-    elif isinstance(*args, set):
-        return str(*args).replace('{', '').replace('}', '').replace("'", '')
-
+        try:
+            n = int(n)
+        except:  # noqa: E722
+            n = len(n)
+        finally:
+            for _ in range(n):
+                main()
