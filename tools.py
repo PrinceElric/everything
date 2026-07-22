@@ -593,15 +593,40 @@ def afk_mouse(n=False, kill=False):
         pag.moveTo(x, y, 0.5)
         time.sleep(0.5)
         pag.click()
-
-    if not n:
-        while True:
-            main()
-    else:
-        try:
-            n = int(n)
-        except:  # noqa: E722
-            n = len(n)
-        finally:
-            for _ in range(n):
+    if not kill:
+        if not n:
+            while True:
                 main()
+        else:
+            try:
+                n = int(n)
+            except:  # noqa: E722
+                n = len(n)
+            finally:
+                for _ in range(n):
+                    main()
+    else:
+        kill_terminal()
+
+
+def kanekicount(number, base):
+    n =0
+    while number > base:
+        number, n = number - base, n +1
+        print(f'{number}    {n}')
+
+
+def enlever_accents(texte: str) -> str:
+    return "".join(
+        c
+        for c in unicodedata.normalize("NFD", texte)
+        if unicodedata.category(c) != "Mn"
+    )
+
+def formate_collections(*args):
+    if isinstance(*args, list):
+        return str(*args).replace('[', '').replace(']', '').replace("'", '')
+    elif isinstance(*args, tuple):
+        return str(*args).replace('(', '').replace(')', '').replace("'", '')
+    elif isinstance(*args, set):
+        return str(*args).replace('{', '').replace('}', '').replace("'", '')
