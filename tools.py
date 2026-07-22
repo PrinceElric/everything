@@ -1,3 +1,232 @@
+"""
+===============================================================================
+                            DOCUMENTATION DU FICHIER TOOLS.PY
+===============================================================================
+
+Ce fichier regroupe un ensemble de fonctions utilitaires destinées à simplifier
+le développement de scripts Python. Il fournit des outils pour l'affichage
+dans le terminal, la génération de données, la manipulation de chaînes de
+caractères, la journalisation, l'automatisation ainsi que diverses opérations
+sur le système.
+
+-------------------------------------------------------------------------------
+1. DÉPENDANCES ET PRÉREQUIS
+-------------------------------------------------------------------------------
+
+Bibliothèques standards utilisées :
+    - os
+    - sys
+    - time
+    - random
+    - string
+    - subprocess
+    - hashlib
+    - json
+    - unicodedata
+    - msvcrt
+    - datetime
+
+Bibliothèque externe (optionnelle) :
+    - pyautogui
+      Utilisée uniquement pour les fonctions d'automatisation de la souris.
+
+      Installation :
+          pip install pyautogui
+
+-------------------------------------------------------------------------------
+2. INITIALISATION
+-------------------------------------------------------------------------------
+
+Au chargement du module :
+
+    • Le fichier temporaire "tempo diary.md" est automatiquement réinitialisé.
+
+Variables globales :
+
+    • PATH_TEMP
+        Chemin du fichier temporaire.
+
+    • _timers
+        Dictionnaire utilisé par les fonctions de chronométrage.
+
+-------------------------------------------------------------------------------
+3. CONSTANTES
+-------------------------------------------------------------------------------
+
+Le module fournit de nombreuses constantes ANSI permettant de personnaliser
+l'affichage dans le terminal :
+
+    • Styles de texte
+        GRAS
+        ITALIC
+        SOULIGN2
+        ...
+
+    • Couleurs classiques
+        ROUGE
+        VERT
+        JAUNE
+        BLEU
+        ...
+
+    • Couleurs haute intensité
+        ROUGE_FLASH
+        VERT_FLASH
+        JAUNE_FLASH
+        ...
+
+    • Couleurs de fond
+        FOND_ROUGE
+        FOND_BLEU
+        ...
+
+    • Styles prédéfinis
+        ERROR
+        WARNING
+        SUCCESS
+        STYLE_TITRE
+        MENU_ACTIF
+        ALERTE_CRITIQUE
+
+-------------------------------------------------------------------------------
+4. DONNÉES
+-------------------------------------------------------------------------------
+
+mots_921
+
+    Liste contenant 921 mots français utilisée par certaines fonctions du
+    module.
+
+-------------------------------------------------------------------------------
+5. FONCTIONS DISPONIBLES
+-------------------------------------------------------------------------------
+
+--- Affichage, Style et Interface Terminal ---
+
+• clear()
+    Efface le terminal Windows.
+
+• cprint(texte, color)
+    Affiche un texte avec une couleur ANSI.
+
+• slow_type(texte, tps_total, tps_btw_letters, color)
+    Simule un effet de frappe caractère par caractère.
+
+• loading_bar(tps, symbol, lenght)
+    Affiche une barre de progression animée.
+
+• clear_lines(n)
+    Efface les dernières lignes du terminal.
+
+• faire_titre_section(texte, symbole, largeur)
+    Affiche un titre centré et décoré.
+
+• menu_options(options)
+    Affiche un menu interactif navigable au clavier.
+
+-------------------------------------------------------------------------------
+
+--- Générateurs, Formatage et Outils ---
+
+• format_number(n)
+    Formate un nombre avec un séparateur de milliers.
+
+• random_password(...)
+    Génère un mot de passe aléatoire.
+
+• random_username(...)
+    Génère un nom d'utilisateur aléatoire.
+
+• random_string(...)
+    Génère une chaîne aléatoire personnalisable.
+
+• enlever_accents(texte)
+    Supprime les accents d'une chaîne.
+
+• formate_collections(*args)
+    Améliore l'affichage des listes, tuples et ensembles.
+
+• dice(face, n)
+    Simule le lancer de plusieurs dés.
+
+• fullmaj(txt)
+    Convertit un texte selon une table de correspondance personnalisée.
+
+-------------------------------------------------------------------------------
+
+--- Gestion du Système ---
+
+• copier_txt(texte)
+    Copie un texte dans le presse-papiers Windows.
+
+• detect_shutdown()
+    Annule plusieurs fois une extinction programmée.
+
+• shutdown_A()
+    Exécute "shutdown -a".
+
+• hach_word(word)
+    Retourne le hash SHA-256 d'une chaîne.
+
+-------------------------------------------------------------------------------
+
+--- Mesure du Temps et Saisie ---
+
+• start_timer(nom, entrées)
+    Démarre un chronomètre.
+
+• stop_timer(nom, entrées)
+    Arrête un chronomètre et affiche le temps écoulé.
+
+• human_time(n)
+    Convertit des secondes en HHh:MMmin:SSs.
+
+• valid_input(type, phrase)
+    Force une saisie valide du type demandé.
+
+-------------------------------------------------------------------------------
+
+--- Journalisation (Logging) ---
+
+• ecrire_log(message, type_log, chemin_fichier)
+    Écrit un message horodaté dans un fichier Markdown.
+
+• log_info(...)
+    Écrit un message de niveau INFO.
+
+• log_warning(...)
+    Écrit un message de niveau WARNING.
+
+• log_error(...)
+    Écrit un message de niveau ERROR.
+
+-------------------------------------------------------------------------------
+
+--- Automatisation ---
+
+• afk_mouse(n, kill)
+    Déplace automatiquement la souris et effectue des clics.
+
+-------------------------------------------------------------------------------
+
+--- Outils Spécifiques au Projet ---
+
+• trouver_nom(objet)
+    Recherche le nom global associé à un objet.
+
+• fonct_mots()
+    Permet de rechercher et d'ajouter des mots à la liste mots_921.
+
+• kanekicount(number, base)
+    Soustrait une valeur de base jusqu'à atteindre zéro.
+
+===============================================================================
+"""
+
+# -------------------------------------------------------------------------------
+# 1. DÉPENDANCES ET PRÉREQUIS
+# -------------------------------------------------------------------------------
+
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata  # noqa: E401
 from datetime import datetime
 try:
@@ -5,6 +234,9 @@ try:
 except ImportError:
     pag = None  # Évite le plantage si absent
 
+# -------------------------------------------------------------------------------
+# 2. INITIALISATION
+# -------------------------------------------------------------------------------
 
 # --- Réinitialisation automatique du fichier temporaire au démarrage ---
 PATH_TEMP = r"C:\Users\elric\Desktop\vs code\all that\tempo diary.md"
@@ -13,6 +245,10 @@ try:
         f.write("")  # On écrase avec du vide UNE SEULE FOIS au début !
 except:  # Si le dossier existe pas encore, pas de crash  # noqa: E722
     pass
+
+# -------------------------------------------------------------------------------
+# 3. CONSTANTES
+# -------------------------------------------------------------------------------
 
 # --- Couleurs ANSI de Base ---
 RESET = "\033[0m"
@@ -65,6 +301,10 @@ MENU_ACTIF = "\033[97m" + FOND_BLEU + GRAS  # Texte Blanc sur Fond Bleu
 LOG_DISCRET = GRIS + ITALIC  # Gris et penché
 ALERTE_CRITIQUE = "\033[97m" + FOND_ROUGE + GRAS  # Texte Blanc sur Fond Rouge
 
+
+# -------------------------------------------------------------------------------
+# 4. DONNÉES
+# -------------------------------------------------------------------------------
 
 mots_921 = [
     "abeille", "abricot", "absinthe", "acacia", "académie", "acier", "acompte", "acteur", "action", "adresse",
@@ -161,61 +401,201 @@ mots_921 = [
     "vitrine", "volcan", "voleur", "voiture", "wagon", "yacht", "yak", "zèbre", "zeppelin", "zinc"
 ]
 
+
+# -------------------------------------------------------------------------------
+# 5. FONCTIONS DISPONIBLES
+# -------------------------------------------------------------------------------
+
+# --- Affichage, Style et Interface Terminal ---
+
 def clear():
     os.system('cls')
+
+
+def cprint(texte, color):
+    """Affiche texte coloré puis réinitialise style."""
+    print(f"{color}{texte}{RESET}")
+
+def slow_type(texte, tps_total=False, tps_btw_letters=False, color=""):
+    """Print string character by character with tiny delay. and color if you want"""
+    for letter in texte:
+        if tps_total:
+            temps_de_latence = tps_total / len(texte)
+            time.sleep(float(temps_de_latence))
+            print(f"{color}{letter}{RESET}", end="", flush=True)
+        if tps_btw_letters:
+            time.sleep(float(tps_btw_letters))
+            print(f"{color}{letter}{RESET}", end="", flush=True)
+
+
+def loading_bar(tps, symbol="#", lenght=10):
+    """Barre de progression avec étapes X/Y et pourcentage exact."""
+    pourc1 = 100 / lenght
+    for i in range(1, lenght + 1):
+        pourcentage = i * pourc1
+        barre = symbol * i
+        vide = "." * (lenght - i)
+        
+        clear()
+        print(f"[{barre}{vide}]    {i}/{lenght}  ({pourcentage:.1f}%)")
+        time.sleep(tps / lenght)
+        
+    clear()
+    cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
+
+
+def clear_lines(n=1):
+    """Efface un nombre de lignes donne dans le terminal."""
+    for _ in range(n):
+        sys.stdout.write("\033[1F\033[2K")
+    sys.stdout.flush()
+
+
+def faire_titre_section(texte, symbole="-", largeur=60):
+    """mettre texte et symbole, funct centre et fait une ligne de symbole de size largeur"""
+    texte_grand = texte.upper()
+
+    print(symbole * largeur)
+    # Utilisation de STYLE_TITRE ici
+    print(f"{STYLE_TITRE}{texte_grand.center(largeur)}{RESET}")
+    print(symbole * largeur)
+
+
+def menu_options(options):
+    """enter a list of options, show a interactif select menu, return the option chose"""
+    index, taille = 0, len(options)
+
+    while True:
+        clear()
+        print("=== CHOISIS TA VIANDE (Z: Haut, S: Bas, Entrée: OK) ===")
+
+        # Afficher options
+        for i in range(taille):
+            if i == index:
+                # Utilisation de la nouvelle fusion MENU_ACTIF
+                print(f"{MENU_ACTIF} > {options[i]} {RESET}")
+            else:
+                print(f"   {options[i]}")
+
+        # Attendre touche
+        touche: bytes = msvcrt.getch()
+
+        # Si touche spéciale (comme les vraies flèches)
+        if touche in (b"\x00", b"\xe0"):
+            touche = msvcrt.getch()  # Lire deuxième code
+            if touche == b"H":  # Flèche Haut
+                index = (index - 1) % taille
+            elif touche == b"P":  # Flèche Bas
+                index = (index + 1) % taille
+        elif touche == b"\r":  # Touche Entrée
+            return options[index]
+
+# -------------------------------------------------------------------------------
+
+# --- Générateurs, Formatage et Outils ---
+
+def format_number(n):
+    """Formate un nombre en le sequencant en pattern de 3"""
+    return f"{n:,}".replace(",", "'")
+
+
+def random_password(
+    n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False
+):
+    """make a password of size n with or without Maj, digit and punct°"""
+    char, txt_password = string.ascii_lowercase, ""
+    if Maj:
+        char += string.ascii_uppercase
+    if digits:
+        char += string.digits
+    if punctuation:
+        char += string.punctuation
+    if space:
+        char += " "
+    if tiret_bas:
+        char += "_"
+    while True:
+        try:
+            txt_password = "".join(random.choices(char, k=n))
+            return txt_password
+        except:  # noqa: E722
+            pass
+
+def random_username(
+    n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True
+):
+    "" "based on the original random_password, chages the parameter to make a username valid''"
+    return random_password(n, Maj, digits, punctuation, space, tiret_bas)
+
+def random_string(
+    n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False
+):
+    "" "based on the original random_password, chages the parameter to make a valid normal string''"
+    return random_password(n, Maj, digits, punctuation, space, tiret_bas)
+
+
+def enlever_accents(texte: str) -> str:
+    return "".join(
+        c
+        for c in unicodedata.normalize("NFD", texte)
+        if unicodedata.category(c) != "Mn"
+    )
+
+
+def formate_collections(*args):
+    if isinstance(*args, list):
+        return str(*args).replace('[', '').replace(']', '').replace("'", '')
+    elif isinstance(*args, tuple):
+        return str(*args).replace('(', '').replace(')', '').replace("'", '')
+    elif isinstance(*args, set):
+        return str(*args).replace('{', '').replace('}', '').replace("'", '')
+
+
+def dice(face=6, n=1):
+    simulation, total = 0, 0
+    for _ in range(n):
+        simulation = random.randint(1, face)
+        total += simulation
+    return total
+
+
+def fullmaj(txt):
+    a = (
+    string.ascii_uppercase
+    + string.ascii_lowercase
+    + "1234567890"
+    + "&é\"'(-è_çà)=^$ù*,;:!"
+    + "°+¨£%µ?./§"
+    )
+    b = (
+        string.ascii_lowercase
+        + string.ascii_uppercase
+        + "&é\"'(-è_çà"
+        + "1234567890°+¨£%µ?./§"
+        + ")=^$ù*,;:!"
+    )
+
+
+    def MAJ(txt):
+        texte_exit = ""
+        for i in txt:
+            if i == " ":
+                texte_exit += " "
+                continue
+            c = a.index(i)
+            d = b[c]
+            texte_exit += d
+        return texte_exit
+    return MAJ(txt)
+
+
+# -------------------------------------------------------------------------------
+
+# --- Gestion du Système ---
 
 def copier_txt(texte):
     """copie texte dans presse-papier, need subprocess"""
     subprocess.run(["clip"], input=texte, text=True, check=True)
-
-
-def trouver_nom(objet):
-    for nom, valeur in globals().items():
-        if valeur is objet:
-            return nom
-    return None
-
-def fonct_mots():
-    global mots_921
-    nom = trouver_nom(mots_921)
-    print(f"{nom} = {len(mots_921)}")
-    if nom != "mots_" + str(len(mots_921)):
-        print(f"{ERROR}Problem with the name of {nom}{RESET}")
-    word = "science"
-    while True:  # noqa: F821
-        word = input("Enter a word:    ").lower()
-        if word == "clear":
-            clear()
-            fonct_mots()
-        elif word == 'quit':
-            sys.exit()
-        if word in mots_921:
-            print(f"{ERROR}{word} is present!{RESET}")
-            continue
-        else:
-            print(f"{SUCCESS}{word} isn't present!{RESET}")
-            accept_enter = input(f"do you want the word :  {word}, to be add?\n>>>  ")
-            if accept_enter == "clear":
-                clear()
-                fonct_mots()
-            elif accept_enter.lower() == 'quit':
-                sys.exit()
-            if accept_enter:
-                mots_921.append(word)
-                mots_921 = sorted(mots_921)
-                index_debut = mots_921.index(word) - 1
-                index_fin = mots_921.index(word) + 2
-                print(mots_921[index_debut:index_fin])
-                a = str(mots_921[index_debut:index_fin])
-                a = a.lstrip("[")
-                a = a.rstrip("]")
-                copier_txt(a)
-                print(f"ligne: {65 +  index_debut // 10}")
-
-# --- Fonctions ---
-def cprint(texte, color):
-    """Affiche texte coloré puis réinitialise style."""
-    print(f"{color}{texte}{RESET}")
 
 
 def detect_shutdown():
@@ -224,13 +604,13 @@ def detect_shutdown():
         os.system("shutdown -a")
         time.sleep(0.4)
 
-
 def shutdown_A():
     os.system("shutdown -a")
 
 
 def hach_word(word):
     return hashlib.sha256(word.encode()).hexdigest()
+
 
 def shutdown(temps=40, kill=False):
     """Arrêt du PC avec protection par mot de passe et bien d'autres."""
@@ -360,45 +740,14 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
-#shutdown(kill=True)
-
-def format_number(n):
-    """Formate un nombre en le sequencant en pattern de 3"""
-    return f"{n:,}".replace(",", "'")
+# shutdown(kill=True)
 
 
-def slow_type(texte, tps_total=False, tps_btw_letters=False, color=""):
-    """Print string character by character with tiny delay. and color if you want"""
-    for letter in texte:
-        if tps_total:
-            temps_de_latence = tps_total / len(texte)
-            time.sleep(float(temps_de_latence))
-            print(f"{color}{letter}{RESET}", end="", flush=True)
-        if tps_btw_letters:
-            time.sleep(float(tps_btw_letters))
-            print(f"{color}{letter}{RESET}", end="", flush=True)
+# -------------------------------------------------------------------------------
 
-
-
-def loading_bar(tps, symbol="#", lenght=10):
-    """Barre de progression avec étapes X/Y et pourcentage exact."""
-    pourc1 = 100 / lenght
-    for i in range(1, lenght + 1):
-        pourcentage = i * pourc1
-        barre = symbol * i
-        vide = "." * (lenght - i)
-        
-        clear()
-        print(f"[{barre}{vide}]    {i}/{lenght}  ({pourcentage:.1f}%)")
-        time.sleep(tps / lenght)
-        
-    clear()
-    cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
-
+# --- Mesure du Temps et Saisie ---
 
 _timers = {}
-
-
 def start_timer(nom="default", entrées=False):
     """Démarre ou réinitialise un chrono avec un nom donné."""
     global _timers
@@ -408,7 +757,6 @@ def start_timer(nom="default", entrées=False):
         start = time.perf_counter()
     _timers[nom] = start
     return start
-
 
 def stop_timer(nom="default", entrées=False):
     """Affiche temps écoulé pour le chrono spécifié."""
@@ -459,89 +807,9 @@ def valid_input(type='int', phrase=""):
     return None
 
 
-def clear_lines(n=1):
-    """Efface un nombre de lignes donne dans le terminal."""
-    for _ in range(n):
-        sys.stdout.write("\033[1F\033[2K")
-    sys.stdout.flush()
+# -------------------------------------------------------------------------------
 
-
-def random_password(
-    n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False
-):
-    """make a password of size n with or without Maj, digit and punct°"""
-    char, txt_password = string.ascii_lowercase, ""
-    if Maj:
-        char += string.ascii_uppercase
-    if digits:
-        char += string.digits
-    if punctuation:
-        char += string.punctuation
-    if space:
-        char += " "
-    if tiret_bas:
-        char += "_"
-    while True:
-        try:
-            txt_password = "".join(random.choices(char, k=n))
-            return txt_password
-        except:  # noqa: E722
-            pass
-
-
-def random_username(
-    n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True
-):
-    "" "based on the original random_password, chages the parameter to make a username valid''"
-    return random_password(n, Maj, digits, punctuation, space, tiret_bas)
-
-
-def random_string(
-    n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False
-):
-    "" "based on the original random_password, chages the parameter to make a valid normal string''"
-    return random_password(n, Maj, digits, punctuation, space, tiret_bas)
-
-
-def faire_titre_section(texte, symbole="-", largeur=60):
-    """mettre texte et symbole, funct centre et fait une ligne de symbole de size largeur"""
-    texte_grand = texte.upper()
-
-    print(symbole * largeur)
-    # Utilisation de STYLE_TITRE ici
-    print(f"{STYLE_TITRE}{texte_grand.center(largeur)}{RESET}")
-    print(symbole * largeur)
-
-
-def menu_options(options):
-    """enter a list of options, show a interactif select menu, return the option chose"""
-    index, taille = 0, len(options)
-
-    while True:
-        clear()
-        print("=== CHOISIS TA VIANDE (Z: Haut, S: Bas, Entrée: OK) ===")
-
-        # Afficher options
-        for i in range(taille):
-            if i == index:
-                # Utilisation de la nouvelle fusion MENU_ACTIF
-                print(f"{MENU_ACTIF} > {options[i]} {RESET}")
-            else:
-                print(f"   {options[i]}")
-
-        # Attendre touche
-        touche: bytes = msvcrt.getch()
-
-        # Si touche spéciale (comme les vraies flèches)
-        if touche in (b"\x00", b"\xe0"):
-            touche = msvcrt.getch()  # Lire deuxième code
-            if touche == b"H":  # Flèche Haut
-                index = (index - 1) % taille
-            elif touche == b"P":  # Flèche Bas
-                index = (index + 1) % taille
-        elif touche == b"\r":  # Touche Entrée
-            return options[index]
-
+# --- Journalisation (Logging) ---
 
 def ecrire_log(
     message,
@@ -565,18 +833,19 @@ def ecrire_log(
     with open(chemin_fichier, "a", encoding="utf-8") as f:
         f.write(ligne_log)
 
-
 def log_info(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "INFO", fichier)
-
 
 def log_warning(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "WARNING", fichier)
 
-
 def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "ERROR", fichier)
 
+
+# -------------------------------------------------------------------------------
+
+# --- Automatisation ---
 
 def afk_mouse(n=False, kill=False):
     """move mouse randomly and click, forever or in range n (len or digit)"""
@@ -609,24 +878,57 @@ def afk_mouse(n=False, kill=False):
         kill_terminal()
 
 
+# -------------------------------------------------------------------------------
+
+# --- Outils Spécifiques au Projet ---
+
+def trouver_nom(objet):
+    for nom, valeur in globals().items():
+        if valeur is objet:
+            return nom
+    return None
+
+
+def fonct_mots():
+    global mots_921
+    nom = trouver_nom(mots_921)
+    print(f"{nom} = {len(mots_921)}")
+    if nom != "mots_" + str(len(mots_921)):
+        print(f"{ERROR}Problem with the name of {nom}{RESET}")
+    word = "science"
+    while True:  # noqa: F821
+        word = input("Enter a word:    ").lower()
+        if word == "clear":
+            clear()
+            fonct_mots()
+        elif word == 'quit':
+            sys.exit()
+        if word in mots_921:
+            print(f"{ERROR}{word} is present!{RESET}")
+            continue
+        else:
+            print(f"{SUCCESS}{word} isn't present!{RESET}")
+            accept_enter = input(f"do you want the word :  {word}, to be add?\n>>>  ")
+            if accept_enter == "clear":
+                clear()
+                fonct_mots()
+            elif accept_enter.lower() == 'quit':
+                sys.exit()
+            if accept_enter:
+                mots_921.append(word)
+                mots_921 = sorted(mots_921)
+                index_debut = mots_921.index(word) - 1
+                index_fin = mots_921.index(word) + 2
+                print(mots_921[index_debut:index_fin])
+                a = str(mots_921[index_debut:index_fin])
+                a = a.lstrip("[")
+                a = a.rstrip("]")
+                copier_txt(a)
+                print(f"ligne: {65 +  index_debut // 10}")
+
+
 def kanekicount(number, base):
     n =0
     while number > base:
         number, n = number - base, n +1
         print(f'{number}    {n}')
-
-
-def enlever_accents(texte: str) -> str:
-    return "".join(
-        c
-        for c in unicodedata.normalize("NFD", texte)
-        if unicodedata.category(c) != "Mn"
-    )
-
-def formate_collections(*args):
-    if isinstance(*args, list):
-        return str(*args).replace('[', '').replace(']', '').replace("'", '')
-    elif isinstance(*args, tuple):
-        return str(*args).replace('(', '').replace(')', '').replace("'", '')
-    elif isinstance(*args, set):
-        return str(*args).replace('{', '').replace('}', '').replace("'", '')
