@@ -25,6 +25,7 @@ Bibliothèques standards utilisées :
     - unicodedata
     - msvcrt
     - datetime
+    - itertools
 
 Bibliothèque externe (optionnelle) :
     - pyautogui
@@ -209,10 +210,19 @@ mots_921
 
 -------------------------------------------------------------------------------
 
---- Encodage ---
+--- Encodage et Comptage---
 
 • cesar()
     Lance un menu interactif pour chiffrer et déchiffrer du texte avec le chiffre de César.
+
+• seq(txt='')
+    demande entrée qui renvoi la plus longue succesion de même caractère.
+
+• • brute_force(password='')
+    Force un mot de passe en testant les longueurs au fur et à mesure.
+
+• morse(txt='')
+    renvoi l'entrée en morse.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -234,7 +244,7 @@ mots_921
 # 1. DÉPENDANCES ET PRÉREQUIS
 # -------------------------------------------------------------------------------
 
-import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata  # noqa: E401
+import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
 try:
     import pyautogui as pag
@@ -778,6 +788,7 @@ def stop_timer(nom="default", entrées=False):
         fin = time.perf_counter()
 
     print(f"[{nom}] {fin - _timers[nom]:.6f} s")
+    return fin - _timers[nom]
 
 
 def human_time(n):
@@ -887,7 +898,7 @@ def afk_mouse(n=False, kill=False):
 
 # -------------------------------------------------------------------------------
 
-# --- Encodage ---
+# --- Encodage et Comptage---
 
 def cesar_code():
     letzte, sequ_of_possibl, alpha = '', {}, string.ascii_lowercase
@@ -983,6 +994,123 @@ def cesar_code():
                 break
         input(">>>   ")
     input("")
+
+def seq(txt=''):
+    if not txt:
+        txt = input()
+    max_len = 1
+    cur_len = 1
+
+    for i in range(1, len(txt)):
+        if txt[i] == txt[i - 1]:
+            cur_len += 1
+            if cur_len > max_len:
+                max_len = cur_len
+        else:
+            cur_len = 1
+
+    return(max_len)
+
+def brute_force(password=''):
+    def brute(target_password, max_length=6):
+        # Les caractères possibles : lettres minuscules, majuscules et chiffres
+        characters, attempts = string.ascii_lowercase + string.ascii_uppercase + string.digits, 0
+        start_timer()
+        
+        for length in range(1, max_length + 1):  # On teste toutes les longueurs de 1 jusqu'à max_length
+            print(f"\nTest des combinaisons de longueur {length}...")
+            
+            for combo in itertools.product(characters, repeat=length):
+                attempts += 1   # itertools.product génère toutes les combinaisons possibles
+                guess = ''.join(combo)
+                
+                if guess == target_password:
+                    print(f"\nMot de passe trouvé : '{guess}'")
+                    print(f"   Tentatives : {attempts:,}")
+                    print(f"   Temps écoulé : {print(f'{stop_timer():.2f}')} secondes")
+                    return guess
+        print("Mot de passe non trouvé dans la limite fixée.")
+        return None
+    
+    if not password:
+        password = input("Entre un mot de passe court à deviner : ")
+
+    brute(password, max_length=len(password))
+    input('')
+
+
+def morse(txt=''):
+    if not txt:
+        txt = input("enter a sequence to put in morse:\n>>>   ")
+    words, morse = tuple(txt), ''
+    char_to_dots = {
+        "A": ".-",
+        "B": "-...",
+        "C": "-.-.",
+        "D": "-..",
+        "E": ".",
+        "F": "..-.",
+        "G": "--.",
+        "H": "....",
+        "I": "..",
+        "J": ".---",
+        "K": "-.-",
+        "L": ".-..",
+        "M": "--",
+        "N": "-.",
+        "O": "---",
+        "P": ".--.",
+        "Q": "--.-",
+        "R": ".-.",
+        "S": "...",
+        "T": "-",
+        "U": "..-",
+        "V": "...-",
+        "W": ".--",
+        "X": "-..-",
+        "Y": "-.--",
+        "Z": "--..",
+        " ": " ",
+        "0": "-----",
+        "1": ".----",
+        "2": "..---",
+        "3": "...--",
+        "4": "....-",
+        "5": ".....",
+        "6": "-....",
+        "7": "--...",
+        "8": "---..",
+        "9": "----.",
+        "&": ".-...",
+        "'": ".----.",
+        "@": ".--.-.",
+        ")": "-.--.-",
+        "(": "-.--.",
+        ":": "---...",
+        ",": "--..--",
+        "=": "-...-",
+        "!": "-.-.--",
+        ".": ".-.-.-",
+        "-": "-....-",
+        "+": ".-.-.",
+        '"': ".-..-.",
+        "?": "..--..",
+        "/": "-..-.",
+    }
+
+    def in_morse():
+        nonlocal morse
+        for abc in words:
+            if abc.isalpha():
+                abc = abc.upper()
+                morse += char_to_dots[abc] + " "
+            else:
+                morse += char_to_dots[abc] + " "
+
+    in_morse()
+    print(f"text in morse :\n{morse}")
+    input("")
+    return morse
 
 # -------------------------------------------------------------------------------
 
