@@ -1,139 +1,96 @@
-import string, random, sys, tools  # noqa: E401
+import string, random  # noqa: E401
+from tools import * # noqa: F403
 
-def encrypt():
-    global letzte
-    alpha = string.ascii_lowercase
-    text = input("enter a text to encrypt:  \n")
-    n = int(
-        input(
-            "enter a key of encryption *NOTE! This is using the Ceaser cipher (or enter 0 to make it randomly)\n"
-        )
-    )
+letzte, sequ_of_possibl, alpha = '', {}, string.ascii_lowercase
 
-    if str(n) == "0":
-        n = random.randint(1, len(alpha) - 1)
-    cesar = ""
-    
-    for i in range(2):
-        if text == "":
-            for i in range(random.randint(1, 50)):
-                text += random.choice(alpha)
-        elif 'last' in text:
-            text = letzte
-    for i in text:
+def math(txt, n, decrypt=True):
+    global alpha
+    text = ''
+    for i in txt:
         if i in alpha:
             a = alpha.find(i)
-            a = (a + n) % len(alpha)
-            cesar += alpha[a]
-        elif i.isascii() and i.lower() != i:
-            i = i.lower()
-            a = alpha.find(i)
-            a = (a + n) % len(alpha)
-            cesar += alpha[a].upper()
-        elif i.isdigit():
-            a = (int(i) - n) % 10
-            cesar += str(a)
-        elif i == " ":
-            cesar += " "
-        else:
-            cesar += i
-    letzte = cesar
-    print(f"here the text : {text} in Cesar with key of {n} :\n {cesar}")
-
-def decrypt(abc):
-    global letzte
-    n = int(input("enter a key of decryption \n"))
-    alpha = string.ascii_lowercase
-    text = ""
-    if 'last' in abc:
-        abc = letzte
-    for i in abc:
-        if i in alpha:
-            a = alpha.find(i)
-            a = (a - n) % len(alpha)
+            if decrypt:
+                a = (a - n) % len(alpha)
+            else:
+                a = (a + n) % len(alpha)
             text += alpha[a]
         elif i.isascii() and i.lower() != i:
-            i = i.lower()
-            a = alpha.find(i)
-            a = (a - n) % len(alpha)
+            i_lower = i.lower()
+            a = alpha.find(i_lower)
+            if decrypt:
+                a = (a - n) % len(alpha)
+            else:
+                a = (a + n) % len(alpha)
             text += alpha[a].upper()
         elif i.isdigit():
-            a = (int(i) + n) % 10
+            if decrypt:
+                a = (int(i) - n) % 10
+            else:
+                a = (int(i) + n) % 10
             text += str(a)
         elif i == " ":
             text += " "
         else:
             text += i
-    letzte = text
-    print(f"the text :  {abc} decrypted in key {n} is : \n {text}")
+    return text
 
+def encrypt():
+    global letzte, alpha
+    txt = input("enter a text to encrypt:  \n")
+    n = int(input("enter a key of encryption *NOTE! This is using the Ceaser cipher (or 0 to make it random)\n"))
+    if n == 0:
+        n = random.randint(1, len(alpha) - 1)
+    if txt == "":
+        txt = ''.join(random.choices(alpha, k=50))
+    elif 'last' in txt:
+        txt = letzte
+    apr = math(txt, n, decrypt=False)
+    letzte = apr
+    print(f"here the text : {txt} in Cesar with key of {n}:\n {apr}")
 
-def not_key_decrypt(txt, sign="elric"):
-    global letzte, sequ_of_possibl
-    n = 1
-    alpha = string.ascii_lowercase
-    text = ""
+def decrypt(txt):
+    global letzte
+    n = int(input("enter a key of decryption \n"))
     if 'last' in txt:
         txt = letzte
-    for e in range(len(alpha)):
-        text = ''
-        for i in txt:
-            if i in alpha:
-                a = alpha.find(i)
-                a = (a - n) % len(alpha)
-                text += alpha[a]
-            elif i.isascii() and i.lower() != i:
-                i = i.lower()
-                a = alpha.find(i)
-                a = (a - n) % len(alpha)
-                text += alpha[a].upper()
-            elif i.isdigit():
-                a = (int(i) + n) % 10
-                text += str(a)
-            elif i == " ":
-                text += " "
-            else:
-                text += i
-        n += 1
-        if sign in text:
-            sequ_of_possibl.update({n-1: text})
+    apr = math(txt, n, decrypt=True)
+    letzte = apr
+    print(f"the text :  {txt} decrypted in key {n} is : \n {apr}")
+
+def decrypt_without_key(txt, sign="elric"):
+    global letzte, sequ_of_possibl
+    if 'last' in txt:
+        txt = letzte
+    for n in range(1, len(alpha) + 1):
+        apr = math(txt, n, decrypt=True)
+        if sign in apr:
+            sequ_of_possibl[n] = apr
+            letzte = apr
             break
-    letzte = text
     for cle, valeur in sequ_of_possibl.items():
         print(f'possible key :  {cle}')
         print(f'text would pass from {txt} to : {valeur}')
 
-is_running = True
-letzte =''
-sequ_of_possibl = {}
-while is_running:
-    print("1. encrypt a text")
-    print("2. decrypt a text")
-    print('3. decrypt without key')
-    print('4. Exit')
-    choice = input(">>> ")
+while True:
+    choice = menu_options(["1. encrypt a text", "2. decrypt a text", '3. decrypt without key', '4. Exit'])  # noqa: F405
     match choice:
-        case "1":
+        case "1. encrypt a text":
             encrypt()
-        case "2":
+        case "2. decrypt a text":
             text = input("enter a text to decrypt: \n")
             decrypt(text)
-        case '3':
+        case '3. decrypt without key':
             text = input("enter a text to decrypt: \n")
             kff = input('enter the sign that you know is in this text:  \n')
             while kff == ' ':
-                print('not valid sign !! ')
+                print('not valid sign !!')
                 kff = input('pls, enter the sign that you know is in this text:  \n')
             if kff != '':
-                not_key_decrypt(text, kff)
+                decrypt_without_key(text, kff)
             else:
-                not_key_decrypt(text)
-        case '4':
-            is_running = False
-            print(f'{tools.VERT}thank you!{tools.RESET}')
-        case _:
-            is_running = False
-            print('not valid input selected')
-            tools.shutdown()
-            sys.exit("go to Hell!!")
+                decrypt_without_key(text)
+        case '4. Exit':
+            cprint('thank you!', SURLIGN2_VERT)  # noqa: F405
+            break
+    input(">>>   ")
 input("")
