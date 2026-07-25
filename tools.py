@@ -1277,7 +1277,7 @@ def pendu_game(mode="normal"):
 
     run(mode)
 
-pendu_game()
+
 # -------------------------------------------------------------------------------
 
 # --- Outils Spécifiques au Projet ---
