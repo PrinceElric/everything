@@ -1,7 +1,8 @@
-import sys, random, time, unicodedata  # noqa: E401, F401
+import sys, random, time  # noqa: E401, F401
 
 sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
 from tools import *  # noqa: F403
+
 
 def start():
     global mots, mots_921, letter, letters, count_pendu, false_answers, count_pendu, pendu_etapes, word
@@ -24,14 +25,15 @@ def start():
         " +---+\n |   \n O   \n/|\\  \n/ \\  ",
     )
 
-def show_word(mode='normal'):
-    if not letters and mode == 'normal':
+
+def show_word(mode=""):
+    if not letters and not mode:
         print("_" * len(word))
         return
     elif not letters:
-        print(word[0] +( "_" * (len(word)-1)))
+        print(word[0] + ("_" * (len(word) - 1)))
         return
-    print(''.join(i if i in letters else '_' for i in word))
+    print("".join(i if i in letters else "_" for i in word))
     print()
 
 
@@ -46,7 +48,7 @@ def enter_letter():
         if letter in ["exit", "quit", "ex"]:
             clear()  # noqa: F405
             sys.exit()
-        elif letter == 're':
+        elif letter == "re":
             clear()  # noqa: F405
             word = random.choice(mots)  # noqa: F405
             word = enlever_accents(word)  # noqa: F405
@@ -56,12 +58,15 @@ def enter_letter():
         if len(letter) != 1 or not letter.isalpha():
             cprint("JUST ONE LETTER!", ERROR)  # noqa: F405
             time.sleep(0.5)
-            clear_lines(2)  # noqa: F405
+            if false_answers:
+                clear_lines(3)  # noqa: F405
+            else:
+                clear_lines(2)  # noqa: F405
             continue
         break
     clear_lines(1)  # noqa: F405
     if letter in letters or letter in false_answers:
-        print('Answer already gave!')
+        print("Answer already gave!")
         time.sleep(1)
         main()
     if letter in word:
@@ -94,43 +99,52 @@ def show_pendu(level: int = 0) -> None:
 def verif(full=False):
     if not full:
         if len(false_answers) >= 5:
-            print(f'Answer was {FOND_VERT}{word}{RESET}')  # noqa: F405
-            cprint(f'You gave {len(false_answers)} bad answers!', ROUGE_FLASH+SOULIGN2)  # noqa: F405
-            cprint(f'You had {len(letters)} good answers!', SUCCESS)  # noqa: F405
-            cprint('But...', ROUGE_FLASH)  # noqa: F405
-            cprint('You lost!', ERROR)  # noqa: F405
+            print(f"Answer was {FOND_VERT}{word}{RESET}")  # noqa: F405
+            cprint(
+                f"You gave {len(false_answers)} bad answers!", ROUGE_FLASH + SOULIGN2
+            )  # noqa: F405
+            cprint(f"You had {len(letters)} good answers!", SUCCESS)  # noqa: F405
+            cprint("But...", ROUGE_FLASH)  # noqa: F405
+            cprint("You lost!", ERROR)  # noqa: F405
             end()
         elif len(letters) == len(set(word)):
-            print(f'Answer was {FOND_VERT}{word}{RESET}')  # noqa: F405
-            cprint('You found all the letters!', VERT_FLASH + SOULIGN2)  # noqa: F405
-            cprint('And...', VERT)  # noqa: F405
-            cprint('You won', SUCCESS)  # noqa: F405
+            print(f"Answer was {FOND_VERT}{word}{RESET}")  # noqa: F405
+            cprint("You found all the letters!", VERT_FLASH + SOULIGN2)  # noqa: F405
+            cprint("And...", VERT)  # noqa: F405
+            cprint("You won", SUCCESS)  # noqa: F405
             end()
         return
-    cprint(f'You guessed the word!, it was good {word}', SUCCESS)  # noqa: F405
-    cprint(f'You gave {len(letters)} good answers and {len(false_answers)} bad answers!', VERT)  # noqa: F405
-    cprint('You won!', SUCCESS)  # noqa: F405
+    cprint(f"You guessed the word!, it was good {word}", SUCCESS)  # noqa: F405
+    cprint(
+        f"You gave {len(letters)} good answers and {len(false_answers)} bad answers!",
+        VERT,
+    )  # noqa: F405
+    cprint("You won!", SUCCESS)  # noqa: F405
     end()
 
 
 def end():
-    choice = input('New round?\n')
+    choice = input("New round?\n")
     if choice:
         run()
     else:
         sys.exit()
 
-def run(mode='normal'):
+
+def main(mode=""):
+    while True:
+        global count_pendu
+        clear()  # noqa: F405
+        show_pendu(count_pendu)
+        verif()
+        # print(word)  #uncomment to debug and test
+        show_word(mode)
+        enter_letter()
+
+
+def run(mode=""):
     start()
-    def main(mode='normal'):
-        while True:
-            global count_pendu
-            clear()  # noqa: F405
-            show_pendu(count_pendu)
-            verif()
-            # print(word)  #uncomment to debug and test
-            show_word(mode)
-            enter_letter()
     main(mode)
 
-run('non')
+
+run("")

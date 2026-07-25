@@ -1,17 +1,14 @@
 import random, time  # noqa: E401
+from tools import *
 
-print("rock, paper, scissor game !")
+faire_titre_section("Rock, Paper, Scissor Game")
 
-is_running = True
-choices = ("rock", "paper", "scissor")
-won = 0
-lose = 0
+choices, won, lose = ("rock", "paper", "scissor"), 0, 0
 
-while is_running:
+while True:
     computer = random.choice(choices)
-    player = input("Enter your choice(q to quit): ")
-    if player == 'q':
-        is_running = False
+    player = input("Enter your choice (q to quit): ")
+    if player.lower() == 'q':
         break
     cheat = player != player.lower()
 
@@ -21,11 +18,11 @@ while is_running:
     else:
         player = player.lower()
 
-    while player not in choices:
-        print("You chose an invalid option")
-        player = input("Enter your choice: ")
-        cheat = player != player.lower()
-        player = player.lower()
+    if player not in choices:
+        cprint("You chose an invalid option", ERROR)
+        time.sleep(0.7)
+        clear_lines(2)
+        continue
 
     if cheat:
         if player == "rock":
@@ -40,18 +37,18 @@ while is_running:
     if player == computer:
         print("It's a tie")
     elif player == "rock" and computer == "paper":
-        print("You lost!")
+        cprint("You lost!", ERROR)
         lose += 1
     elif player == "paper" and computer == "scissor":
-        print("You lost!")
+        cprint("You lost!", ERROR)
         lose += 1
     elif player == "scissor" and computer == "rock":
-        print("You lost!")
+        cprint("You lost!", ERROR)
         lose += 1
     else:
-        print("You win!")
+        cprint("You won!", SUCCESS)
         won += 1
 
-print(f"you won {won} times, and lost {lose} times")
-print("good game" if won > lose else "you will do it better next time!")
-time.sleep(5)
+print(f"{SUCCESS}you won {won} times,{RESET} {ERROR}and lost {lose} times{RESET}")
+print(f"{SUCCESS}Good game!{RESET}" if won > lose else f"{ERROR}You will do it better next time!{RESET}")
+input("Press enter to exit\n>>>    ")
