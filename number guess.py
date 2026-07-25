@@ -6,7 +6,7 @@ def number_guess_game(minimum=0, maximum=100):
     clear()
     faire_titre_section("Number Guessing Game!")
     number_rand, guesses, my_number, choix ,  = int(random.randint(minimum, maximum)), 0, None, (1, 3)
-    print(f'Num is {number_rand}')
+    # print(f'Num is {number_rand}')
     def enter_num():
         nonlocal my_number, guesses
         while True:
