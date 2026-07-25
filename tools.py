@@ -243,6 +243,8 @@ mots_921
     Lance le jeu du papier-ciseaux avec capacité de triche.
 • number_guess_game(minimum=0, maximum=100)
     Lance le jeu du nombre à deviner avec capa de triche.
+• def code_names_game()
+    Lance le jeu du code names.
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -488,8 +490,10 @@ def loading_bar(tps, symbol="#", lenght=10):
         print(f"[{barre}{vide}]    {i}/{lenght}  ({pourcentage:.1f}%)")
         time.sleep(tps / lenght)
         
-    clear()
+    clear_lines(1)
     cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
+    time.sleep(0.3)
+    clear_lines(1)
 
 
 def clear_lines(n=1):
@@ -1223,7 +1227,7 @@ def pendu_game(mode="normal"):
 
             clear_lines(1)
             if normalized_input in letters or normalized_input in false_answers:
-                print("Answer already gave!")
+                cprint("Answer already gave!", WARNING)
                 time.sleep(1)
                 clear()
                 return
@@ -1419,6 +1423,231 @@ def number_guess_game(minimum=0, maximum=100):
         high_low()
 
 
+def code_names_game():
+    def afficher_grille(grille, mode="joueur"):
+        """Affiche la grille selon le mode : 'joueur' (brut) ou 'maitre' (avec filtres)"""
+        for e in range(5):
+            for i in range(5):
+                mot = grille[e][i]
+                if mode == "maitre":
+                    if mot in accepted_prop:
+                        print(f"{NOIR_INVISIBLE}{mot:<15}{RESET}", end="")
+                    elif mot in mots_rouges:
+                        print(f"{ROUGE}{mot:<15}{RESET}", end="")
+                    elif mot in mots_verts:
+                        print(f"{VERT}{mot:<15}{RESET}", end="")
+                    else:
+                        print(f"{mot:<15}", end="")
+
+                else:
+                    if mot in accepted_prop:
+                        print(f"{NOIR_INVISIBLE}{mot:<15}{RESET}", end="")
+                    else:
+                        print(f"{mot:<15}", end="")
+            print("")
+
+
+    def repetition_aceptation_rep(props):
+        """augmente le nb de rep gave (de 1) et ajoute la proposition a une liste pour ensuite les masquer (next turn)"""
+        nonlocal nb_rep_gave, accepted_prop
+        nb_rep_gave += 1
+        accepted_prop.append(props)
+
+
+    mots = random.choices(mots_921, k=25)
+    while len(set(mots)) != len(mots):
+        mots = random.choices(mots_921, k=25)
+    accepted_prop, rouge, vert, pts, mots2, nb_rep_gave = (
+        [],
+        (range(3)),
+        (range(5)),
+        0,
+        mots.copy(),
+        0,
+    )
+    random.shuffle(mots)
+    random.shuffle(mots2)
+    matrice, matrice2 = (
+        (mots[:5]),
+        (mots[5:10]),
+        (mots[10:15]),
+        (mots[15:20]),
+        (mots[20:]),
+    ), ((mots2[:5]), (mots2[5:10]), (mots2[10:15]), (mots2[15:20]), (mots2[20:]))
+    mots_rouges = [matrice[4][i] for i in rouge]
+    mots_verts = [matrice[0][i] for i in vert] + [matrice[1][i] for i in vert[:2]]
+    while not set(accepted_prop) == set(mots_verts):
+        clear()
+        afficher_grille(matrice, mode="maitre")
+
+        key_word = input("Enter a word for the person can devine:\n>>>   ").strip().lower()
+        reponses = []
+
+        while True:
+            continueeee = 0
+            reponses.append(
+                input("What are the answers ?(q to quit)(enter for each one):   ")
+                .lower()
+                .strip()
+            )
+            for i in mots_rouges:
+                if i in reponses:
+                    print(f"{ROUGE}Incorrect enter{RESET}")
+                    reponses.remove(i)
+                    continueeee = 1
+            if continueeee == 1:
+                continue
+            if "q" in reponses:
+                reponses.pop()
+                break
+            for i in reponses:
+                if i not in mots:
+                    print(f"{ROUGE}Incorrect enter{RESET}")
+                    print(
+                        f"{ROUGE}{GRAS}IMPORTANT : Les answers entered have been deleted bc you made a mistake!{RESET}"
+                    )
+                    reponses = []
+                    continueeee = 1
+            if continueeee == 1:
+                continue
+            print("Element succesfuly added to the answers, what's the next ?")
+
+        clear()
+        nb_rep = 0
+        print("The answers are: ", end="")
+        for i in reponses:
+            nb_rep += 1
+            print(i, end="   ")
+        print("")
+        print(f"There are {nb_rep} rep at total")
+        input("")
+        clear()
+
+        propositions, nb_rep_gave, nb_good_answ, pts_before = "", 0, 0, pts
+
+        while True:
+            clear()
+            print(
+                f"The player selected {nb_rep} words to find, the keyword is: {key_word}\n {VERT}GOOD LUKE{RESET}"
+            )
+            afficher_grille(matrice2)
+
+            if nb_rep_gave == nb_rep:
+                break
+            propositions = (
+                input(
+                    f"Which answer propose you ?(again {nb_rep - nb_rep_gave} to enter):\n>>> "
+                )
+                .lower()
+                .strip()
+            )
+            if propositions not in mots:
+                print(f"{ROUGE}Propostion invalid{RESET}")
+                print("The proposition isn't in the table, pls select an other one")
+                input('')
+                continue
+            if propositions in mots_rouges:
+                cprint(f"You lost!", ROUGE)
+                cprint(f"the answers were : {reponses}", VERT + SOULIGN2)
+                sys.exit(f"See you next time, you had {pts}pts")
+            if propositions in mots_verts and propositions in reponses:
+                pts += 1
+                cprint(f"You won 1pts, you are now to {pts}pts!", VERT)
+                repetition_aceptation_rep(propositions)
+                nb_good_answ += 1
+            elif propositions in reponses:
+                cprint(
+                    f"{VERT}Very well answer but you didn't make points{RESET}", VERT
+                )
+                cprint(f"You have {pts}!", VERT)
+                repetition_aceptation_rep(propositions)
+                nb_good_answ += 1
+            else:
+                print(f"{ROSE} Not good Answer,{RESET} keep schearching")
+                repetition_aceptation_rep(propositions)
+            input("")
+
+        clear()
+        print(
+            f"The player selected the {nb_rep} reponses\n He found {nb_good_answ} good answers, and made {pts - pts_before}pts!"
+        )
+        input("Next round ?\n")
+
+    cprint("You won!", VERT + SOULIGN2 + GRAS + ITALIC)
+    print(f"You had {pts}pts !")
+
+
+def pile_face_game(load=True):
+    faire_titre_section("Pile ou Face Game")
+    choix = ("pile", "face")
+    while True:
+        reponse = input(">>>   ")
+        if reponse.lower() in exit:
+            break
+        elif reponse.strip() != reponse:
+            if load:
+                loading_bar(1)
+            slow_type("And it's...", 1, color=LOG_DISCRET)
+            cprint(' FACE', LOG_DISCRET)
+        else:
+            if load:
+                loading_bar(1)
+            slow_type("And it's...", 1, color=LOG_DISCRET)
+            choi = random.choice(choix)
+            cprint(f" {choi}", LOG_DISCRET)
+
+
+def menu_game():
+    while True:
+        clear()
+        faire_titre_section("Games Menu")
+        choice = menu_options(
+            [
+                "1. Pendu Game",
+                "2. Rock, Paper, Scissor Game",
+                "3. Number Guessing Game",
+                "4. Code Names Game",
+                "5. Pile ou Face Game",
+                "6. Exit",
+            ]
+        )
+        match choice:
+            case "1. Pendu Game":
+                mode = menu_options(
+                    [
+                        "1. Normal",
+                        "2. Facile",
+                        "3. Très Facile",
+                        "4. Difficile",
+                        "5. Debug",
+                        "6. Exit"
+                    ]
+                )
+                match mode:
+                    case "1. Normal":
+                        pendu_game("normal")
+                    case "2. Facile":
+                        pendu_game("facile")
+                    case "3. Très Facile":
+                        pendu_game("tr_facile")
+                    case "4. Difficile":
+                        pendu_game("difficile")
+                    case "5. Debug":
+                        pendu_game("debug")
+                    case "6. Exit":
+                        break
+            case "2. Rock, Paper, Scissor Game":
+                paper_scissor_game()
+            case "3. Number Guessing Game":
+                number_guess_game()
+            case "4. Code Names Game":
+                code_names_game()
+            case "5. Pile ou Face Game":
+                pile_face_game()
+            case "6. Exit":
+                break
+
+menu_game()
 
 # -------------------------------------------------------------------------------
 
