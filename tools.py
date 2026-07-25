@@ -228,7 +228,7 @@ mots_921
 
 --- Jeux ---
 
-• pendu_game(mode="")
+• def pendu_game(mode="normal")
     Lance le jeu du pendu.
 
 
@@ -1280,7 +1280,7 @@ def pendu_game(mode="normal"):
 
     run(mode)
 
-pendu_game('tr_facile')
+pendu_game()
 # -------------------------------------------------------------------------------
 
 # --- Outils Spécifiques au Projet ---
