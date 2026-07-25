@@ -218,11 +218,19 @@ mots_921
 • seq(txt='')
     demande entrée qui renvoi la plus longue succesion de même caractère.
 
-• • brute_force(password='')
+• brute_force(password='')
     Force un mot de passe en testant les longueurs au fur et à mesure.
 
 • morse(txt='')
     renvoi l'entrée en morse.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--- Jeux ---
+
+• pendu_game(mode="")
+    Lance le jeu du pendu.
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -250,6 +258,7 @@ try:
     import pyautogui as pag
 except ImportError:
     pag = None  # Évite le plantage si absent
+# sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
 
 # -------------------------------------------------------------------------------
 # 2. INITIALISATION
@@ -1112,6 +1121,166 @@ def morse(txt=''):
     input("")
     return morse
 
+
+# -------------------------------------------------------------------------------
+
+# --- Jeux ---
+
+def pendu_game(mode="normal"):
+    global mots_921
+    def start():
+        global mots, count_down, mots_921, letter, letters, count_pendu, false_answers, count_pendu, pendu_etapes, word
+        mots = mots_921.copy()
+        mots, letter, letters, count_pendu, false_answers, count_down = (
+            list(filter(lambda x: True if len(x) > 5 else False, mots_921)),
+            "",
+            [],
+            0,
+            [],
+            6,
+        )
+        word = mots[random.randrange(0, len(mots))]
+        word = enlever_accents(word)
+        pendu_etapes = (
+            " +---+\n     \n     \n     \n     ",
+            " +---+\n |   \n     \n     \n     ",
+            " +---+\n |   \n O   \n     \n     ",
+            " +---+\n |   \n O   \n/|   \n     ",
+            " +---+\n |   \n O   \n/|\\  \n     ",
+            " +---+\n |   \n O   \n/|\\  \n/    ",
+            " +---+\n |   \n O   \n/|\\  \n/ \\  ",
+        )
+
+
+    def show_word(mode="normal"):
+        global count_down, word, letters
+        if not letters and mode == "normal":
+            print("_" * len(word))
+            return
+        elif not letters and mode == "facile":
+            letters.append(word[0])
+        elif not letters and mode == "tr_facile":
+            letters.append(word[0])
+            letters.append(word[-1])
+        elif not letters and mode == "difficile":
+            count_down = 4
+        elif mode == 'debug':
+            print(f'word is {VERT_FLASH + SOULIGN2}{word}{RESET}')
+        print("".join(i if i in letters else "_" for i in word))
+        print()
+
+
+    def enter_letter():
+        global letter, false_answers, word, count_pendu
+        while True:
+            if false_answers:
+                print(
+                    f'{ROUGE_FLASH}False letters:   {str(false_answers).replace('[', '').replace(']', '').replace("'", '')}{RESET}'
+                )
+            letter = input("enter a letter:    ").strip().lower()
+            if letter in ["exit", "quit", "ex"]:
+                clear()
+                sys.exit()
+            elif letter == "re":
+                clear()
+                word = random.choice(mots)
+                word = enlever_accents(word)
+                main()
+            if letter == word:
+                verif_game(True)
+            if len(letter) != 1 or not letter.isalpha():
+                cprint("JUST ONE LETTER!", ERROR)
+                time.sleep(0.5)
+                if false_answers:
+                    clear_lines(3)
+                else:
+                    clear_lines(2)
+                continue
+            break
+        clear_lines(1)
+        if letter in letters or letter in false_answers:
+            print("Answer already gave!")
+            time.sleep(1)
+            main()
+        if letter in word:
+            print(f"enter a letter:    {VERT_FLASH}{GRAS}{letter}{RESET}")
+            print(f"{letter} {SUCCESS}is in the word!{RESET}")
+            letters.append(letter)
+
+        else:
+            print(f"enter a letter:    {ROUGE_FLASH}{GRAS}{letter}{RESET}")
+            print(f"{letter} {ERROR}not in the word!{RESET}")
+            count_pendu += 1
+            false_answers.append(letter)
+        time.sleep(1)
+
+
+    def show_pendu(level: int = 0) -> None:
+        print()
+        for line in pendu_etapes[level].split("\n"):
+            print(line)
+        match level:
+            case 0:
+                clear_lines(3)
+            case 1:
+                clear_lines(2)
+            case 2 | 3:
+                clear_lines(1)
+        print()
+
+
+    def verif_game(full_word=False):
+        if not full_word:
+            if len(false_answers) >= count_down:
+                print(f"Answer was {FOND_VERT}{word}{RESET}")
+                cprint(
+                    f"You gave {len(false_answers)} bad answers!", ROUGE_FLASH + SOULIGN2
+                )
+                cprint(f"You had {len(letters)} good answers!", SUCCESS)
+                cprint("But...", ROUGE_FLASH)
+                cprint("You lost!", ERROR)
+                end()
+            elif len(letters) == len(set(word)):
+                print(f"Answer was {FOND_VERT}{word}{RESET}")
+                cprint("You found all the letters!", VERT_FLASH + SOULIGN2)
+                cprint("And...", VERT)
+                cprint("You won", SUCCESS)
+                end()
+            return
+        cprint(f"You guessed the word!, it was good {word}", SUCCESS)
+        print(
+            f"{VERT}You gave {len(letters)} good answers {ROUGE}and {len(false_answers)} bad answers!{RESET}"
+        )
+        cprint("You won!", SUCCESS)
+        end()
+
+
+    def end():
+        choice = input("New round?\n")
+        if choice:
+            run()
+        else:
+            sys.exit()
+
+
+    def main(mode="normal"):
+        while True:
+            global count_pendu
+            clear()
+            show_pendu(count_pendu)
+            verif_game()
+            show_word(mode)
+            enter_letter()
+
+
+    def run(mode="normal"):
+        start()
+        main(mode)
+
+
+    run(mode)
+
+pendu_game('tr_facile')
 # -------------------------------------------------------------------------------
 
 # --- Outils Spécifiques au Projet ---
