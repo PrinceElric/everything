@@ -115,9 +115,8 @@ def verif(full=False):
             end()
         return
     cprint(f"You guessed the word!, it was good {word}", SUCCESS)  # noqa: F405
-    cprint(
-        f"You gave {len(letters)} good answers and {len(false_answers)} bad answers!",
-        VERT,
+    print(
+        f"{VERT}You gave {len(letters)} good answers {ROUGE}and {len(false_answers)} bad answers!{RESET}"
     )  # noqa: F405
     cprint("You won!", SUCCESS)  # noqa: F405
     end()
@@ -137,7 +136,7 @@ def main(mode=""):
         clear()  # noqa: F405
         show_pendu(count_pendu)
         verif()
-        # print(word)  #uncomment to debug and test
+        print(word)  #uncomment to debug and test
         show_word(mode)
         enter_letter()
 
