@@ -89,6 +89,15 @@ l'affichage dans le terminal :
         MENU_ACTIF
         ALERTE_CRITIQUE
 
+
+Le module propose également des listes pour sortir des input des programmes:
+
+• Continue
+
+• Exit
+
+• Others
+
 -------------------------------------------------------------------------------
 4. DONNÉES
 -------------------------------------------------------------------------------
@@ -328,6 +337,15 @@ STYLE_TITRE = "\033[30m" + FOND_CYAN + GRAS  # Texte Noir sur Fond Cyan
 MENU_ACTIF = "\033[97m" + FOND_BLEU + GRAS  # Texte Blanc sur Fond Bleu
 LOG_DISCRET = GRIS + ITALIC  # Gris et penché
 ALERTE_CRITIQUE = "\033[97m" + FOND_ROUGE + GRAS  # Texte Blanc sur Fond Rouge
+
+
+# listes de sortie d'input
+
+continuer = ("continue", "c", "cont", "go", "next", "1", "y", "yes", "o", "oui")
+exit = ("exit", "ex", "quitter", "quit", "q", "0", "n", "no", "non")
+others = ("other", "o", "autre")
+
+
 
 
 # -------------------------------------------------------------------------------

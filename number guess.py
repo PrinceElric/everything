@@ -1,67 +1,64 @@
-import random
+import random, sys, time
 from tools import *
 
 
-def number_guess_game(mini=1, maxi=100):
+def number_guess_game(minimum=0, maximum=100):
+    clear()
     faire_titre_section("Number Guessing Game!")
-    number_rand, cheat = int(random.randint(mini, maxi)), False
+    number_rand, guesses, my_number, choix ,  = int(random.randint(minimum, maximum)), 0, None, (1, 3)
+    print(f'Num is {number_rand}')
+    def enter_num():
+        nonlocal my_number, guesses
+        while True:
+            user_input = input(f"Please enter a number between {minimum} and {maximum}: ")
+            if user_input.lower() in exit:
+                cprint("Exiting the game.", WARNING)
+                sys.exit()
+            elif user_input.lower() == 're':
+                cprint("Restarting the game.", WARNING)
+                number_guess_game(minimum, maximum)
+            elif user_input.strip() != user_input:
+                high_low(cheat=True)
+            try:
+                my_number = int(user_input.strip())
+            except ValueError:
+                cprint("Invalid input. Please enter a valid number.", ERROR)
+                time.sleep(0.5)
+                clear_lines(2)
+                continue
 
-    def numberr():
-        nonlocal number
-        while not number.isdigit():
-            number = input(f"Please enter a number between {mini} and {maxi}: ")
-        while not mini < int(number) < maxi:
-            number = input(f"Please enter a number between {mini} and {maxi}: ")
-        number = int(number)
+            if minimum <= my_number <= maximum:
+                guesses += 1
+                break
 
     def high_low(cheat=False):
-        nonlocal number_rand, number, guesses
+        nonlocal number_rand, my_number, guesses
         if cheat:
-            for i in range(2):
-                choi = (1, 2)
-                a = random.choice(choi)
+            for _ in range(2):
+                a = random.choice(choix)
                 if a == 1:
-                    print(f"{number} is too LOW! Try again!")
-                    number = input(f"Please enter a number between {mini} and {maxi}: ")
+                    print(f"{my_number} is too LOW! Try again!")
+                    enter_num()
 
                 else:
-                    print(f"{number} is too HIGH! Try again!")
-                    number = input(f"Please enter a number between {mini} and {maxi}: ")
-                guesses += 1
-            return
-        if int(number) > number_rand:
-            print(f"{number} is too high! Try again!")
-            guesses += 1
-            number = input(f"Please enter a number between {mini} and {maxi}: ")
-            numberr()
+                    print(f"{my_number} is too HIGH! Try again!")
+                    enter_num()
+            end()
+        if int(my_number) > number_rand:
+            print(f"{my_number} is too High! Try again!")
         else:
-            print(f"{number} is too low! Try again!")
-            guesses += 1
-            number = input(f"Please enter a number between {mini} and {maxi}: ")
-            numberr()
+            print(f"{my_number} is too Low! Try again!")
 
-    number = input(f"Please enter a number between {mini} and {maxi}: ")
-    guesses = 1
-    if number.strip() != number:
-        cheat = True
-    else:
-        numberr()
-    if cheat:
-        for i in range(2):
-            choi = (1, 2)
-            a = random.choice(choi)
-            if a == 1:
-                print(f"{number} is too LOW! Try again!")
-                number = input(f"Please enter a number between {mini} and {maxi}: ")
+    def end():
+        cprint("Congratulations! You guessed the number!", SUCCESS)
+        cprint(f"You guessed {guesses} times!", WARNING)
+        input("")
+        sys.exit()
 
-            else:
-                print(f"{number} is too HIGH! Try again!")
-                number = input(f"Please enter a number between {mini} and {maxi}: ")
-            guesses += 1
-    else:
-        while number != number_rand:
-            high_low()
+    while True:
+        enter_num()
+        if my_number == number_rand:
+            end()
+        high_low()
 
-    print("Congratulations! You guessed the number!")
-    print(f"You guessed {guesses} times!")
-    input("")
+number_guess_game()
