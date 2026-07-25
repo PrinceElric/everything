@@ -29,7 +29,7 @@ while True:
             computer = "scissor"
         elif player == "paper":
             computer = "rock"
-        else:
+        elif player == "scissor":
             computer = "paper"
 
     print(f"the computer chose: {computer}")
