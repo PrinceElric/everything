@@ -1,4 +1,5 @@
 import random, time, sys, string
+import pyautogui as pag
 from tools import *  # noqa: F403
 
 mots_921 = list(filter(lambda x: True if len(x) > 5 else False, mots_921))
@@ -17,17 +18,15 @@ letters, propositions_color, good_answ, esp, total_props, guesses = (
 def affichage():
     clear()
     faire_titre_section("Word Correspondance Game!")
-    # print(word)
-    # print(letters)
-    total_props.append(" ".join(propositions_color))
-    for i in range(guesses):
-        print(f"{esp}{total_props[i-1]}", end="\n")
+    for prop in total_props:
+        print(f"{esp}{prop}", end="\n")
     print(f" " * 28 + "_" * len(word))
 
 
 def test_word():
-    global good_answ, propositions_color, guesses
+    global good_answ, propositions_color, guesses, enter
     guesses += 1
+    enter, propositions_color, good_answ = str(enter), [], 0
     for i in range(len(word)):
         if enter[i] == word[i]:
             propositions_color.append(f"{SUCCESS}{enter[i]}{RESET}")
@@ -36,12 +35,12 @@ def test_word():
             propositions_color.append(f"{WARNING}{enter[i]}{RESET}")
         else:
             propositions_color.append(f"{ERROR}{enter[i]}{RESET}")
+    total_props.append(" ".join(propositions_color))
 
 
 while not good_answ == len(word) and not guesses >= 10:
     while True:
         affichage()
-        good_answ, propositions_color = 0, []
         enter = (
             input(f"Enter word of {WARNING}{len(word)} letters:{esp}{RESET}")
             .lower()
@@ -69,6 +68,11 @@ while not good_answ == len(word) and not guesses >= 10:
             continue
         elif enter == "help":
             enter = "".join(list(random.choices(string.ascii_lowercase, k=len(word))))
+            pag.write(enter)
+            time.sleep(0.7)
+            for _ in range(len(enter)):
+                pag.press('delete')
+                time.sleep(0.1)
         elif len(enter) != len(word):
             cprint(f"Word must be {len(word)} letters long!", ERROR)
             time.sleep(0.5)
