@@ -270,6 +270,7 @@ mots_921
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
 from mots_francais import mots
+
 try:
     import pyautogui as pag
 except ImportError:
@@ -364,13 +365,15 @@ mots_921 = list(mots_921)
 
 # --- Affichage, Style et Interface Terminal ---
 
+
 def clear():
-    os.system('cls')
+    os.system("cls")
 
 
 def cprint(texte, color):
     """Affiche texte coloré puis réinitialise style."""
     print(f"{color}{texte}{RESET}")
+
 
 def slow_type(texte, tps_total=False, tps_btw_letters=False, color=""):
     """Print string character by character with tiny delay. and color if you want"""
@@ -391,11 +394,11 @@ def loading_bar(tps, symbol="#", lenght=10):
         pourcentage = i * pourc1
         barre = symbol * i
         vide = "." * (lenght - i)
-        
+
         clear()
         print(f"[{barre}{vide}]    {i}/{lenght}  ({pourcentage:.1f}%)")
         time.sleep(tps / lenght)
-        
+
     clear_lines(1)
     cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
     time.sleep(0.3)
@@ -448,9 +451,11 @@ def menu_options(options):
         elif touche == b"\r":  # Touche Entrée
             return options[index]
 
+
 # -------------------------------------------------------------------------------
 
 # --- Générateurs, Formatage et Outils ---
+
 
 def format_number(n):
     """Formate un nombre en le sequencant en pattern de 3"""
@@ -479,11 +484,13 @@ def random_password(
         except:  # noqa: E722
             pass
 
+
 def random_username(
     n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True
 ):
     "" "based on the original random_password, chages the parameter to make a username valid''"
     return random_password(n, Maj, digits, punctuation, space, tiret_bas)
+
 
 def random_string(
     n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False
@@ -502,11 +509,11 @@ def enlever_accents(texte: str) -> str:
 
 def formate_collections(*args):
     if isinstance(*args, list):
-        return str(*args).replace('[', '').replace(']', '').replace("'", '')
+        return str(*args).replace("[", "").replace("]", "").replace("'", "")
     elif isinstance(*args, tuple):
-        return str(*args).replace('(', '').replace(')', '').replace("'", '')
+        return str(*args).replace("(", "").replace(")", "").replace("'", "")
     elif isinstance(*args, set):
-        return str(*args).replace('{', '').replace('}', '').replace("'", '')
+        return str(*args).replace("{", "").replace("}", "").replace("'", "")
 
 
 def dice(face=6, n=1):
@@ -519,11 +526,11 @@ def dice(face=6, n=1):
 
 def fullmaj(txt):
     a = (
-    string.ascii_uppercase
-    + string.ascii_lowercase
-    + "1234567890"
-    + "&é\"'(-è_çà)=^$ù*,;:!"
-    + "°+¨£%µ?./§"
+        string.ascii_uppercase
+        + string.ascii_lowercase
+        + "1234567890"
+        + "&é\"'(-è_çà)=^$ù*,;:!"
+        + "°+¨£%µ?./§"
     )
     b = (
         string.ascii_lowercase
@@ -532,7 +539,6 @@ def fullmaj(txt):
         + "1234567890°+¨£%µ?./§"
         + ")=^$ù*,;:!"
     )
-
 
     def MAJ(txt):
         texte_exit = ""
@@ -544,12 +550,14 @@ def fullmaj(txt):
             d = b[c]
             texte_exit += d
         return texte_exit
+
     return MAJ(txt)
 
 
 # -------------------------------------------------------------------------------
 
 # --- Gestion du Système ---
+
 
 def copier_txt(texte):
     """copie texte dans presse-papier, need subprocess"""
@@ -562,6 +570,7 @@ def detect_shutdown():
         os.system("shutdown -a")
         time.sleep(0.4)
 
+
 def shutdown_A():
     os.system("shutdown -a")
 
@@ -572,6 +581,7 @@ def hach_word(word):
 
 def shutdown(temps=40, kill=False):
     """Arrêt du PC avec protection par mot de passe et bien d'autres."""
+
     def load_config(chemin="config.json"):
         """Charge la configuration JSON en toute sécurité. Renvoie un dict vide si échec."""
         if not os.path.exists(chemin):
@@ -591,8 +601,10 @@ def shutdown(temps=40, kill=False):
         except Exception:
             return False
         copier_txt("shutdown -a")
+
     config = load_config()
     password_reel = config["password"]
+
     def launch_shutdown(temps):
         shutdown_A()
         clear()
@@ -601,8 +613,8 @@ def shutdown(temps=40, kill=False):
     def temps_stay():
         return timer - (time.time() - debut)
 
-    def force_shutdown(timer=6, mode_normal=True, password=''):
-        
+    def force_shutdown(timer=6, mode_normal=True, password=""):
+
         launch_shutdown(timer)
         print(f"{ALERTE_CRITIQUE}shutdown executed{RESET}")
         timer_final, cancelled = max(0, timer - 1.5), False
@@ -677,7 +689,7 @@ def shutdown(temps=40, kill=False):
         print(f"password is {hide_password}")
         password = input("\nOne more chance:  ")
         if password == " ":
-            pass          # mot de passe spécial
+            pass  # mot de passe spécial
         else:
             password = password.strip()
             if password:
@@ -698,6 +710,7 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
+
 # shutdown(kill=True)
 
 
@@ -706,6 +719,8 @@ def shutdown(temps=40, kill=False):
 # --- Mesure du Temps et Saisie ---
 
 _timers = {}
+
+
 def start_timer(nom="default", entrées=False):
     """Démarre ou réinitialise un chrono avec un nom donné."""
     global _timers
@@ -715,6 +730,7 @@ def start_timer(nom="default", entrées=False):
         start = time.perf_counter()
     _timers[nom] = start
     return start
+
 
 def stop_timer(nom="default", entrées=False):
     """Affiche temps écoulé pour le chrono spécifié."""
@@ -742,12 +758,12 @@ def human_time(n):
     print(f"{h:02d}h:{minutes:02d}min:{sec:02d}s")
 
 
-def valid_input(type='int', phrase=""):
+def valid_input(type="int", phrase=""):
     """Demande une entrée d'un type précis et boucle tant que l'entrée est invalide."""
     if type == "str":
         phrase = phrase or "enter a string"
         return input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
-        
+
     elif type in ["int", "float"]:
         phrase = phrase or "enter a number"
         while True:
@@ -756,12 +772,12 @@ def valid_input(type='int', phrase=""):
                 return int(entree) if type == "int" else float(entree)
             except ValueError:
                 print(f"{ERROR}Incorrect enter, try again{RESET}")
-                
+
     elif type == "bool":
         phrase = phrase or "enter True/Yes or False/No"
         entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip().lower()
         return entree in ["true", "t", "1", "y", "yes", "o", "oui"]
-        
+
     print(f"{ERROR}INCORRECT TYPE!!!{RESET}")
     return None
 
@@ -769,6 +785,7 @@ def valid_input(type='int', phrase=""):
 # -------------------------------------------------------------------------------
 
 # --- Journalisation (Logging) ---
+
 
 def ecrire_log(
     message,
@@ -792,11 +809,14 @@ def ecrire_log(
     with open(chemin_fichier, "a", encoding="utf-8") as f:
         f.write(ligne_log)
 
+
 def log_info(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "INFO", fichier)
 
+
 def log_warning(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "WARNING", fichier)
+
 
 def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "ERROR", fichier)
@@ -805,6 +825,7 @@ def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\donnée
 # -------------------------------------------------------------------------------
 
 # --- Automatisation ---
+
 
 def afk_mouse(n=False, kill=False):
     """move mouse randomly and click, forever or in range n (len or digit)"""
@@ -816,11 +837,13 @@ def afk_mouse(n=False, kill=False):
         pag.moveTo(x, y, 0.5)
         time.sleep(0.5)
         pag.click()
+
     def kill_terminal():
         x, y = 1745, 666
         pag.moveTo(x, y, 0.5)
         time.sleep(0.5)
         pag.click()
+
     if not kill:
         if not n:
             while True:
@@ -841,12 +864,13 @@ def afk_mouse(n=False, kill=False):
 
 # --- Encodage et Comptage---
 
+
 def cesar_code():
-    letzte, sequ_of_possibl, alpha = '', {}, string.ascii_lowercase
+    letzte, sequ_of_possibl, alpha = "", {}, string.ascii_lowercase
 
     def math(txt, n, decrypt=True):
         nonlocal alpha
-        text = ''
+        text = ""
         for i in txt:
             if i in alpha:
                 a = alpha.find(i)
@@ -878,12 +902,16 @@ def cesar_code():
     def encrypt():
         nonlocal letzte, alpha
         txt = input("enter a text to encrypt:  \n")
-        n = int(input("enter a key of encryption *NOTE! This is using the Ceaser cipher (or 0 to make it random)\n"))
+        n = int(
+            input(
+                "enter a key of encryption *NOTE! This is using the Ceaser cipher (or 0 to make it random)\n"
+            )
+        )
         if n == 0:
             n = random.randint(1, len(alpha) - 1)
         if txt == "":
-            txt = ''.join(random.choices(alpha, k=50))
-        elif 'last' in txt:
+            txt = "".join(random.choices(alpha, k=50))
+        elif "last" in txt:
             txt = letzte
         apr = math(txt, n, decrypt=False)
         letzte = apr
@@ -892,7 +920,7 @@ def cesar_code():
     def decrypt(txt):
         nonlocal letzte
         n = int(input("enter a key of decryption \n"))
-        if 'last' in txt:
+        if "last" in txt:
             txt = letzte
         apr = math(txt, n, decrypt=True)
         letzte = apr
@@ -900,7 +928,7 @@ def cesar_code():
 
     def decrypt_without_key(txt, sign="elric"):
         nonlocal letzte, sequ_of_possibl
-        if 'last' in txt:
+        if "last" in txt:
             txt = letzte
         for n in range(1, len(alpha) + 1):
             apr = math(txt, n, decrypt=True)
@@ -909,34 +937,44 @@ def cesar_code():
                 letzte = apr
                 break
         for cle, valeur in sequ_of_possibl.items():
-            print(f'possible key :  {cle}')
-            print(f'text would pass from {txt} to : {valeur}')
+            print(f"possible key :  {cle}")
+            print(f"text would pass from {txt} to : {valeur}")
 
     while True:
-        choice = menu_options(["1. encrypt a text", "2. decrypt a text", '3. decrypt without key', '4. Exit'])
+        choice = menu_options(
+            [
+                "1. encrypt a text",
+                "2. decrypt a text",
+                "3. decrypt without key",
+                "4. Exit",
+            ]
+        )
         match choice:
             case "1. encrypt a text":
                 encrypt()
             case "2. decrypt a text":
                 text = input("enter a text to decrypt: \n")
                 decrypt(text)
-            case '3. decrypt without key':
+            case "3. decrypt without key":
                 text = input("enter a text to decrypt: \n")
-                kff = input('enter the sign that you know is in this text:  \n')
-                while kff == ' ':
-                    print('not valid sign !!')
-                    kff = input('pls, enter the sign that you know is in this text:  \n')
-                if kff != '':
+                kff = input("enter the sign that you know is in this text:  \n")
+                while kff == " ":
+                    print("not valid sign !!")
+                    kff = input(
+                        "pls, enter the sign that you know is in this text:  \n"
+                    )
+                if kff != "":
                     decrypt_without_key(text, kff)
                 else:
                     decrypt_without_key(text)
-            case '4. Exit':
-                cprint('thank you!', SURLIGN2_VERT)  
+            case "4. Exit":
+                cprint("thank you!", SURLIGN2_VERT)
                 break
         input(">>>   ")
     input("")
 
-def seq(txt=''):
+
+def seq(txt=""):
     if not txt:
         txt = input()
     max_len = 1
@@ -950,21 +988,29 @@ def seq(txt=''):
         else:
             cur_len = 1
 
-    return(max_len)
+    return max_len
 
-def brute_force(password=''):
+
+def brute_force(password=""):
     def brute(target_password, max_length=6):
         # Les caractères possibles : lettres minuscules, majuscules et chiffres
-        characters, attempts = string.ascii_lowercase + string.ascii_uppercase + string.digits, 0
+        characters, attempts = (
+            string.ascii_lowercase + string.ascii_uppercase + string.digits,
+            0,
+        )
         start_timer()
-        
-        for length in range(1, max_length + 1):  # On teste toutes les longueurs de 1 jusqu'à max_length
+
+        for length in range(
+            1, max_length + 1
+        ):  # On teste toutes les longueurs de 1 jusqu'à max_length
             print(f"\nTest des combinaisons de longueur {length}...")
-            
+
             for combo in itertools.product(characters, repeat=length):
-                attempts += 1   # itertools.product génère toutes les combinaisons possibles
-                guess = ''.join(combo)
-                
+                attempts += (
+                    1  # itertools.product génère toutes les combinaisons possibles
+                )
+                guess = "".join(combo)
+
                 if guess == target_password:
                     print(f"\nMot de passe trouvé : '{guess}'")
                     print(f"   Tentatives : {attempts:,}")
@@ -972,18 +1018,18 @@ def brute_force(password=''):
                     return guess
         print("Mot de passe non trouvé dans la limite fixée.")
         return None
-    
+
     if not password:
         password = input("Entre un mot de passe court à deviner : ")
 
     brute(password, max_length=len(password))
-    input('')
+    input("")
 
 
-def morse(txt=''):
+def morse(txt=""):
     if not txt:
         txt = input("enter a sequence to put in morse:\n>>>   ")
-    words, morse = tuple(txt), ''
+    words, morse = tuple(txt), ""
     char_to_dots = {
         "A": ".-",
         "B": "-...",
@@ -1057,6 +1103,7 @@ def morse(txt=''):
 # -------------------------------------------------------------------------------
 
 # --- Jeux ---
+
 
 def pendu_game(mode="normal"):
     global mots_921
@@ -1138,11 +1185,15 @@ def pendu_game(mode="normal"):
                 clear()
                 return
             if normalized_input in word:
-                print(f"enter a letter or a full word:    {VERT_FLASH}{GRAS}{normalized_input}{RESET}")
+                print(
+                    f"enter a letter or a full word:    {VERT_FLASH}{GRAS}{normalized_input}{RESET}"
+                )
                 print(f"{normalized_input} {SUCCESS}is in the word!{RESET}")
                 letters.append(normalized_input)
             else:
-                print(f"enter a letter or a full word:    {ROUGE_FLASH}{GRAS}{normalized_input}{RESET}")
+                print(
+                    f"enter a letter or a full word:    {ROUGE_FLASH}{GRAS}{normalized_input}{RESET}"
+                )
                 print(f"{normalized_input} {ERROR}not in the word!{RESET}")
                 count_pendu += 1
                 false_answers.append(normalized_input)
@@ -1167,7 +1218,8 @@ def pendu_game(mode="normal"):
             if len(false_answers) >= count_down:
                 print(f"Answer was {FOND_VERT}{word}{RESET}")
                 cprint(
-                    f"You gave {len(false_answers)} bad answers!", ROUGE_FLASH + SOULIGN2
+                    f"You gave {len(false_answers)} bad answers!",
+                    ROUGE_FLASH + SOULIGN2,
                 )
                 cprint(f"You had {len(letters)} good answers!", SUCCESS)
                 cprint("But...", ROUGE_FLASH)
@@ -1272,16 +1324,29 @@ def paper_scissor_game():
 def number_guess_game(minimum=0, maximum=100):
     clear()
     faire_titre_section("Number Guessing Game!")
-    number_rand, guesses, my_number, choix ,  = int(random.randint(minimum, maximum)), 0, None, (1, 3)
+    (
+        number_rand,
+        guesses,
+        my_number,
+        choix,
+    ) = (
+        int(random.randint(minimum, maximum)),
+        0,
+        None,
+        (1, 3),
+    )
+
     # print(f'Num is {number_rand}')
     def enter_num():
         nonlocal my_number, guesses
         while True:
-            user_input = input(f"Please enter a number between {minimum} and {maximum}: ")
+            user_input = input(
+                f"Please enter a number between {minimum} and {maximum}: "
+            )
             if user_input.lower() in exit:
                 cprint("Exiting the game.", WARNING)
                 sys.exit()
-            elif user_input.lower() == 're':
+            elif user_input.lower() == "re":
                 cprint("Restarting the game.", WARNING)
                 number_guess_game(minimum, maximum)
             elif user_input.strip() != user_input:
@@ -1352,13 +1417,11 @@ def code_names_game():
                         print(f"{mot:<15}", end="")
             print("")
 
-
     def repetition_aceptation_rep(props):
         """augmente le nb de rep gave (de 1) et ajoute la proposition a une liste pour ensuite les masquer (next turn)"""
         nonlocal nb_rep_gave, accepted_prop
         nb_rep_gave += 1
         accepted_prop.append(props)
-
 
     mots = random.choices(mots_921, k=25)
     while len(set(mots)) != len(mots):
@@ -1386,7 +1449,9 @@ def code_names_game():
         clear()
         afficher_grille(matrice, mode="maitre")
 
-        key_word = input("Enter a word for the person can devine:\n>>>   ").strip().lower()
+        key_word = (
+            input("Enter a word for the person can devine:\n>>>   ").strip().lower()
+        )
         reponses = []
 
         while True:
@@ -1450,7 +1515,7 @@ def code_names_game():
             if propositions not in mots:
                 print(f"{ROUGE}Propostion invalid{RESET}")
                 print("The proposition isn't in the table, pls select an other one")
-                input('')
+                input("")
                 continue
             if propositions in mots_rouges:
                 cprint(f"You lost!", ROUGE)
@@ -1494,13 +1559,159 @@ def pile_face_game(load=True):
             if load:
                 loading_bar(1)
             slow_type("And it's...", 1, color=LOG_DISCRET)
-            cprint(' FACE', LOG_DISCRET)
+            cprint(" FACE", LOG_DISCRET)
         else:
             if load:
                 loading_bar(1)
             slow_type("And it's...", 1, color=LOG_DISCRET)
             choi = random.choice(choix)
             cprint(f" {choi}", LOG_DISCRET)
+
+
+def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
+    global mots_921
+    mots_921 = list(
+        filter(lambda x: True if len(x) >= lenght_word_min else False, mots_921)
+    )
+    word = random.choice(mots_921)
+    word = enlever_accents(word)
+    (
+        letters,
+        propositions_color,
+        good_answ,
+        esp,
+        total_props,
+        guesses,
+        alphabet,
+        letters_red,
+        letters_yellow,
+        letters_green,
+    ) = (
+        list(set(list(word))),
+        [],
+        0,
+        "    " if len(word) <= 9 else "   ",
+        [],
+        0,
+        string.ascii_lowercase,
+        [],
+        [],
+        [],
+    )
+
+    def affichage():
+        clear()
+        faire_titre_section("Word Correspondance Game!")
+        print("")
+        for i in alphabet:
+            if i in letters_green:
+                print(f"{SUCCESS}{i}{RESET}", end=" ")
+            elif i in letters_yellow:
+                print(f"{WARNING}{i}{RESET}", end=" ")
+            elif i in letters_red:
+                print(f"{ERROR}{i}{RESET}", end=" ")
+            else:
+                print(i, end=" ")
+        print("\n")
+        if mode == "debug":
+            print(f" " * 28 + {word})
+        for prop in total_props:
+            print(f"{esp}{prop}", end="\n")
+        if max_guesses - guesses <= 3:
+            print("\n")
+            if max_guesses - guesses != 1:
+                cprint(f"Just {max_guesses - guesses} guesses left!", WARNING)
+            else:
+                cprint("Just 1 attempt left!!", WARNING)
+                cprint("Be really carefull!", WARNING)
+        print(f" " * 28 + "_" * len(word))
+
+    def test_word():
+        nonlocal good_answ, propositions_color, guesses, enter, guesses
+        guesses += 1
+        enter, propositions_color, good_answ = str(enter), [], 0
+        for i in range(len(word)):
+            if enter[i] == word[i]:
+                propositions_color.append(f"{SUCCESS}{enter[i]}{RESET}")
+                if not enter[i] in letters_green:
+                    letters_green.append(enter[i])
+                    if enter[i] in letters_yellow:
+                        letters_yellow.remove(enter[i])
+                good_answ += 1
+            elif enter[i] in letters:
+                propositions_color.append(f"{WARNING}{enter[i]}{RESET}")
+                if not enter[i] in letters_yellow and enter[i] not in letters_green:
+                    letters_yellow.append(enter[i])
+            else:
+                propositions_color.append(f"{ERROR}{enter[i]}{RESET}")
+                if not enter[i] in letters_red:
+                    letters_red.append(enter[i])
+        total_props.append(" ".join(propositions_color))
+
+    while not good_answ == len(word) and not guesses >= 10:
+        while True:
+            affichage()
+            enter = (
+                input(f"Enter word of {WARNING}{len(word)} letters:{esp}{RESET}")
+                .lower()
+                .strip()
+            )
+            if enter.lower() in exit:
+                cprint("Exiting the game.", WARNING)
+                return
+            elif enter.lower() == "re":
+                cprint("Restarting the game.", WARNING)
+                exec(open(__file__).read())
+            elif enter == "1":
+                cprint(f"The word was: {SURLIGN2_BLANC}{word}", ERROR)
+                return
+            elif enter in ["-help", "/help"]:
+                cprint("Type '1' to reveal the word and exit.", WARNING)
+                cprint("Type 're' to restart the game.", WARNING)
+                cprint("Type 'help' to receive help with the word", WARNING)
+                time.sleep(2)
+                clear_lines(4)
+                continue
+            elif not enter.isalpha():
+                cprint("Word must only contain letters!", ERROR)
+                time.sleep(0.5)
+                clear_lines(2)
+                continue
+            elif enter == "help":
+                enter = "".join(
+                    list(random.choices(string.ascii_lowercase, k=len(word)))
+                )
+                clear_lines()
+                print(
+                    f"Enter word of {WARNING}{len(word)} letters:{esp}{RESET}", end=""
+                )
+                slow_type(enter, 1, color=LOG_DISCRET)
+                time.sleep(0.5)
+            elif len(enter) != len(word):
+                cprint(f"Word must be {len(word)} letters long!", ERROR)
+                time.sleep(0.5)
+                clear_lines(2)
+                continue
+            clear_lines(2)
+            break
+        test_word()
+        if good_answ >= len(word):
+            affichage()
+            clear_lines(2)
+            print(f"{SUCCESS}{esp}{' '.join(list(word))}{RESET}", end="\n")
+            cprint(f"Congratulations! You found the word: {word}", SUCCESS)
+            choice = input("New game?:  ")
+            if choice in continuer:
+                word_guess_game()
+            return
+        elif guesses >= max_guesses:
+            affichage()
+            clear_lines()
+            cprint(f"Sorry but you lost!\n{VERT_FLASH}The word was {word}", ERROR)
+            choice = input("New game?:  ")
+            if choice in continuer:
+                word_guess_game()
+            return
 
 
 def menu_game():
@@ -1514,7 +1725,8 @@ def menu_game():
                 "3. Number Guessing Game",
                 "4. Code Names Game",
                 "5. Pile ou Face Game",
-                "6. Exit",
+                "6. Word guessing Game",
+                "7. Exit",
             ]
         )
         match choice:
@@ -1526,7 +1738,7 @@ def menu_game():
                         "3. Très Facile",
                         "4. Difficile",
                         "5. Debug",
-                        "6. Exit"
+                        "6. Exit",
                     ]
                 )
                 match mode:
@@ -1550,20 +1762,25 @@ def menu_game():
                 code_names_game()
             case "5. Pile ou Face Game":
                 pile_face_game()
-            case "6. Exit":
+            case "6. Word guessing Game":
+                word_guess_game()
+            case "7. Exit":
                 break
 
-# menu_game()
+
+menu_game()
 
 # -------------------------------------------------------------------------------
 
 # --- Outils Spécifiques au Projet ---
+
 
 def trouver_nom(objet):
     for nom, valeur in globals().items():
         if valeur is objet:
             return nom
     return None
+
 
 # pas a jour du tout avec la new versions de mots_921 !!
 def fonct_mots():
@@ -1578,7 +1795,7 @@ def fonct_mots():
         if word == "clear":
             clear()
             fonct_mots()
-        elif word == 'quit':
+        elif word == "quit":
             sys.exit()
         if word in mots_921:
             print(f"{ERROR}{word} is present!{RESET}")
@@ -1589,7 +1806,7 @@ def fonct_mots():
             if accept_enter == "clear":
                 clear()
                 fonct_mots()
-            elif accept_enter.lower() == 'quit':
+            elif accept_enter.lower() == "quit":
                 sys.exit()
             if accept_enter:
                 mots_921.append(word)
@@ -1605,7 +1822,7 @@ def fonct_mots():
 
 
 def kanekicount(number, base):
-    n =0
+    n = 0
     while number > base:
-        number, n = number - base, n +1
-        print(f'{number}    {n}')
+        number, n = number - base, n + 1
+        print(f"{number}    {n}")
