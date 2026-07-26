@@ -269,6 +269,7 @@ mots_921
 
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
+from mots_francais import mots
 try:
     import pyautogui as pag
 except ImportError:
@@ -350,107 +351,12 @@ exit = ("exit", "ex", "quitter", "quit", "q", "0", "n", "no", "non")
 others = ("other", "o", "autre")
 
 
-
-
 # -------------------------------------------------------------------------------
 # 4. DONNÉES
 # -------------------------------------------------------------------------------
 
-mots_921 = [
-    "abeille", "abricot", "absinthe", "acacia", "académie", "acier", "acompte", "acteur", "action", "adresse",
-    "adulte", "aéronef", "aéroport", "affiche", "agathe", "agenda", "agent", "agile", "aigle", "aiguille",
-    "aimant", "air", "airelle", "aisance", "alarme", "albatros", "album", "alchimie", "alerte", "algue",
-    "alignement", "alliance", "allumette", "alouette", "alpage", "alpha", "altitude", "aluminium", "alvéole", "amande",
-    "amarante", "amazone", "ambassade", "ambre", "ambulance", "améthyste", "amiral", "amitié", "amorce", "ampoule",
-    "amulette", "ananas", "ancêtre", "ancre", "andromède", "âne", "anémone", "ange", "angora", "animal",
-    "anneau", "année", "annuaire", "anomalie", "antenne", "antibiotique", "antilope", "antre", "anxiété", "apache",
-    "appareil", "appartement", "appel", "applaudissement", "apport", "appentis", "apprenti", "approche", "aptitude", "aquarium",
-    "aquarelle", "aqueduc", "araignée", "arbitre", "arc", "arcade", "arceau", "archipel", "architecture", "archive",
-    "arbre", "arbuste", "ardoise", "arène", "argent", "argile", "argument", "aride", "armoire", "armure",
-    "arôme", "arpenteur", "arrêt", "arrivée", "arrosoir", "art", "artère", "article", "artifice", "artichaut",
-    "artisan", "artiste", "asbeste", "ascenseur", "asphalte", "asphyxie", "aspic", "aspirateur", "asperge", "assaut",
-    "assiette", "association", "assonance", "astéroïde", "astre", "astrologie", "astronaute", "astronome", "astuce", "atelier",
-    "atlas", "athlète", "atmosphère", "atoll", "atome", "atout", "attache", "attaque", "attente", "attention",
-    "attraction", "aubépine", "auberge", "audace", "audience", "auditorium", "auge", "aurore", "auteur", "autruche",
-    "avalanche", "avance", "avanie", "avatar", "avenir", "aventure", "avenue", "averse", "aveugle", "avion",
-    "avocat", "avoine", "avril", "axe", "axiome", "azalée", "azimut", "azote", "azur", "bâton",
-    "badigeonnage", "bagage", "bagarre", "bague", "baguette", "baie", "baignoire", "bail", "baiser", "baisse",
-    "balai", "balance", "balcon", "baleine", "balise", "baliste", "balle", "bulletin", "ballon", "bambou",
-    "banane", "banc", "bandage", "banderole", "banjo", "banne", "bannière", "banque", "banquet", "baobab",
-    "baquet", "bar", "baragouin", "baraque", "barbare", "barbe", "barbeau", "barbecue", "barbillon", "barboteuse",
-    "barbouillage", "baril", "bariolage", "baron", "barque", "barrage", "barre", "barrette", "barrière", "baryton",
-    "basalte", "bascule", "basilic", "basilique", "bassin", "bassine", "baste", "bastion", "bataille", "bataillon",
-    "bateau", "batelage", "batelier", "bâtiment", "bâtisse", "batiste", "bâtonnet", "battage", "battement", "batterie",
-    "baume", "bavardage", "bave", "bavette", "bavoir", "bazar", "beauté", "bec", "bécane", "bêche",
-    "bécot", "beffroi", "bégonia", "béguine", "beige", "belette", "bélier", "belle", "belvédère", "bémol",
-    "bénéfice", "benjoin", "benne", "béquille", "berceau", "berge", "berger", "bergamote", "berline", "bermuda",
-    "besace", "besogne", "besoin", "bestiole", "bétail", "bête", "béton", "betterave", "beurre", "bévue",
-    "biais", "biberon", "bible", "bibliographie", "bibliothèque", "bicarbonate", "biceps", "bicyclette", "bidon", "bielle",
-    "bien", "bienfait", "bière", "bifteck", "bifurcation", "bijou", "bijoutier", "bilan", "bilboquet", "bile",
-    "billet", "bille", "billon", "binaire", "binette", "bingo", "binocle", "biographie", "biologie", "biopsie",
-    "biotope", "bipède", "bique", "biscotte", "biscuit", "bise", "biseau", "bison", "bistrot", "bitume",
-    "bivouac", "bizarre", "blafard", "blâme", "blanquet", "blé", "blaireau", "blâme", "blancheur", "blason",
-    "blasphème", "blatte", "blazer", "blessure", "bleu", "bleuet", "blindage", "blister", "blizzard", "bloc",
-    "blocage", "blocus", "blond", "blondinet", "blouse", "blouson", "blues", "bluff", "blutage", "boa",
-    "bobine", "bocal", "bocage", "bocal", "bogue", "bohémien", "boire", "bois", "boisé", "boisson",
-    "boîte", "boiterie", "boîtier", "bol", "bolide", "bombardement", "bombe", "bombance", "bonace", "bonbon",
-    "bond", "bonde", "bonheur", "boniche", "boniment", "bonite", "bonjour", "bonne", "bonnet", "bonsoir",
-    "bonté", "bonus", "boomerang", "bootlegger", "borax", "bord", "bordeaux", "bordel", "bordure", "borée",
-    "borgne", "borne", "bosquet", "bosse", "bosselage", "bosselure", "botanique", "botte", "bottillon", "bottine",
-    "bouc", "boucan", "bouche", "bouchée", "boucher", "bouchon", "boucle", "bouclier", "bouddha", "bouderie",
-    "boudin", "boue", "bouée", "bouffée", "bouffon", "bouge", "bougie", "bouillon", "bouleau", "boule",
-    "bouledogue", "boulet", "boulette", "boulevard", "bouleversement", "boulon", "boulanger", "bouquet", "bouquin", "bourbe",
-    "bourbon", "bourde", "bourdon", "bourg", "bourgeon", "bourrasque", "bourre", "bourreau", "bourrique", "bourse",
-    "boursouflure", "bousculade", "bouse", "boussole", "bout", "boutique", "bouton", "bouture", "bouvier", "bovidé",
-    "bowling", "boxe", "boxeur", "boyau", "boycott", "bracelet", "braconnier", "braise", "brame", "brancard",
-    "branche", "branchie", "brande", "brandy", "branle", "braquage", "bras", "brasero", "brassard", "brasse",
-    "brasserie", "brasseur", "brassière", "bravade", "bravo", "bravoure", "break", "brebis", "brèche", "bredouillage",
-    "bref", "bréviaire", "breuvage", "brevet", "bribe", "bricolage", "bride", "bridge", "brie", "briefing",
-    "brigade", "brigand", "brillant", "brillantine", "brique", "brioche", "bribe", "brique", "briquet", "bris",
-    "brise", "briscard", "brisure", "broc", "brocanteur", "brocard", "broche", "brochet", "brochette", "brochure",
-    "brocoli", "brodequin", "broderie", "bronchite", "bronze", "brosse", "brouette", "brouhaha", "brouillard", "brouille",
-    "brouillon", "broussaille", "brousse", "broutille", "broyage", "bruit", "brûlure", "brume", "brun", "brune",
-    "brusquerie", "brut", "brutalité", "buisson", "bulbe", "bulle", "bureau", "cabane", "cactus", "cadeau",
-    "cadenas", "café", "cage", "caillou", "calculatrice", "caméléon", "caméra", "camion", "campagne", "canard",
-    "canapé", "canne", "canon", "cape", "capitaine", "carotte", "carte", "carton", "cascade", "casque",
-    "castor", "caverne", "cèdre", "ceinture", "célèbre", "cerf", "cerise", "cerveau", "chaîne", "chaise",
-    "chaleur", "chameau", "champignon", "chanson", "chantier", "chapeau", "chargeur", "chat", "château", "chaudron",
-    "chaussette", "chemin", "cheminée", "chêne", "chenille", "cheval", "chien", "chimie", "chimpanzé", "chocolat",
-    "ciel", "cigogne", "citadelle", "citron", "clairière", "clé", "cloche", "clou", "cobra", "coccinelle",
-    "coffre", "colline", "colombe", "comète", "compas", "concert", "confiture", "corail", "corbeau", "corde",
-    "couronne", "couteau", "crabe", "cratère", "crayon", "cristal", "crocodile", "croissant", "cuillère", "cuir",
-    "cygne", "cylindre", "damier", "danse", "diamant", "dinosaure", "diplôme", "disque", "dollar", "dôme",
-    "dragon", "drapeau", "drone", "écharpe", "échelle", "éclair", "éclipse", "écorce", "écureuil", "église",
-    "élastique", "éléphant", "émeraude", "enclume", "encre", "épée", "éponge", "épouvantail", "escargot", "escalier",
-    "espadon", "espoir", "essence", "étoile", "étudiant", "éventail", "explorateur", "fabrique", "falaise", "famille",
-    "fantôme", "farine", "feu", "feuille", "feutre", "ficelle", "figue", "fil", "fjord", "flamme",
-    "flèche", "fleur", "fleuve", "flocon", "flûte", "forêt", "forge", "four", "fourchette", "fraise",
-    "framboise", "frégate", "fromage", "fusée", "galaxie", "garage", "gardien", "gazelle", "géant", "gemme",
-    "girafe", "glace", "glacier", "gobelet", "gomme", "gorille", "goutte", "grain", "gravité", "grenouille",
-    "griffe", "grue", "guitare", "hache", "hamac", "harpe", "hélicoptère", "hibou", "hippopotame", "hôpital",
-    "horizon", "horloge", "hublot", "huile", "iceberg", "igloo", "île", "immeuble", "incendie", "indigo",
-    "infirmier", "insecte", "internet", "iris", "jaguar", "jardin", "jasmin", "jet", "jongleur", "journal",
-    "juge", "jungle", "kangourou", "kayak", "kiwi", "koala", "labyrinthe", "lac", "lampe", "lanterne",
-    "laser", "lavande", "légende", "léopard", "lettre", "levier", "liberté", "licorne", "lierre", 'lion', 'liste', 'livre',
-    "loup", "loupe", "lune", "lutin", "machine", "magicien", "maison", "mammouth", "mangue",
-    "marais", "marbre", "marteau", "masque", "médaillon", "médecin", "melon", "mer", "mercure", "message",
-    "météore", "métro", "micro", "miroir", "montagne", "montre", "moteur", "moulin", "mur", "musée",
-    "musique", "navire", "neige", "ninja", "nuage", "océan", "olive", "ombre", "orage", "orchidée",
-    "ordinateur", "oreiller", "orignal", "ours", "outil", "palette", "palmier", "paon", "papillon", "parachute",
-    "parapluie", "parfum", "paris", "parquet", "pastèque", "patate", "patin", "patrouille", "paume", "pêche",
-    "peinture", "pelouse", "pendule", "perle", "perroquet", "phare", "phénix", "photo", "piano", "pieuvre",
-    "pilote", "pin", "pirate", "piscine", "pistolet", "plage", "planète", "plante", "pluie", "poire",
-    "poisson", "pomme", "pont", "porcelaine", "porte", "portefeuille", "prairie", "prisme", "prison", "projecteur",
-    "pyramide", "python", "quille", "radio", "raisin", "ravin", "requin", "restaurant", "rivière", "robot",
-    "rocher", "rose", "roue", "rubis", "ruche", "sabre", "sac", "salade", "sapin", "satellite",
-    "saxophone", "science", "scorpion", "serpent", "serveur", "singe", "sirène", "skieur", "société", "soleil",
-    "sommet", "souris", "sphinx", "spirale", "statue", "stylo", "sucre", "table", "tableau", "tambour",
-    "tempête", "temple", "tennis", "terre", "tigre", "tomate", "tornade", "tortue", "tour", "tracteur",
-    "train", "trampoline", "trésor", "triangle", "trompette", "trône", "tunnel", "turbine", "uniforme", "univers",
-    "usine", "vague", "valise", "vampire", "vase", "vélo", "verre", "viaduc", "violon", "virus",
-    "vitrine", "volcan", "voleur", "voiture", "wagon", "yacht", "yak", "zèbre", "zeppelin", "zinc"
-]
-
+mots_921 = mots
+mots_921 = list(mots_921)
 
 # -------------------------------------------------------------------------------
 # 5. FONCTIONS DISPONIBLES
@@ -1659,7 +1565,7 @@ def trouver_nom(objet):
             return nom
     return None
 
-
+# pas a jour du tout avec la new versions de mots_921 !!
 def fonct_mots():
     global mots_921
     nom = trouver_nom(mots_921)
