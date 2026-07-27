@@ -1,19 +1,11 @@
-import time
-import sys
+import time, sys
 
-name = ""
-just_namee = ""
-b = 0
-a = 0
+name, just_namee, a, b = "", "", 0, 0
 
 
 def azer():
-    global name
-    global just_namee
-    global b
-    global a
-    a = 0
-    b = 0
+    global name, just_namee, a, b
+    a, b = 0, 0
     name = str(input("Enter your name: "))
     just_namee = name
     if "Elric" in name or "elric" in name:
@@ -66,9 +58,7 @@ def tyuiop():
 
 def fonction_password():
     global password, size
-    password = ""
-    size = ""
-    verif = ""
+    password, size, verif = "", "", ""
     password = str(input("Enter your password: "))
     while password == "" or password == " ":
         password = str(input("Enter your password: "))
@@ -97,9 +87,7 @@ def fonction_password():
 
 azer()
 time.sleep(1)
-start_password = ""
-password = ""
-size = 0
+start_password, password, size = "", "", 0
 print(f"{just_namee}, you have to define a password")
 if b == 1:
     just_namee = "Elric"
