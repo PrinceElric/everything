@@ -225,13 +225,16 @@ mots_921
     Lance un menu interactif pour chiffrer et déchiffrer du texte avec le chiffre de César.
 
 • seq(txt='')
-    demande entrée qui renvoi la plus longue succesion de même caractère.
+    Demande entrée qui renvoi la plus longue succesion de même caractère.
 
 • brute_force(password='')
     Force un mot de passe en testant les longueurs au fur et à mesure.
 
 • morse(txt='')
-    renvoi l'entrée en morse.
+    Renvoi l'entrée en morse.
+
+• fibonacci()
+    Répète la sequ de fibonacci et offre des options de séléctions de données.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -588,7 +591,9 @@ def shutdown(temps=40, kill=False):
             with open(chemin, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
-            return {"password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"}
+            return {
+                "password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"
+            }
 
     def save_config(data, chemin="config.json"):
         """Sauvegarde les données dans un fichier JSON. Renvoie un booléen de succès."""
@@ -708,6 +713,7 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
+
 # shutdown(kill=True)
 
 
@@ -716,6 +722,7 @@ def shutdown(temps=40, kill=False):
 # --- Mesure du Temps et Saisie ---
 
 _timers = {}
+
 
 def start_timer(nom="default", entrées=False):
     """Démarre ou réinitialise un chrono avec un nom donné."""
@@ -727,7 +734,9 @@ def start_timer(nom="default", entrées=False):
     _timers[nom] = start
     return start
 
+
 start_timer()
+
 
 def stop_timer(nom="default", entrées=False):
     """Affiche temps écoulé pour le chrono spécifié."""
@@ -966,7 +975,7 @@ def cesar_code():
                 else:
                     decrypt_without_key(text)
             case "4. Exit":
-                cprint("thank you!", SURLIGN2_VERT)
+                cprint("thank you!", FOND_VERT)
                 break
         input(">>>   ")
     input("")
@@ -992,6 +1001,7 @@ def seq(txt=""):
 
 def brute_force(password=""):
     """brutforce un pwrd"""
+
     def brute(target_password, max_length=6):
         # Les caractères possibles : lettres minuscules, majuscules et chiffres
         characters, attempts = (
@@ -1099,6 +1109,70 @@ def morse(txt=""):
     print(f"text in morse :\n{morse}")
     input("")
     return morse
+
+
+def fibonacci():
+    '''Remake the fibonacci sequ and few data selections options'''
+    def fibonacci_place(n):
+        if n <= 0:
+            return f"{ROUGE}the number must be greater than 0{RESET}"
+        fib1, fib2, count = 1, 1, 2
+        if n == 1:
+            return f"the number is at the {VERT}1st or 2nd place{RESET}"
+        while fib2 < n:
+            fib1, fib2, count = fib2, fib1 + fib2, count + 1
+        if fib2 == n:
+            return f"the number is at the {VERT}{count}th place{RESET}"
+        else:
+            return f"{ROUGE}the number isn't in the Fibonacci sequence{RESET}"
+
+    def fibonnacci_index_num(n):
+        if n <= 0:
+            return None
+        fib1, fib2 = 1, 1
+        if n == 1 or n == 2:
+            return 1
+        for _ in range(3, n + 1):
+            fib1, fib2 = fib2, fib1 + fib2
+        return fib2
+
+    while True:
+        choice = menu_options(
+            [
+                "1. Find number in place n in the Fibonacci sequence",
+                "2. Find if n is the sequence",
+                "3. Quit",
+            ]
+        )
+        if choice == "1. Find number in place n in the Fibonacci sequence":
+            try:
+                n = int(input("Enter a index of the Fibonacci sequence :\nPlace: "))
+                result = fibonnacci_index_num(n)
+                if result is None:
+                    cprint("the index must be greater than 0!", ERROR)
+                else:
+                    print(
+                        f"To the place {n} of the Fibonacci sequence there is the #"
+                        f"{VERT}{format_number(result)}{RESET}"
+                    )
+            except ValueError:
+                cprint("please enter a valid integer", ERROR)
+            input("")
+            clear()
+        elif choice == "2. Find if n is the sequence":
+            try:
+                n = int(
+                    input(
+                        "Enter a number to check if he's in the sequence and at wich place:\nNumber to check:  "
+                    )
+                )
+                print(fibonacci_place(n))
+            except ValueError:
+                cprint("please enter a valid integer", ERROR)
+            input("")
+            clear()
+        elif choice == "3. Quit":
+            return
 
 
 # -------------------------------------------------------------------------------
@@ -1400,6 +1474,7 @@ def number_guess_game(minimum=0, maximum=100):
 def code_names_game():
     """reprodution of code_names"""
     faire_titre_section(code_names_game)
+
     def afficher_grille(grille, mode="joueur"):
         """Affiche la grille selon le mode : 'joueur' (brut) ou 'maitre' (avec filtres)"""
         for e in range(5):
