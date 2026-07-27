@@ -367,6 +367,7 @@ mots_921 = list(mots_921)
 
 
 def clear():
+    """Nettoie le terminal"""
     os.system("cls")
 
 
@@ -375,7 +376,7 @@ def cprint(texte, color):
     print(f"{color}{texte}{RESET}")
 
 
-def slow_type(texte, tps_total=False, tps_btw_letters=False, color=""):
+def slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET):
     """Print string character by character with tiny delay. and color if you want"""
     for letter in texte:
         if tps_total:
@@ -415,9 +416,8 @@ def clear_lines(n=1):
 def faire_titre_section(texte, symbole="-", largeur=60):
     """mettre texte et symbole, funct centre et fait une ligne de symbole de size largeur"""
     texte_grand = texte.upper()
-
+    clear()
     print(symbole * largeur)
-    # Utilisation de STYLE_TITRE ici
     print(f"{STYLE_TITRE}{texte_grand.center(largeur)}{RESET}")
     print(symbole * largeur)
 
@@ -433,7 +433,6 @@ def menu_options(options):
         # Afficher options
         for i in range(taille):
             if i == index:
-                # Utilisation de la nouvelle fusion MENU_ACTIF
                 print(f"{MENU_ACTIF} > {options[i]} {RESET}")
             else:
                 print(f"   {options[i]}")
@@ -500,6 +499,7 @@ def random_string(
 
 
 def enlever_accents(texte: str) -> str:
+    """remove accents and things like that from the text and return"""
     return "".join(
         c
         for c in unicodedata.normalize("NFD", texte)
@@ -508,6 +508,7 @@ def enlever_accents(texte: str) -> str:
 
 
 def formate_collections(*args):
+    """formate a collection into a str without the coast and komma-> ' '"""
     if isinstance(*args, list):
         return str(*args).replace("[", "").replace("]", "").replace("'", "")
     elif isinstance(*args, tuple):
@@ -516,15 +517,17 @@ def formate_collections(*args):
         return str(*args).replace("{", "").replace("}", "").replace("'", "")
 
 
-def dice(face=6, n=1):
+def dice(n_faces=6, n=1):
+    """simule n lances de dés à n_faces faces"""
     simulation, total = 0, 0
     for _ in range(n):
-        simulation = random.randint(1, face)
+        simulation = random.randint(1, n_faces)
         total += simulation
     return total
 
 
 def fullmaj(txt):
+    """remake txt like the shift was turned on the other mode"""
     a = (
         string.ascii_uppercase
         + string.ascii_lowercase
@@ -572,10 +575,12 @@ def detect_shutdown():
 
 
 def shutdown_A():
+    """shutdown -a"""
     os.system("shutdown -a")
 
 
 def hach_word(word):
+    """genere the hach of a word and return a 128 carac string in hexadecimal"""
     return hashlib.sha256(word.encode()).hexdigest()
 
 
@@ -590,7 +595,7 @@ def shutdown(temps=40, kill=False):
             with open(chemin, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
-            return {}
+            return {"password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"}
 
     def save_config(data, chemin="config.json"):
         """Sauvegarde les données dans un fichier JSON. Renvoie un booléen de succès."""
@@ -710,7 +715,6 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
-
 # shutdown(kill=True)
 
 
@@ -719,7 +723,6 @@ def shutdown(temps=40, kill=False):
 # --- Mesure du Temps et Saisie ---
 
 _timers = {}
-
 
 def start_timer(nom="default", entrées=False):
     """Démarre ou réinitialise un chrono avec un nom donné."""
@@ -731,6 +734,7 @@ def start_timer(nom="default", entrées=False):
     _timers[nom] = start
     return start
 
+start_timer()
 
 def stop_timer(nom="default", entrées=False):
     """Affiche temps écoulé pour le chrono spécifié."""
@@ -866,6 +870,7 @@ def afk_mouse(n=False, kill=False):
 
 
 def cesar_code():
+    """Encrypt a text with Cesar! Multiple options into"""
     letzte, sequ_of_possibl, alpha = "", {}, string.ascii_lowercase
 
     def math(txt, n, decrypt=True):
@@ -975,6 +980,7 @@ def cesar_code():
 
 
 def seq(txt=""):
+    """return the max continue chaine of a carac in txt"""
     if not txt:
         txt = input()
     max_len = 1
@@ -992,6 +998,7 @@ def seq(txt=""):
 
 
 def brute_force(password=""):
+    """brutforce un pwrd"""
     def brute(target_password, max_length=6):
         # Les caractères possibles : lettres minuscules, majuscules et chiffres
         characters, attempts = (
@@ -1027,6 +1034,7 @@ def brute_force(password=""):
 
 
 def morse(txt=""):
+    """convert iterable to morse code"""
     if not txt:
         txt = input("enter a sequence to put in morse:\n>>>   ")
     words, morse = tuple(txt), ""
@@ -1106,6 +1114,7 @@ def morse(txt=""):
 
 
 def pendu_game(mode="normal"):
+    """launch mytique pendu_game. Multiple mode"""
     global mots_921
 
     def start():
@@ -1264,6 +1273,7 @@ def pendu_game(mode="normal"):
 
 
 def paper_scissor_game():
+    """Execut legendary paper_scissor-game with cheat capa"""
     faire_titre_section("Rock, Paper, Scissor Game")
 
     choices, won, lose = ("rock", "paper", "scissor"), 0, 0
@@ -1322,7 +1332,7 @@ def paper_scissor_game():
 
 
 def number_guess_game(minimum=0, maximum=100):
-    clear()
+    """start number_guess_game, with a cheat capa!"""
     faire_titre_section("Number Guessing Game!")
     (
         number_rand,
@@ -1395,6 +1405,8 @@ def number_guess_game(minimum=0, maximum=100):
 
 
 def code_names_game():
+    """reprodution of code_names"""
+    faire_titre_section(code_names_game)
     def afficher_grille(grille, mode="joueur"):
         """Affiche la grille selon le mode : 'joueur' (brut) ou 'maitre' (avec filtres)"""
         for e in range(5):
@@ -1549,6 +1561,7 @@ def code_names_game():
 
 
 def pile_face_game(load=True):
+    """just pile/face game! great animation and cheat capa->J"""
     faire_titre_section("Pile ou Face Game")
     choix = ("pile", "face")
     while True:
@@ -1569,6 +1582,7 @@ def pile_face_game(load=True):
 
 
 def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
+    """the word_guess_game were you input word and make color on letter -> /help"""
     global mots_921
     mots_921 = list(
         filter(lambda x: True if len(x) >= lenght_word_min else False, mots_921)
@@ -1715,6 +1729,7 @@ def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
 
 
 def menu_game():
+    """the menu_game!!!"""
     while True:
         clear()
         faire_titre_section("Games Menu")
@@ -1768,7 +1783,7 @@ def menu_game():
                 break
 
 
-menu_game()
+# menu_game()
 
 # -------------------------------------------------------------------------------
 
@@ -1776,6 +1791,7 @@ menu_game()
 
 
 def trouver_nom(objet):
+    """return name of the given variable"""
     for nom, valeur in globals().items():
         if valeur is objet:
             return nom
@@ -1784,6 +1800,7 @@ def trouver_nom(objet):
 
 # pas a jour du tout avec la new versions de mots_921 !!
 def fonct_mots():
+    """fonct for the var mots_921 which search if given name is into"""
     global mots_921
     nom = trouver_nom(mots_921)
     print(f"{nom} = {len(mots_921)}")
