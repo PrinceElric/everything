@@ -15,17 +15,18 @@ sur le système.
 
 Bibliothèques standards utilisées :
     - os
-    - sys
     - time
+    - sys
+    - subprocess
     - random
     - string
-    - subprocess
-    - hashlib
-    - json
-    - unicodedata
     - msvcrt
-    - datetime
+    - json
+    - hashlib
+    - unicodedata
     - itertools
+    - datetime
+    - mots_francais
 
 Bibliothèque externe (optionnelle) :
     - pyautogui
