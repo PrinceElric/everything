@@ -92,7 +92,7 @@ l'affichage dans le terminal :
 
 Le module propose également des listes pour sortir des input des programmes:
 
-• Continue
+• Continuer
 
 • Exit
 
@@ -356,8 +356,7 @@ others = ("other", "o", "autre")
 # 4. DONNÉES
 # -------------------------------------------------------------------------------
 
-mots_921 = mots
-mots_921 = list(mots_921)
+mots_921 = list(mots)
 
 # -------------------------------------------------------------------------------
 # 5. FONCTIONS DISPONIBLES
@@ -428,7 +427,7 @@ def menu_options(options):
 
     while True:
         clear()
-        print("=== CHOISIS TA VIANDE (Z: Haut, S: Bas, Entrée: OK) ===")
+        print("=== CHOISIS TON DESTIN (Z: Haut, S: Bas, Entrée: OK) ===")
 
         # Afficher options
         for i in range(taille):
