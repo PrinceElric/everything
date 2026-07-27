@@ -1,5 +1,5 @@
 from tools import *
-import time
+import time, random
 
 
 def menu_principal():
@@ -248,6 +248,37 @@ def menu_principal():
                 case "3. Exit":
                     return
 
+    def DONN2ES():
+        clear()
+        loading_bar(0.67)
+        filtred_6_min, words_10 = list(
+            filter(lambda x: True if len(x) >= 6 else False, mots_921)
+        ), list(random.choices(mots_921, k=10))
+        slow_type(
+            f"mots_921 is a list of french word which is composed of {len(mots_921)} words\n -> ({len(filtred_6_min)}) words of minimum 6 letters.",
+            tps_btw_letters=0.030,
+        )
+        print("\n")
+        slow_type(
+            f"Here some exemple of words you can find in it: \n{formate_collections(words_10)}",
+            tps_btw_letters=0.030,
+        )
+        print("\n")
+        while True:
+            enter = input("")
+            if enter.lower().strip() in continuer:
+                clear_lines(4)
+                words_10 = list(random.choices(mots_921, k=10))
+                slow_type(
+                    f"Here some exemple of words you can find in it: \n{formate_collections(words_10)}",
+                    tps_btw_letters=0.030,
+                )
+                print("\n")
+                continue
+            elif enter.lower().strip() == "re":
+                DONN2ES()
+            break
+
     while True:
         principal = menu_options(
             ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"]
@@ -256,8 +287,7 @@ def menu_principal():
             case "1. Show CONSTANTES":
                 menu_CONSTANTES()
             case "2. Show DONNÉES":
-                # menu de mots_921 avec des infos...
-                pass
+                DONN2ES()
             case "3. Show FONCTIONS":
                 # menu le + imp avec les fonct
                 pass
