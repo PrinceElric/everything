@@ -125,6 +125,9 @@ mots_921
 • loading_bar(tps, symbol, lenght)
     Affiche une barre de progression animée.
 
+• abreviation(word="")
+    renvoi le mot en abreviation -> 1st lettre + lenght + last
+
 • clear_lines(n)
     Efface les dernières lignes du terminal.
 
@@ -400,6 +403,19 @@ def loading_bar(tps, symbol="#", lenght=10):
     cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
     time.sleep(0.3)
     clear_lines(1)
+
+
+def abreviation(word=""):
+    """return word abrevated, first letter + len + last letter"""
+    if not word:
+        word = str(input("Enter a word!:    ")).lower()
+    if not word.isalpha() and " " not in word:
+        cprint("Invalid enter!", ERROR)
+        abreviation()
+    if len(word) > 2:
+        return word[0] + str(len(word)) + word[len(word) - 1]
+    else:
+        return word
 
 
 def clear_lines(n=1):
@@ -1112,7 +1128,8 @@ def morse(txt=""):
 
 
 def fibonacci():
-    '''Remake the fibonacci sequ and few data selections options'''
+    """Remake the fibonacci sequ and few data selections options"""
+
     def fibonacci_place(n):
         if n <= 0:
             return f"{ROUGE}the number must be greater than 0{RESET}"
