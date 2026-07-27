@@ -1,7 +1,32 @@
 from tools import *
 import time, random
 
-
+def info(menu_fonct=False):
+    if menu_fonct:
+        while True:
+            faire_titre_section('Fonctions disponibles')
+            section = menu_options(["1. Terminal", "2. Text", "3. System", "4. Journalisation (Logging)", "5. Automatisation", "6. Crypto", "7. Jeux", "8. Outils Spécifiques au Projet", "9. Exit"])
+            match section:
+                case "1. Terminal":
+                    pass
+                case "2. Text":
+                    pass
+                case "3. System":
+                    pass
+                case "4. Journalisation (Logging)":
+                    pass
+                case "5. Automatisation":
+                    pass
+                case "6. Crypto":
+                    pass
+                case "7. Jeux":
+                    pass
+                case "8. Outils Spécifiques au Projet":
+                    pass
+                case "9. Exit":
+                    return
+info(True)
+input('')
 def menu_principal():
     def menu_CONSTANTES():
         def menu_ANSI():
