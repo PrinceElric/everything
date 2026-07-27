@@ -374,13 +374,16 @@ mots_921 = list(mots)
 
 # --- Terminal ---
 
+
 def clear():
     """Nettoie le terminal"""
     os.system("cls")
 
+
 def cprint(texte, color):
     """Affiche texte coloré puis réinitialise style."""
     print(f"{color}{texte}{RESET}")
+
 
 def slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET):
     """Print string character by character with tiny delay. and color if you want"""
@@ -392,6 +395,7 @@ def slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET):
         elif tps_btw_letters:
             time.sleep(float(tps_btw_letters))
             print(f"{color}{letter}{RESET}", end="", flush=True)
+
 
 def loading_bar(tps, symbol="#", lenght=10):
     """Barre de progression avec étapes X/Y et pourcentage exact."""
@@ -410,11 +414,13 @@ def loading_bar(tps, symbol="#", lenght=10):
     time.sleep(0.3)
     clear_lines(1)
 
+
 def clear_lines(n=1):
     """Efface un nombre de lignes donne dans le terminal."""
     for _ in range(n):
         sys.stdout.write("\033[1F\033[2K")
     sys.stdout.flush()
+
 
 def faire_titre_section(texte, symbole="-", largeur=60):
     """mettre texte et symbole, funct centre et fait une ligne de symbole de size largeur"""
@@ -423,6 +429,7 @@ def faire_titre_section(texte, symbole="-", largeur=60):
     print(symbole * largeur)
     print(f"{STYLE_TITRE}{texte_grand.center(largeur)}{RESET}")
     print(symbole * largeur)
+
 
 def menu_options(options):
     """enter a list of options, show a interactif select menu, return the option chose"""
@@ -455,6 +462,7 @@ def menu_options(options):
 
 # -------------------------------------------------------------------------------
 
+
 # --- Text ---
 def enlever_accents(texte: str) -> str:
     """remove accents and things like that from the text and return"""
@@ -464,6 +472,7 @@ def enlever_accents(texte: str) -> str:
         if unicodedata.category(c) != "Mn"
     )
 
+
 def formate_collections(*args):
     """formate a collection into a str without the coast and komma-> ' '"""
     if isinstance(*args, list):
@@ -472,6 +481,7 @@ def formate_collections(*args):
         return str(*args).replace("(", "").replace(")", "").replace("'", "")
     elif isinstance(*args, set):
         return str(*args).replace("{", "").replace("}", "").replace("'", "")
+
 
 def fullmaj(txt):
     """remake txt like the shift was turned on the other mode"""
@@ -503,9 +513,11 @@ def fullmaj(txt):
 
     return MAJ(txt)
 
+
 def format_number(n):
     """Formate un nombre en le sequencant en pattern de 3"""
     return f"{n:,}".replace(",", "'")
+
 
 def random_password(
     n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False
@@ -529,17 +541,20 @@ def random_password(
         except:  # noqa: E722
             pass
 
+
 def random_username(
     n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True
 ):
     "" "based on the original random_password, chages the parameter to make a username valid''"
     return random_password(n, Maj, digits, punctuation, space, tiret_bas)
 
+
 def random_string(
     n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False
 ):
     "" "based on the original random_password, chages the parameter to make a valid normal string''"
     return random_password(n, Maj, digits, punctuation, space, tiret_bas)
+
 
 def abreviation(word=""):
     """return word abrevated, first letter + len + last letter"""
@@ -552,6 +567,7 @@ def abreviation(word=""):
         return word[0] + str(len(word)) + word[len(word) - 1]
     else:
         return word
+
 
 def seq(txt=""):
     """return the max continue chaine of a carac in txt"""
@@ -575,9 +591,11 @@ def seq(txt=""):
 
 # --- System ---
 
+
 def copier_txt(texte):
     """copie texte dans presse-papier, need subprocess"""
     subprocess.run(["clip"], input=texte, text=True, check=True)
+
 
 def detect_shutdown():
     """shutdown -a twice with sleep of 0.4 btw the two"""
@@ -585,13 +603,16 @@ def detect_shutdown():
         os.system("shutdown -a")
         time.sleep(0.4)
 
+
 def shutdown_A():
     """shutdown -a"""
     os.system("shutdown -a")
 
+
 def hach_word(word):
     """genere the hach of a word and return a 128 carac string in hexadecimal"""
     return hashlib.sha256(word.encode()).hexdigest()
+
 
 def shutdown(temps=40, kill=False):
     """Arrêt du PC avec protection par mot de passe et bien d'autres."""
@@ -726,7 +747,9 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
+
 _timers = {}
+
 
 def start_timer(nom="default", entrées=False):
     """Démarre ou réinitialise un chrono avec un nom donné."""
@@ -738,7 +761,9 @@ def start_timer(nom="default", entrées=False):
     _timers[nom] = start
     return start
 
+
 start_timer()
+
 
 def stop_timer(nom="default", entrées=False):
     """Affiche temps écoulé pour le chrono spécifié."""
@@ -755,6 +780,7 @@ def stop_timer(nom="default", entrées=False):
     print(f"[{nom}] {fin - _timers[nom]:.6f} s")
     return fin - _timers[nom]
 
+
 def human_time(n):
     """Convert big # of sec into a digit info (00h:00min:00s)"""
     h, minutes, sec = 00, 00, 00
@@ -763,6 +789,7 @@ def human_time(n):
     minutes = n // 60
     sec = n % 60
     print(f"{h:02d}h:{minutes:02d}min:{sec:02d}s")
+
 
 def valid_input(type="int", phrase=""):
     """Demande une entrée d'un type précis et boucle tant que l'entrée est invalide."""
@@ -792,6 +819,7 @@ def valid_input(type="int", phrase=""):
 
 # --- Journalisation (Logging) ---
 
+
 def ecrire_log(
     message,
     type_log="INFO",
@@ -814,11 +842,14 @@ def ecrire_log(
     with open(chemin_fichier, "a", encoding="utf-8") as f:
         f.write(ligne_log)
 
+
 def log_info(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "INFO", fichier)
 
+
 def log_warning(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "WARNING", fichier)
+
 
 def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\données.md"):
     ecrire_log(message, "ERROR", fichier)
@@ -827,6 +858,7 @@ def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\donnée
 # -------------------------------------------------------------------------------
 
 # --- Automatisation ---
+
 
 def afk_mouse(n=False, kill=False):
     """move mouse randomly and click, forever or in range n (len or digit)"""
@@ -864,6 +896,7 @@ def afk_mouse(n=False, kill=False):
 # -------------------------------------------------------------------------------
 
 # --- Crypto ---
+
 
 def cesar_code():
     """Encrypt a text with Cesar! Multiple options into"""
@@ -974,6 +1007,7 @@ def cesar_code():
         input(">>>   ")
     input("")
 
+
 def brute_force(password=""):
     """brutforce un pwrd"""
 
@@ -1009,6 +1043,7 @@ def brute_force(password=""):
 
     brute(password, max_length=len(password))
     input("")
+
 
 def morse(txt=""):
     """convert iterable to morse code"""
@@ -1084,6 +1119,7 @@ def morse(txt=""):
     input("")
     return morse
 
+
 def fibonacci():
     """Remake the fibonacci sequ and few data selections options"""
 
@@ -1152,6 +1188,7 @@ def fibonacci():
 # -------------------------------------------------------------------------------
 
 # --- Jeux ---
+
 
 def pendu_game(mode="normal"):
     """launch mytique pendu_game. Multiple mode"""
@@ -1332,6 +1369,7 @@ def pendu_game(mode="normal"):
 
     run(mode)
 
+
 def paper_scissor_game():
     """Execut legendary paper_scissor-game with cheat capa"""
     faire_titre_section("Rock, Paper, Scissor Game")
@@ -1389,6 +1427,7 @@ def paper_scissor_game():
         else f"{ERROR}You will do it better next time!{RESET}"
     )
     input("Press enter to exit\n>>>    ")
+
 
 def number_guess_game(minimum=0, maximum=100):
     """start number_guess_game, with a cheat capa!"""
@@ -1461,6 +1500,7 @@ def number_guess_game(minimum=0, maximum=100):
         if my_number == number_rand:
             end()
         high_low()
+
 
 def code_names_game():
     """reprodution of code_names"""
@@ -1618,6 +1658,7 @@ def code_names_game():
     cprint("You won!", VERT + SOULIGN2 + GRAS + ITALIC)
     print(f"You had {pts}pts !")
 
+
 def pile_face_game(load=True):
     """just pile/face game! great animation and cheat capa->J"""
     faire_titre_section("Pile ou Face Game")
@@ -1637,6 +1678,7 @@ def pile_face_game(load=True):
             slow_type("And it's...", 1, color=LOG_DISCRET)
             choi = random.choice(choix)
             cprint(f" {choi}", LOG_DISCRET)
+
 
 def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
     """the word_guess_game were you input word and make color on letter -> /help"""
@@ -1784,18 +1826,20 @@ def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
                 word_guess_game()
             return
 
+
 def dice(n_faces=6, n=1):
     """simule n lances de dés à n_faces faces"""
     simulation, total = 0, 0
     for i in range(n):
         simulation = random.randint(1, n_faces)
-        slow_type(f'{i+1} -> {simulation}', 0.05)
-        print('\n')
+        slow_type(f"{i+1} -> {simulation}", 0.05)
+        print("\n")
         total += simulation
-    print('\n')
+    print("\n")
     slow_type(f"total = {total}", 0.05)
-    input('')
-    return 
+    input("")
+    return
+
 
 def menu_game():
     """the menu_game!!!"""
@@ -1810,8 +1854,7 @@ def menu_game():
                 "4. Code Names Game",
                 "5. Pile ou Face Game",
                 "6. Word guessing Game",
-                "7. Dice simulator Game"
-                "8. Exit",
+                "7. Dice simulator Game" "8. Exit",
             ]
         )
         match choice:
@@ -1850,8 +1893,8 @@ def menu_game():
             case "6. Word guessing Game":
                 word_guess_game()
             case "7. Dice simulator Game":
-                face = input('How many face (0 by def):    ')
-                dices = input('How many dice? (1 by def):    ')
+                face = input("How many face (0 by def):    ")
+                dices = input("How many dice? (1 by def):    ")
                 if not face:
                     face = 6
                 if not dices:
@@ -1865,12 +1908,14 @@ def menu_game():
 
 # --- Outils du projet ---
 
+
 def trouver_nom(objet):
     """return name of the given variable"""
     for nom, valeur in globals().items():
         if valeur is objet:
             return nom
     return None
+
 
 # pas a jour du tout avec la new versions de mots_921 !!
 def fonct_mots():
@@ -1910,6 +1955,7 @@ def fonct_mots():
                 a = a.rstrip("]")
                 copier_txt(a)
                 print(f"ligne: {65 +  index_debut // 10}")
+
 
 def kanekicount(number, base):
     n = 0
