@@ -293,29 +293,25 @@ except:  # Si le dossier existe pas encore, pas de crash  # noqa: E722
 # 3. CONSTANTES
 # -------------------------------------------------------------------------------
 
-# --- Couleurs ANSI de Base ---
+# --- Styles de texte ---
 RESET = "\033[0m"
 GRAS = "\033[1m"
-GRIS = "\033[2m"
 ITALIC = "\033[3m"
 SOULIGN2 = "\033[4m"
 SURLIGN2_BLANC = "\033[7m"
 NOIR_INVISIBLE = "\033[8m"
 BARR2 = "\033[9m"
+
+# --- Couleurs classiques ---
+GRIS = "\033[2m"
 ROUGE = "\033[31m"
 VERT = "\033[32m"
 JAUNE = "\033[33m"
 BLEU = "\033[34m"
 ROSE = "\033[35m"
 CYAN = "\033[36m"
-SURLIGN2_ROUGE = "\033[41m"
-SURLIGN2_VERT = "\033[42m"
-SURLIGN2_JAUNE = "\033[43m"
-SURLIGN2_BLEU = "\033[44m"
-SURLIGN2_ROSE = "\033[45m"
-SURLIGN2_CYAN = "\033[46m"
 
-# --- NOUVEAU : Couleurs Flashy (Haute Intensité) ---
+# --- Couleurs Haute Intensité ---
 ROUGE_FLASH = "\033[91m"
 VERT_FLASH = "\033[92m"
 JAUNE_FLASH = "\033[93m"
@@ -323,7 +319,7 @@ BLEU_FLASH = "\033[94m"
 ROSE_FLASH = "\033[95m"
 CYAN_FLASH = "\033[96m"
 
-# --- Couleurs de Fond Directes (Sans inverser) ---
+# --- Couleurs de Fond ---
 FOND_NOIR = "\033[40m"
 FOND_ROUGE = "\033[41m"
 FOND_VERT = "\033[42m"
@@ -337,8 +333,6 @@ FOND_GRIS = "\033[100m"  # Fond sombre discret
 ERROR = ROUGE_FLASH + GRAS + SOULIGN2
 WARNING = JAUNE_FLASH + ITALIC
 SUCCESS = VERT_FLASH + GRAS
-
-# --- Combinaisons Thématiques ---
 STYLE_TITRE = "\033[30m" + FOND_CYAN + GRAS  # Texte Noir sur Fond Cyan
 MENU_ACTIF = "\033[97m" + FOND_BLEU + GRAS  # Texte Blanc sur Fond Bleu
 LOG_DISCRET = GRIS + ITALIC  # Gris et penché
