@@ -232,6 +232,81 @@ def menu_ANSI():
                 return
 
 
+def match_color(color):
+    match color:
+        case "BARR2":
+            color = BARR2
+        case "SURLIGN2_BLANC":
+            color = SURLIGN2_BLANC
+        case "GRAS":
+            color = GRAS
+        case "ITALIC":
+            color = ITALIC
+        case "SOULIGN2":
+            color = SOULIGN2
+        case "NOIR_INVISIBLE":
+            color = NOIR_INVISIBLE
+        case "RESET":
+            color = RESET
+        case "CYAN":
+            color = CYAN
+        case "ROSE":
+            color = ROSE
+        case "BLEU":
+            color = BLEU
+        case "JAUNE":
+            color = JAUNE
+        case "VERT":
+            color = VERT
+        case "GRIS":
+            color = GRIS
+        case "ROUGE":
+            color = ROUGE
+        case "CYAN_FLASH":
+            color = CYAN_FLASH
+        case "ROSE_FLASH":
+            color = ROSE_FLASH
+        case "BLEU_FLASH":
+            color = BLEU_FLASH
+        case "JAUNE_FLASH":
+            color = JAUNE_FLASH
+        case "VERT_FLASH":
+            color = VERT_FLASH
+        case "ROUGE_FLASH":
+            color = ROUGE_FLASH
+        case "FOND_GRIS":
+            color = FOND_GRIS
+        case "FOND_CYAN":
+            color = FOND_CYAN
+        case "FOND_ROSE":
+            color = FOND_ROSE
+        case "FOND_BLEU":
+            color = FOND_BLEU
+        case "FOND_JAUNE":
+            color = FOND_JAUNE
+        case "FOND_VERT":
+            color = FOND_VERT
+        case "FOND_ROUGE":
+            color = FOND_ROUGE
+        case "FOND_NOIR":
+            color = FOND_NOIR
+        case "ALERTE_CRITIQUE":
+            color = ALERTE_CRITIQUE
+        case "LOG_DISCRET":
+            color = LOG_DISCRET
+        case "MENU_ACTIF":
+            color = MENU_ACTIF
+        case "STYLE_TITRE":
+            color = STYLE_TITRE
+        case "SUCCESS":
+            color = SUCCESS
+        case "WARNING":
+            color = WARNING
+        case "ERROR":
+            color = ERROR
+    return color
+
+
 def menu_principal():
     def menu_CONSTANTES():
         while True:
@@ -539,107 +614,121 @@ def menu_principal():
 # time.sleep(0.4)
 # menu_principal()
 
+
 def info(fonction: str):
     match fonction:
         case "clear()":
-            slow_type('La fonction clear() Nettoie le terminal\nEn effet, par exemple on affiche des choses puis...', tps_btw_letters=0.025)
-            input('')
+            slow_type(
+                "La fonction clear() Nettoie le terminal\nEn effet, par exemple on affiche des choses puis...",
+                tps_btw_letters=0.025,
+            )
+            input("")
             clear()
-            slow_type('Le tout est effacé du terminal et repart de zéro\n', tps_btw_letters=0.025)
-            input('')
+            slow_type(
+                "Le tout est effacé du terminal et repart de zéro\n",
+                tps_btw_letters=0.025,
+            )
+            input("")
+
         case "cprint()":
-            slow_type('La fonction cprint(texte, color)  affiche des textes dans le terminal avec une certaine couleur ANSI.\n', tps_btw_letters=0.025)
-            slow_type('Vous pouvez consulter le menu des couleurs pour en savoir +\n', tps_btw_letters=0.025)
-            choix = input('Ouvrir le menu des Couleurs ANSI?:   ')
+            slow_type(
+                "La fonction cprint(texte, color)  affiche des textes dans le terminal avec une certaine couleur ANSI.\n",
+                tps_btw_letters=0.025,
+            )
+            slow_type(
+                "Vous pouvez consulter le menu des couleurs pour en savoir +\n",
+                tps_btw_letters=0.025,
+            )
+            choix = input("Ouvrir le menu des Couleurs ANSI?:   ")
             if choix in continuer:
                 menu_ANSI()
             while True:
                 clear()
-                color = input('Enter a color for the text:  ').strip()
+                color = input("Enter a color for the text:  ").strip()
                 if color not in colors:
-                    cprint('Invallid enter!', ERROR)
+                    cprint("Invallid enter!", ERROR)
                     time.sleep(0.6)
                     continue
-                match color:
-                    case 'BARR2':
-                        color = BARR2
-                    case 'SURLIGN2_BLANC':
-                        color = SURLIGN2_BLANC
-                    case 'GRAS':
-                        color = GRAS
-                    case 'ITALIC':
-                        color = ITALIC
-                    case 'SOULIGN2':
-                        color = SOULIGN2
-                    case 'NOIR_INVISIBLE':
-                        color = NOIR_INVISIBLE
-                    case 'RESET':
-                        color = RESET
-                    case 'CYAN':
-                        color = CYAN
-                    case 'ROSE':
-                        color = ROSE
-                    case 'BLEU':
-                        color = BLEU
-                    case 'JAUNE':
-                        color = JAUNE
-                    case 'VERT':
-                        color = VERT
-                    case 'GRIS':
-                        color = GRIS
-                    case 'ROUGE':
-                        color = ROUGE
-                    case 'CYAN_FLASH':
-                        color = CYAN_FLASH
-                    case 'ROSE_FLASH':
-                        color = ROSE_FLASH
-                    case 'BLEU_FLASH':
-                        color = BLEU_FLASH
-                    case 'JAUNE_FLASH':
-                        color = JAUNE_FLASH
-                    case 'VERT_FLASH':
-                        color = VERT_FLASH
-                    case 'ROUGE_FLASH':
-                        color = ROUGE_FLASH
-                    case 'FOND_GRIS':
-                        color = FOND_GRIS
-                    case 'FOND_CYAN':
-                        color = FOND_CYAN
-                    case 'FOND_ROSE':
-                        color = FOND_ROSE
-                    case 'FOND_BLEU':
-                        color = FOND_BLEU
-                    case 'FOND_JAUNE':
-                        color = FOND_JAUNE
-                    case 'FOND_VERT':
-                        color = FOND_VERT
-                    case 'FOND_ROUGE':
-                        color = FOND_ROUGE
-                    case 'FOND_NOIR':
-                        color = FOND_NOIR
-                    case 'ALERTE_CRITIQUE':
-                        color = ALERTE_CRITIQUE
-                    case 'LOG_DISCRET':
-                        color = LOG_DISCRET
-                    case 'MENU_ACTIF':
-                        color = MENU_ACTIF
-                    case 'STYLE_TITRE':
-                        color = STYLE_TITRE
-                    case 'SUCCESS':
-                        color = SUCCESS
-                    case 'WARNING':
-                        color = WARNING
-                    case 'ERROR':
-                        color = ERROR
-
-                texte = input('Enter a text, (if nothing -> Prince-Elric 33!)').strip()
+                color = match_color(color)
+                texte = input("Enter a text, (if nothing -> Prince-Elric 33!)").strip()
                 if not texte:
-                    texte = 'Prince-Elric 33!'
+                    texte = "Prince-Elric 33!"
                 cprint(texte, color)
-                input('')
-                break            
+                input("")
+                return
+
         case "slow_type()":
-            pass
+
+            def color_change():
+                color_chang = input("Change color (y/n)?:     ")
+                if color_chang in continuer:
+                    while color_chang not in colors:
+                        color_chang = input("Which one?:  ")
+                        if color_chang not in colors:
+                            cprint("Incorrect input!", ERROR)
+                            time.sleep(0.5)
+                            clear_lines(2)
+                    return color_chang
+                return False
+
+            clear()
+            slow_type(
+                "la fonction, slow_type(...)\n Elle est omniprésente ici, elle sert même tout simplement à afficher le texte ici présent.\nElle simule un effet de frappe caractère par caractère.",
+                tps_btw_letters=0.03,
+            )
+            print("")
+            input("")
+            slow_type("Voici comment elle marche (8):   ", tps_btw_letters=0.03)
+            input("")
+            print("")
+            print(
+                f"{ROSE_FLASH}slow_type{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET},{RESET} {JAUNE}tps_total{RESET}{LOG_DISCRET}={RESET}{VERT}0{RESET}{LOG_DISCRET},{RESET} {JAUNE}tps_btw_letters{RESET}{LOG_DISCRET}={RESET}{VERT}0{RESET}{LOG_DISCRET},{RESET} {JAUNE}color{RESET}{LOG_DISCRET}={RESET}{BLEU}LOG_DISCRET{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            time.sleep(0.5)
+            slow_type(
+                "On entre d'abord le texte, puis selon ce qu'on veut soit un tps_total ou pour chaque lettre:\n Si c'est par lettre on applique une latence entre chaque caractères sinon on calcule le temps moyen de latence en fonction de la longueur du texte.\n",
+                tps_btw_letters=0.035,
+            )
+            time.sleep(1)
+            slow_type(
+                "Par défaut la couleur est LOG_DISCRET mais elle peut totalement être redéfini\n",
+                tps_btw_letters=0.03,
+            )
+            choix = input("Tu veux la faire marcher toi-même?:  ").strip().lower()
+            if choix in continuer:
+                texte = input(
+                    "Enter the text, (if nothing -> Prince-Elric 33!):  "
+                ).strip()
+                if not texte:
+                    texte = "Prince-Elric 33!"
+                choix_tempo = menu_options(["tps_total", "tps_by_letter"])
+                if choix_tempo == "tps_total":
+                    tps_total = valid_input("float", phrase="enter a total time")
+                    couleur = color_change()
+                    if couleur:
+                        couleur = match_color(couleur)
+                        clear()
+                        slow_type(texte, tps_total, color=couleur)
+                        input("\n")
+                        return
+                    clear()
+                    slow_type(texte, tps_total)
+                    return
+                else:
+                    tps_par_letter = valid_input(
+                        "float", phrase="enter the time between each letter"
+                    )
+                    couleur = color_change()
+                    if couleur:
+                        couleur = match_color(couleur)
+                        clear()
+                        slow_type(texte, tps_btw_letters=tps_par_letter, color=couleur)
+                        input("\n")
+                        return
+                    slow_type(texte, tps_btw_letters=tps_par_letter)
+                    input("\n")
+                    return
+
         case "loading_bar()":
             pass
         case "clear_lines()":
@@ -648,7 +737,7 @@ def info(fonction: str):
             pass
         case "menu_options()":
             pass
-        
+
         case "enlever_accents()":
             pass
         case "formate_collections()":
@@ -667,7 +756,7 @@ def info(fonction: str):
             pass
         case "seq()":
             pass
-       
+
         case "copier_txt()":
             pass
         case "detect_shutdown()":
@@ -686,7 +775,7 @@ def info(fonction: str):
             pass
         case "valid_input()":
             pass
-        
+
         case "ecrire_log()":
             pass
         case "log_info()":
@@ -695,10 +784,10 @@ def info(fonction: str):
             pass
         case "log_error":
             pass
-        
+
         case "afk_mouse()":
             pass
-        
+
         case "cesar_code()":
             pass
         case "brute_force()":
@@ -707,7 +796,7 @@ def info(fonction: str):
             pass
         case "fibonacci()":
             pass
-        
+
         case "pendu_game()":
             pass
         case "papier_scissor_game()":
@@ -722,7 +811,7 @@ def info(fonction: str):
             pass
         case "dice()":
             pass
-        
+
         case "trouver_nom()":
             pass
         case "fonct_mots()":
@@ -731,6 +820,7 @@ def info(fonction: str):
             pass
 
         case _:
-            cprint('Invallid enter', ERROR)
+            cprint("Invallid enter", ERROR)
 
-info('cprint()')
+
+info("slow_type()")
