@@ -1,6 +1,6 @@
 """
 ===============================================================================
-                            DOCUMENTATION DU FICHIER TOOLS.PY
+                        DOCUMENTATION DU FICHIER TOOLS.PY
 ===============================================================================
 
 Ce fichier regroupe un ensemble de fonctions utilitaires destinées à simplifier
@@ -861,7 +861,7 @@ def log_error(message, fichier=r"C:\Users\elric\Desktop\vs code\all that\donnée
 # --- Automatisation ---
 
 
-def afk_mouse(n=False, kill=False):
+def afk_mouse(n=0, kill=False):
     """move mouse randomly and click, forever or in range n (len or digit)"""
     pag.FAILSAFE = False
 
@@ -1843,9 +1843,8 @@ def dice(n_faces=6, n=1):
 
 
 def menu_game():
-    """the menu_game!!!"""
+    """the game jeux!!"""
     while True:
-        clear()
         faire_titre_section("Games Menu")
         choice = menu_options(
             [
@@ -1902,7 +1901,7 @@ def menu_game():
                     dices = 1
                 dice(face, dices)
             case "8. Exit":
-                break
+                return
 
 
 # -------------------------------------------------------------------------------
