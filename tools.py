@@ -105,7 +105,7 @@ Le module propose également des listes pour sortir des input des programmes:
 
 mots_921
 
-    Liste contenant 921 mots français utilisée par certaines fonctions du
+    Liste contenant aux alentours de 19000 mots français utilisée par certaines fonctions du
     module.
 
 -------------------------------------------------------------------------------
@@ -358,6 +358,7 @@ ALERTE_CRITIQUE = "\033[97m" + FOND_ROUGE + GRAS  # Texte Blanc sur Fond Rouge
 continuer = ("continue", "c", "cont", "go", "next", "1", "y", "yes", "o", "oui")
 exit = ("exit", "ex", "quitter", "quit", "q", "0", "n", "no", "non")
 others = ("other", "o", "autre")
+colors = ('BARR2', 'SURLIGN2_BLANC', 'NOIR_INVISIBLE', 'SOULIGN2', 'ITALIC', 'GRAS', 'RESET', 'CYAN', 'ROSE', 'BLEU', 'JAUNE', 'VERT', 'GRIS', 'ROUGE', 'CYAN_FLASH', 'ROSE_FLASH', 'BLEU_FLASH', 'JAUNE_FLASH', 'VERT_FLASH', 'ROUGE_FLASH', 'FOND_GRIS', 'FOND_CYAN', 'FOND_ROSE', 'FOND_BLEU', 'FOND_JAUNE', 'FOND_VERT', 'FOND_ROUGE', 'FOND_NOIR', 'ALERTE_CRITIQUE', 'LOG_DISCRET', 'MENU_ACTIF', 'STYLE_TITRE', 'SUCCESS', 'WARNING', 'ERROR')
 
 
 # -------------------------------------------------------------------------------
@@ -1854,7 +1855,8 @@ def menu_game():
                 "4. Code Names Game",
                 "5. Pile ou Face Game",
                 "6. Word guessing Game",
-                "7. Dice simulator Game" "8. Exit",
+                "7. Dice simulator Game",
+                "8. Exit",
             ]
         )
         match choice:
