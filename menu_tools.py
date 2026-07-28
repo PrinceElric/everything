@@ -2,339 +2,238 @@ from tools import *
 import time, random
 
 
-def info(fonction: str):
-    match fonction:
-        case "clear()":
-            pass
-        case "cprint()":
-            pass
-        case "slow_type()":
-            pass
-        case "loading_bar()":
-            pass
-        case "clear_lines()":
-            pass
-        case "faire_titre_section()":
-            pass
-        case "menu_options()":
-            pass
-        
-        case "enlever_accents()":
-            pass
-        case "formate_collections()":
-            pass
-        case "fullmaj()":
-            pass
-        case "formate_number()":
-            pass
-        case "random_password()":
-            pass
-        case "random_username()":
-            pass
-        case "random_string()":
-            pass
-        case "abreviation()":
-            pass
-        case "seq()":
-            pass
-       
-        case "copier_txt()":
-            pass
-        case "detect_shutdown()":
-            pass
-        case "shutdown_A()":
-            pass
-        case "hach_word()":
-            pass
-        case "shutdown()":
-            pass
-        case "start_timer()":
-            pass
-        case "stop_timer()":
-            pass
-        case "human_time()":
-            pass
-        case "valid_input()":
-            pass
-        
-        case "ecrire_log()":
-            pass
-        case "log_info()":
-            pass
-        case "log_warning()":
-            pass
-        case "log_error":
-            pass
-        
-        case "afk_mouse()":
-            pass
-        
-        case "cesar_code()":
-            pass
-        case "brute_force()":
-            pass
-        case "morse()":
-            pass
-        case "fibonacci()":
-            pass
-        
-        case "pendu_game()":
-            pass
-        case "papier_scissor_game()":
-            pass
-        case "number_guess_game()":
-            pass
-        case "code_names_game()":
-            pass
-        case "pile_face_game()":
-            pass
-        case "word_guess_game()":
-            pass
-        case "dice()":
-            pass
-        
-        case "trouver_nom()":
-            pass
-        case "fonct_mots()":
-            pass
-        case "kaneki_count()":
-            pass
+def menu_ANSI():
+    def menu_styles_txt():
+        while True:
+            faire_titre_section(" Menu styles de texte")
+            time.sleep(0.4)
+            style_txt = menu_options(
+                [
+                    "1. Gras",
+                    "2. Italic",
+                    "3. Souligné",
+                    "4. Surligné_blanc",
+                    "5. Noir_Invisible",
+                    "6. Barré",
+                    "7. Exit",
+                ]
+            )
+            match style_txt:
+                case "1. Gras":
+                    cprint("\nPrince-Elric 33!", GRAS)
+                    input("")
+                case "2. Italic":
+                    cprint("\nPrince-Elric 33!", ITALIC)
+                    input("")
+                case "3. Souligné":
+                    cprint("\nPrince-Elric 33!", SOULIGN2)
+                    input("")
+                case "4. Surligné_blanc":
+                    cprint("\nPrince-Elric 33!", SURLIGN2_BLANC)
+                    input("")
+                case "5. Noir_Invisible":
+                    cprint("\nPrince-Elric 33!", NOIR_INVISIBLE)
+                    input("")
+                case "6. Barré":
+                    cprint("\nPrince-Elric 33!", BARR2)
+                    input("")
+                case "7. Exit":
+                    return
 
-        case _:
-            cprint('Invallid enter', ERROR)
+    def menu_couleurs_classiques():
+        while True:
+            faire_titre_section("Menu Couleurs classiques")
+            time.sleep(0.4)
+            classic_color = menu_options(
+                [
+                    "1. GRIS",
+                    "2. ROUGE",
+                    "3. VERT",
+                    "4. JAUNE",
+                    "5. BLEU",
+                    "6. ROSE",
+                    "7. CYAN",
+                    "8. Exit",
+                ]
+            )
+            match classic_color:
+                case "1. GRIS":
+                    cprint("\nPrince-Elric 33!", GRIS)
+                    input("")
+                case "2. ROUGE":
+                    cprint("\nPrince-Elric 33!", ROUGE)
+                    input("")
+                case "3. VERT":
+                    cprint("\nPrince-Elric 33!", VERT)
+                    input("")
+                case "4. JAUNE":
+                    cprint("\nPrince-Elric 33!", JAUNE)
+                    input("")
+                case "5. BLEU":
+                    cprint("\nPrince-Elric 33!", BLEU)
+                    input("")
+                case "6. ROSE":
+                    cprint("\nPrince-Elric 33!", ROSE)
+                    input("")
+                case "7. CYAN":
+                    cprint("\nPrince-Elric 33!", CYAN)
+                    input("")
+                case "8. Exit":
+                    return
+
+    def menu_couleurs_intenses():
+        while True:
+            faire_titre_section("Menu Couleurs Haute Intensité")
+            time.sleep(0.4)
+            intense_color = menu_options(
+                [
+                    "1. ROUGE_FLASH",
+                    "2. VERT_FLASH",
+                    "3. JAUNE_FLASH",
+                    "4. BLEU_FLASH",
+                    "5. ROSE_FLASH",
+                    "6. CYAN_FLASH",
+                    "7. Exit",
+                ]
+            )
+            match intense_color:
+                case "1. ROUGE_FLASH":
+                    cprint("\nPrince-Elric 33!", ROUGE_FLASH)
+                    input("")
+                case "2. VERT_FLASH":
+                    cprint("\nPrince-Elric 33!", VERT_FLASH)
+                    input("")
+                case "3. JAUNE_FLASH":
+                    cprint("\nPrince-Elric 33!", JAUNE_FLASH)
+                    input("")
+                case "4. BLEU_FLASH":
+                    cprint("\nPrince-Elric 33!", BLEU_FLASH)
+                    input("")
+                case "5. ROSE_FLASH":
+                    cprint("\nPrince-Elric 33!", ROSE_FLASH)
+                    input("")
+                case "6. CYAN_FLASH":
+                    cprint("\nPrince-Elric 33!", CYAN_FLASH)
+                    input("")
+                case "7. Exit":
+                    return
+
+    def menu_color_fond():
+        while True:
+            faire_titre_section("Menu Couleurs de fonds")
+            time.sleep(0.4)
+            color_fond = menu_options(
+                [
+                    "1. FOND_NOIR",
+                    "2. FOND_ROUGE",
+                    "3. FOND_VERT",
+                    "4. FOND_JAUNE",
+                    "5. FOND_BLEU",
+                    "6. FOND_ROSE",
+                    "7. FOND_CYAN",
+                    "8. FOND_GRIS",
+                    "9. Exit",
+                ]
+            )
+            match color_fond:
+                case "1. FOND_NOIR":
+                    cprint("\nPrince-Elric 33!", FOND_NOIR)
+                    input("")
+                case "2. FOND_ROUGE":
+                    cprint("\nPrince-Elric 33!", FOND_ROUGE)
+                    input("")
+                case "3. FOND_VERT":
+                    cprint("\nPrince-Elric 33!", FOND_VERT)
+                    input("")
+                case "4. FOND_JAUNE":
+                    cprint("\nPrince-Elric 33!", FOND_JAUNE)
+                    input("")
+                case "5. FOND_BLEU":
+                    cprint("\nPrince-Elric 33!", FOND_BLEU)
+                    input("")
+                case "6. FOND_ROSE":
+                    cprint("\nPrince-Elric 33!", FOND_ROSE)
+                    input("")
+                case "7. FOND_CYAN":
+                    cprint("\nPrince-Elric 33!", FOND_CYAN)
+                    input("")
+                case "8. FOND_GRIS":
+                    cprint("\nPrince-Elric 33!", FOND_GRIS)
+                    input("")
+                case "9. Exit":
+                    return
+
+    def menu_styles_predef():
+        while True:
+            faire_titre_section("Menu Styles Prédéfinis")
+            time.sleep(0.4)
+            style_def = menu_options(
+                [
+                    "1. ERROR",
+                    "2. WARNING",
+                    "3. SUCCESS",
+                    "4. STYLE_TITRE",
+                    "5. MENU_ACTIF",
+                    "6. LOG_DISCRET",
+                    "7. ALERTE_CRITIQUE",
+                    "8. Exit",
+                ]
+            )
+            match style_def:
+                case "1. ERROR":
+                    cprint("\nPrince-Elric 33!", ERROR)
+                    input("")
+                case "2. WARNING":
+                    cprint("\nPrince-Elric 33!", WARNING)
+                    input("")
+                case "3. SUCCESS":
+                    cprint("\nPrince-Elric 33!", SUCCESS)
+                    input("")
+                case "4. STYLE_TITRE":
+                    cprint("\nPrince-Elric 33!", STYLE_TITRE)
+                    input("")
+                case "5. MENU_ACTIF":
+                    cprint("\nPrince-Elric 33!", MENU_ACTIF)
+                    input("")
+                case "6. LOG_DISCRET":
+                    cprint("\nPrince-Elric 33!", LOG_DISCRET)
+                    input("")
+                case "7. ALERTE_CRITIQUE":
+                    cprint("\nPrince-Elric 33!", ALERTE_CRITIQUE)
+                    input("")
+                case "8. Exit":
+                    return
+
+    while True:
+        faire_titre_section("ANSI colors Menu!")
+        time.sleep(0.4)
+        color_ch = menu_options(
+            [
+                "1. Styles de texte",
+                "2. Couleurs classiques",
+                "3. Couleurs haute intensité",
+                "4. Couleurs de fond",
+                "5. Styles prédéfinis",
+                "6. Exit",
+            ]
+        )
+        match color_ch:
+            case "1. Styles de texte":
+                menu_styles_txt()
+            case "2. Couleurs classiques":
+                menu_couleurs_classiques()
+            case "3. Couleurs haute intensité":
+                menu_couleurs_intenses()
+            case "4. Couleurs de fond":
+                menu_color_fond()
+            case "5. Styles prédéfinis":
+                menu_styles_predef()
+            case "6. Exit":
+                return
 
 
 def menu_principal():
     def menu_CONSTANTES():
-        def menu_ANSI():
-            def menu_styles_txt():
-                while True:
-                    faire_titre_section(" Menu styles de texte")
-                    time.sleep(0.4)
-                    style_txt = menu_options(
-                        [
-                            "1. Gras",
-                            "2. Italic",
-                            "3. Souligné",
-                            "4. Surligné_blanc",
-                            "5. Noir_Invisible",
-                            "6. Barré",
-                            "7. Exit",
-                        ]
-                    )
-                    match style_txt:
-                        case "1. Gras":
-                            cprint("\nPrince-Elric 33!", GRAS)
-                            input("")
-                        case "2. Italic":
-                            cprint("\nPrince-Elric 33!", ITALIC)
-                            input("")
-                        case "3. Souligné":
-                            cprint("\nPrince-Elric 33!", SOULIGN2)
-                            input("")
-                        case "4. Surligné_blanc":
-                            cprint("\nPrince-Elric 33!", SURLIGN2_BLANC)
-                            input("")
-                        case "5. Noir_Invisible":
-                            cprint("\nPrince-Elric 33!", NOIR_INVISIBLE)
-                            input("")
-                        case "6. Barré":
-                            cprint("\nPrince-Elric 33!", BARR2)
-                            input("")
-                        case "7. Exit":
-                            return
-
-            def menu_couleurs_classiques():
-                while True:
-                    faire_titre_section("Menu Couleurs classiques")
-                    time.sleep(0.4)
-                    classic_color = menu_options(
-                        [
-                            "1. GRIS",
-                            "2. ROUGE",
-                            "3. VERT",
-                            "4. JAUNE",
-                            "5. BLEU",
-                            "6. ROSE",
-                            "7. CYAN",
-                            "8. Exit",
-                        ]
-                    )
-                    match classic_color:
-                        case "1. GRIS":
-                            cprint("\nPrince-Elric 33!", GRIS)
-                            input("")
-                        case "2. ROUGE":
-                            cprint("\nPrince-Elric 33!", ROUGE)
-                            input("")
-                        case "3. VERT":
-                            cprint("\nPrince-Elric 33!", VERT)
-                            input("")
-                        case "4. JAUNE":
-                            cprint("\nPrince-Elric 33!", JAUNE)
-                            input("")
-                        case "5. BLEU":
-                            cprint("\nPrince-Elric 33!", BLEU)
-                            input("")
-                        case "6. ROSE":
-                            cprint("\nPrince-Elric 33!", ROSE)
-                            input("")
-                        case "7. CYAN":
-                            cprint("\nPrince-Elric 33!", CYAN)
-                            input("")
-                        case "8. Exit":
-                            return
-
-            def menu_couleurs_intenses():
-                while True:
-                    faire_titre_section("Menu Couleurs Haute Intensité")
-                    time.sleep(0.4)
-                    intense_color = menu_options(
-                        [
-                            "1. ROUGE_FLASH",
-                            "2. VERT_FLASH",
-                            "3. JAUNE_FLASH",
-                            "4. BLEU_FLASH",
-                            "5. ROSE_FLASH",
-                            "6. CYAN_FLASH",
-                            "7. Exit",
-                        ]
-                    )
-                    match intense_color:
-                        case "1. ROUGE_FLASH":
-                            cprint("\nPrince-Elric 33!", ROUGE_FLASH)
-                            input("")
-                        case "2. VERT_FLASH":
-                            cprint("\nPrince-Elric 33!", VERT_FLASH)
-                            input("")
-                        case "3. JAUNE_FLASH":
-                            cprint("\nPrince-Elric 33!", JAUNE_FLASH)
-                            input("")
-                        case "4. BLEU_FLASH":
-                            cprint("\nPrince-Elric 33!", BLEU_FLASH)
-                            input("")
-                        case "5. ROSE_FLASH":
-                            cprint("\nPrince-Elric 33!", ROSE_FLASH)
-                            input("")
-                        case "6. CYAN_FLASH":
-                            cprint("\nPrince-Elric 33!", CYAN_FLASH)
-                            input("")
-                        case "7. Exit":
-                            return
-
-            def menu_color_fond():
-                while True:
-                    faire_titre_section("Menu Couleurs de fonds")
-                    time.sleep(0.4)
-                    color_fond = menu_options(
-                        [
-                            "1. FOND_NOIR",
-                            "2. FOND_ROUGE",
-                            "3. FOND_VERT",
-                            "4. FOND_JAUNE",
-                            "5. FOND_BLEU",
-                            "6. FOND_ROSE",
-                            "7. FOND_CYAN",
-                            "8. FOND_GRIS",
-                            "9. Exit",
-                        ]
-                    )
-                    match color_fond:
-                        case "1. FOND_NOIR":
-                            cprint("\nPrince-Elric 33!", FOND_NOIR)
-                            input("")
-                        case "2. FOND_ROUGE":
-                            cprint("\nPrince-Elric 33!", FOND_ROUGE)
-                            input("")
-                        case "3. FOND_VERT":
-                            cprint("\nPrince-Elric 33!", FOND_VERT)
-                            input("")
-                        case "4. FOND_JAUNE":
-                            cprint("\nPrince-Elric 33!", FOND_JAUNE)
-                            input("")
-                        case "5. FOND_BLEU":
-                            cprint("\nPrince-Elric 33!", FOND_BLEU)
-                            input("")
-                        case "6. FOND_ROSE":
-                            cprint("\nPrince-Elric 33!", FOND_ROSE)
-                            input("")
-                        case "7. FOND_CYAN":
-                            cprint("\nPrince-Elric 33!", FOND_CYAN)
-                            input("")
-                        case "8. FOND_GRIS":
-                            cprint("\nPrince-Elric 33!", FOND_GRIS)
-                            input("")
-                        case "9. Exit":
-                            return
-
-            def menu_styles_predef():
-                while True:
-                    faire_titre_section("Menu Styles Prédéfinis")
-                    time.sleep(0.4)
-                    style_def = menu_options(
-                        [
-                            "1. ERROR",
-                            "2. WARNING",
-                            "3. SUCCESS",
-                            "4. STYLE_TITRE",
-                            "5. MENU_ACTIF",
-                            "6. LOG_DISCRET",
-                            "7. ALERTE_CRITIQUE",
-                            "8. Exit",
-                        ]
-                    )
-                    match style_def:
-                        case "1. ERROR":
-                            cprint("\nPrince-Elric 33!", ERROR)
-                            input("")
-                        case "2. WARNING":
-                            cprint("\nPrince-Elric 33!", WARNING)
-                            input("")
-                        case "3. SUCCESS":
-                            cprint("\nPrince-Elric 33!", SUCCESS)
-                            input("")
-                        case "4. STYLE_TITRE":
-                            cprint("\nPrince-Elric 33!", STYLE_TITRE)
-                            input("")
-                        case "5. MENU_ACTIF":
-                            cprint("\nPrince-Elric 33!", MENU_ACTIF)
-                            input("")
-                        case "6. LOG_DISCRET":
-                            cprint("\nPrince-Elric 33!", LOG_DISCRET)
-                            input("")
-                        case "7. ALERTE_CRITIQUE":
-                            cprint("\nPrince-Elric 33!", ALERTE_CRITIQUE)
-                            input("")
-                        case "8. Exit":
-                            return
-
-            while True:
-                faire_titre_section("ANSI colors Menu!")
-                time.sleep(0.4)
-                color_ch = menu_options(
-                    [
-                        "1. Styles de texte",
-                        "2. Couleurs classiques",
-                        "3. Couleurs haute intensité",
-                        "4. Couleurs de fond",
-                        "5. Styles prédéfinis",
-                        "6. Exit",
-                    ]
-                )
-                match color_ch:
-                    case "1. Styles de texte":
-                        menu_styles_txt()
-                    case "2. Couleurs classiques":
-                        menu_couleurs_classiques()
-                    case "3. Couleurs haute intensité":
-                        menu_couleurs_intenses()
-                    case "4. Couleurs de fond":
-                        menu_color_fond()
-                    case "5. Styles prédéfinis":
-                        menu_styles_predef()
-                    case "6. Exit":
-                        return
-
         while True:
             faire_titre_section("CONSTANTES Menu!")
             time.sleep(0.4)
@@ -636,6 +535,202 @@ def menu_principal():
                 return
 
 
-faire_titre_section("Tools Menu!")
-time.sleep(0.4)
-menu_principal()
+# faire_titre_section("Tools Menu!")
+# time.sleep(0.4)
+# menu_principal()
+
+def info(fonction: str):
+    match fonction:
+        case "clear()":
+            slow_type('La fonction clear() Nettoie le terminal\nEn effet, par exemple on affiche des choses puis...', tps_btw_letters=0.025)
+            input('')
+            clear()
+            slow_type('Le tout est effacé du terminal et repart de zéro\n', tps_btw_letters=0.025)
+            input('')
+        case "cprint()":
+            slow_type('La fonction cprint(texte, color)  affiche des textes dans le terminal avec une certaine couleur ANSI.\n', tps_btw_letters=0.025)
+            slow_type('Vous pouvez consulter le menu des couleurs pour en savoir +\n', tps_btw_letters=0.025)
+            choix = input('Ouvrir le menu des Couleurs ANSI?:   ')
+            if choix in continuer:
+                menu_ANSI()
+            while True:
+                clear()
+                color = input('Enter a color for the text:  ').strip()
+                if color not in colors:
+                    cprint('Invallid enter!', ERROR)
+                    time.sleep(0.6)
+                    continue
+                match color:
+                    case 'BARR2':
+                        color = BARR2
+                    case 'SURLIGN2_BLANC':
+                        color = SURLIGN2_BLANC
+                    case 'GRAS':
+                        color = GRAS
+                    case 'ITALIC':
+                        color = ITALIC
+                    case 'SOULIGN2':
+                        color = SOULIGN2
+                    case 'NOIR_INVISIBLE':
+                        color = NOIR_INVISIBLE
+                    case 'RESET':
+                        color = RESET
+                    case 'CYAN':
+                        color = CYAN
+                    case 'ROSE':
+                        color = ROSE
+                    case 'BLEU':
+                        color = BLEU
+                    case 'JAUNE':
+                        color = JAUNE
+                    case 'VERT':
+                        color = VERT
+                    case 'GRIS':
+                        color = GRIS
+                    case 'ROUGE':
+                        color = ROUGE
+                    case 'CYAN_FLASH':
+                        color = CYAN_FLASH
+                    case 'ROSE_FLASH':
+                        color = ROSE_FLASH
+                    case 'BLEU_FLASH':
+                        color = BLEU_FLASH
+                    case 'JAUNE_FLASH':
+                        color = JAUNE_FLASH
+                    case 'VERT_FLASH':
+                        color = VERT_FLASH
+                    case 'ROUGE_FLASH':
+                        color = ROUGE_FLASH
+                    case 'FOND_GRIS':
+                        color = FOND_GRIS
+                    case 'FOND_CYAN':
+                        color = FOND_CYAN
+                    case 'FOND_ROSE':
+                        color = FOND_ROSE
+                    case 'FOND_BLEU':
+                        color = FOND_BLEU
+                    case 'FOND_JAUNE':
+                        color = FOND_JAUNE
+                    case 'FOND_VERT':
+                        color = FOND_VERT
+                    case 'FOND_ROUGE':
+                        color = FOND_ROUGE
+                    case 'FOND_NOIR':
+                        color = FOND_NOIR
+                    case 'ALERTE_CRITIQUE':
+                        color = ALERTE_CRITIQUE
+                    case 'LOG_DISCRET':
+                        color = LOG_DISCRET
+                    case 'MENU_ACTIF':
+                        color = MENU_ACTIF
+                    case 'STYLE_TITRE':
+                        color = STYLE_TITRE
+                    case 'SUCCESS':
+                        color = SUCCESS
+                    case 'WARNING':
+                        color = WARNING
+                    case 'ERROR':
+                        color = ERROR
+
+                texte = input('Enter a text, (if nothing -> Prince-Elric 33!)').strip()
+                if not texte:
+                    texte = 'Prince-Elric 33!'
+                cprint(texte, color)
+                input('')
+                break            
+        case "slow_type()":
+            pass
+        case "loading_bar()":
+            pass
+        case "clear_lines()":
+            pass
+        case "faire_titre_section()":
+            pass
+        case "menu_options()":
+            pass
+        
+        case "enlever_accents()":
+            pass
+        case "formate_collections()":
+            pass
+        case "fullmaj()":
+            pass
+        case "formate_number()":
+            pass
+        case "random_password()":
+            pass
+        case "random_username()":
+            pass
+        case "random_string()":
+            pass
+        case "abreviation()":
+            pass
+        case "seq()":
+            pass
+       
+        case "copier_txt()":
+            pass
+        case "detect_shutdown()":
+            pass
+        case "shutdown_A()":
+            pass
+        case "hach_word()":
+            pass
+        case "shutdown()":
+            pass
+        case "start_timer()":
+            pass
+        case "stop_timer()":
+            pass
+        case "human_time()":
+            pass
+        case "valid_input()":
+            pass
+        
+        case "ecrire_log()":
+            pass
+        case "log_info()":
+            pass
+        case "log_warning()":
+            pass
+        case "log_error":
+            pass
+        
+        case "afk_mouse()":
+            pass
+        
+        case "cesar_code()":
+            pass
+        case "brute_force()":
+            pass
+        case "morse()":
+            pass
+        case "fibonacci()":
+            pass
+        
+        case "pendu_game()":
+            pass
+        case "papier_scissor_game()":
+            pass
+        case "number_guess_game()":
+            pass
+        case "code_names_game()":
+            pass
+        case "pile_face_game()":
+            pass
+        case "word_guess_game()":
+            pass
+        case "dice()":
+            pass
+        
+        case "trouver_nom()":
+            pass
+        case "fonct_mots()":
+            pass
+        case "kaneki_count()":
+            pass
+
+        case _:
+            cprint('Invallid enter', ERROR)
+
+info('cprint()')
