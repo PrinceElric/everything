@@ -53,8 +53,7 @@ def info(menu_fonct=False):
                         "6. random_username(n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True)",
                         "7. random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)",
                         "8. abreviation(word='')",
-                        "9. seq(txt='')"
-                        "10. Exit",
+                        "9. seq(txt='')" "10. Exit",
                     ]
                 )
                 match fonct_text:
@@ -123,25 +122,88 @@ def info(menu_fonct=False):
             while True:
                 faire_titre_section(" Menu de Fonctions de journalisation")
                 time.sleep(0.5)
-                fonct_sys = menu_options(
+                fonct_journal = menu_options(
                     [
-                        "1. copier_txt(texte)",
-                        "2. detect_shutdown()",
-                        "3. shutdown_A()",
-                        "4. hach_word(word)",
+                        "1. ecrire_log(message, type_log='INFO', chemin)",
+                        "2. log_info(message, type_log='INFO', chemin)",
+                        "3. log_warning(message, type_log='WARNING', chemin)",
+                        "4. log_error(message, type_log='ERROR', chemin)",
                         "5. Exit",
                     ]
                 )
-                match fonct_sys:
-                    case "1. copier_txt(texte)":
+                match fonct_journal:
+                    case "1. ecrire_log(message, type_log='INFO', chemin)":
                         pass
-                    case "2. detect_shutdown()":
+                    case "2. log_info(message, type_log='INFO', chemin)":
                         pass
-                    case "3. shutdown_A()":
+                    case "3. log_warning(message, type_log='WARNING', chemin)":
                         pass
-                    case "4. hach_word(word)":
+                    case "4. log_error(message, type_log='ERROR', chemin)":
                         pass
                     case "5. Exit":
+                        return
+
+        def menu_automat():
+            while True:
+                faire_titre_section(" Menu de Fonctions d'Automatisation")
+                time.sleep(0.5)
+                fonct_auto = menu_options(
+                    [
+                        "1. afk_mouse(n=0, kill=False)",
+                        "2. Exit",
+                    ]
+                )
+                match fonct_auto:
+                    case "1. afk_mouse(n=0, kill=False)":
+                        pass
+                    case "2. Exit":
+                        return
+
+        def menu_crypto():
+            while True:
+                faire_titre_section(" Menu de Fonctions de Crypto")
+                time.sleep(0.5)
+                fonct_crypto = menu_options(
+                    [
+                        "1. cesar_code()",
+                        "2. brute_force()",
+                        "3. morse(txt='')",
+                        "4. fibonacci()",
+                        "5. Exit",
+                    ]
+                )
+                match fonct_crypto:
+                    case "1. cesar_code()":
+                        pass
+                    case "2. brute_force()":
+                        pass
+                    case "3. morse(txt='')":
+                        pass
+                    case "4. fibonacci()":
+                        pass
+                    case "5. Exit":
+                        return
+
+        def menu_specifik():
+            while True:
+                faire_titre_section(" Menu de Fonctions de Spécifiques")
+                time.sleep(0.5)
+                fonct_sys = menu_options(
+                    [
+                        "1. trouver_nom(objet)",
+                        "2. fonct_mots()",
+                        "3. kanekicount(number, base)",
+                        "4. Exit",
+                    ]
+                )
+                match fonct_sys:
+                    case "1. trouver_nom(objet)":
+                        pass
+                    case "2. fonct_mots()":
+                        pass
+                    case "3. kanekicount(number, base)":
+                        pass
+                    case "4. Exit":
                         return
 
         while True:
@@ -168,15 +230,15 @@ def info(menu_fonct=False):
                 case "3. System":
                     menu_system()
                 case "4. Journalisation (Logging)":
-                    pass
+                    menu_journal()
                 case "5. Automatisation":
-                    pass
+                    menu_automat()
                 case "6. Crypto":
-                    pass
+                    menu_crypto()
                 case "7. Jeux":
-                    pass
+                    menu_game()
                 case "8. Outils Spécifiques au Projet":
-                    pass
+                    menu_specifik
                 case "9. Exit":
                     return
 
