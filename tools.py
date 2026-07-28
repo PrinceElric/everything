@@ -793,7 +793,7 @@ def human_time(n):
     print(f"{h:02d}h:{minutes:02d}min:{sec:02d}s")
 
 
-def valid_input(type="int", phrase=""):
+def valid_input(type="int", phrase="", info=False):
     """Demande une entrée d'un type précis et boucle tant que l'entrée est invalide."""
     if type == "str":
         phrase = phrase or "enter a string"
@@ -802,7 +802,10 @@ def valid_input(type="int", phrase=""):
     elif type in ["int", "float"]:
         phrase = phrase or "enter a number"
         while True:
-            entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
+            if info:
+                entree = input(f"{SOULIGN2}{phrase}{RESET}").strip()
+            else:
+                entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
             try:
                 return int(entree) if type == "int" else float(entree)
             except ValueError:
