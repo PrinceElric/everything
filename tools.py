@@ -807,6 +807,8 @@ def valid_input(type="int", phrase=""):
                 return int(entree) if type == "int" else float(entree)
             except ValueError:
                 print(f"{ERROR}Incorrect enter, try again{RESET}")
+                time.sleep(0.5)
+                clear_lines(2)
 
     elif type == "bool":
         phrase = phrase or "enter True/Yes or False/No"
