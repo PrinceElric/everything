@@ -803,7 +803,7 @@ def valid_input(type="int", phrase="", info=False):
         phrase = phrase or "enter a number"
         while True:
             if info:
-                entree = input(f"{SOULIGN2}{phrase}{RESET}").strip()
+                entree = input(f"{phrase}").strip().rstrip(')')
             else:
                 entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
             try:
