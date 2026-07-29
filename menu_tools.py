@@ -1,5 +1,5 @@
 from tools import *
-import time, random
+import time, random, string
 
 
 def menu_ANSI():
@@ -760,42 +760,12 @@ def info(fonction: str):
                 True,
             )
             clear()
-            Maj = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            digits = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            punct = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            space = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            tiret_bas = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
             slow_type(f"Here's your build:\n", tps_btw_letters=0.03)
             print(
-                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}{tiret_bas}{RESET}{LOG_DISCRET}){RESET}\n"
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}True{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}True{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
             )
             input("")
-            print(random_username(n, Maj, digits, punct, space, tiret_bas))
+            print(random_username(n))
             input("")
 
         case "random_username()":
@@ -838,42 +808,12 @@ def info(fonction: str):
                 True,
             )
             clear()
-            Maj = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            digits = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            punct = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            space = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            tiret_bas = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
             slow_type(f"Here's your build:\n", tps_btw_letters=0.03)
             print(
-                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}{tiret_bas}{RESET}{LOG_DISCRET}){RESET}\n"
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}False{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}False{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET}){RESET}\n"
             )
             input("")
-            print(random_username(n, Maj, digits, punct, space, tiret_bas))
+            print(random_username(n))
             input("")
 
         case "random_string()":
@@ -914,42 +854,12 @@ def info(fonction: str):
                 True,
             )
             clear()
-            Maj = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            digits = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            punct = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            space = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
-            tiret_bas = valid_input(
-                "bool",
-                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}",
-                info=True,
-            )
-            clear()
             slow_type(f"Here's your build:\n", tps_btw_letters=0.03)
             print(
-                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}{tiret_bas}{RESET}{LOG_DISCRET}){RESET}\n"
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}False{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}True{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
             )
             input("")
-            print(random_string(n, Maj, digits, punct, space, tiret_bas))
+            print(random_string(n))
             input("")
 
         case "abreviation()":
@@ -989,7 +899,23 @@ def info(fonction: str):
             input("")
 
         case "seq()":
-            pass
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type("La fonction seq(...) renvoie le nombre max de chaine continue dans le texte.\n", tps_btw_letters=0.03)
+            slow_type("Here how it works (14):  \n", tps_btw_letters=0.03)
+            input('')
+            print(f"{ROSE_FLASH}seq{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}''{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type("Exemple: ", tps_btw_letters=0.03)
+            input('')
+            clear()
+            text = ''.join(random.choices(['A', 'B', 'C', 'D', 'E'], k=90))
+            print(f'Text => {text}')
+            print(f'Seq => {seq(text)}')
+            input('')
+
 
         case "copier_txt()":
             pass
@@ -1178,7 +1104,7 @@ def menu_principal():
                     case "8. abreviation(word='')":
                         info("abreviation()")
                     case "9. seq(txt='')":
-                        pass
+                        info('seq()')
                     case "10. Exit":
                         return
 
