@@ -636,7 +636,7 @@ def seq(txt=""):
 
 
 def copier_txt(texte):
-    """copie texte dans presse-papier, need subprocess"""
+    """copie texte dans presse-papier, subprocess"""
     subprocess.run(["clip"], input=texte, text=True, check=True)
 
 
