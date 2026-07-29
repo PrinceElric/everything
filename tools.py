@@ -815,8 +815,11 @@ def valid_input(type="int", phrase="", info=False):
 
     elif type == "bool":
         phrase = phrase or "enter True/Yes or False/No"
-        entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip().lower()
-        return entree in ["true", "t", "1", "y", "yes", "o", "oui"]
+        if info:
+            entree = input(f"{phrase}").strip().rstrip(')').lower()
+        else:
+            entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip().lower()
+        return entree in continuer
 
     print(f"{ERROR}INCORRECT TYPE!!!{RESET}")
     return None
