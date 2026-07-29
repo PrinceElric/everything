@@ -633,11 +633,68 @@ def info(fonction: str):
             input('')
 
         case "formate_collections()":
-            pass
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+            
+            slow_type("The fonction formate_collections(...) just delete the born of the entered collection an ' .\n", tps_btw_letters=0.03)
+            slow_type("Here how it works (6):   \n")
+            input('')
+            print(f"{ROSE_FLASH}formate_collections{RESET}{LOG_DISCRET}({RESET}{JAUNE}*args{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type("The *args means that we enter multiple things by count as one.\n", tps_btw_letters=0.03)
+            slow_type("Exemple:    ", tps_btw_letters=0.03)
+            input('')
+            clear()
+            print(f'BEFORE: countinuer -> {continuer}')
+            print(f'AFTER: countinuer -> {formate_collections(continuer)}')
+            input('')
+
         case "fullmaj()":
-            pass
-        case "formate_number()":
-            pass
+            clear()
+            cprint("Nécessite STRING", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type("La fonction fullmaj(...) renvoie le text entré comme si le mode de MAJ avait été défini différemment\n", tps_btw_letters=0.035)
+            slow_type("Here how it works (26):\n", tps_btw_letters=0.035)
+            input('')
+            print(f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type("Exemple:     ")
+            input('')
+            clear()
+            texte = input(f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}").strip().rstrip(')')
+            if not texte:
+                texte = 'Prince-Elric 33!'
+            clear()
+            print(f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}'{texte}'{RESET}{LOG_DISCRET}){RESET}\n")
+            print(f'BEFORE -> {texte}')
+            print(f'AFTER -> {fullmaj(texte)}')
+            input('')
+
+        case "format_number()":
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type("La fonction format_number(...) renvoie le nombre formaté (sequencé en pattern de 3)\n", tps_btw_letters=0.035)
+            slow_type("Here how it works (1):\n", tps_btw_letters=0.035)
+            input('')
+            print(f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type("Exemple:     ")
+            input('')
+            clear()
+            num = input(f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{BLEU}").strip().rstrip(')')
+            if not num:
+                num = random.randrange(100000, pow(10, 9))
+            clear()
+            print(f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{BLEU}'{num}'{RESET}{LOG_DISCRET}){RESET}\n")
+            print(f'BEFORE -> {num}')
+            print(f'AFTER -> {format_number(num)}')
+            input('')
+
+
         case "random_password()":
             pass
         case "random_username()":
@@ -822,11 +879,11 @@ def menu_principal():
                     case "1. enlever_accents(texte: str)":
                         info("enlever_accents()")
                     case "2. formate_collections(*args)":
-                        pass
+                        info("formate_collections()")
                     case "3. fullmaj(txt)":
-                        pass
+                        info("fullmaj()")
                     case "4. format_number(n)":
-                        pass
+                        info("format_number()")
                     case "5. random_password(n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False)":
                         pass
                     case "6. random_username(n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True)":
