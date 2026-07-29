@@ -306,9 +306,14 @@ def match_color(color):
             color = ERROR
     return color
 
+
 def info(fonction: str):
     match fonction:
         case "clear()":
+            clear()
+            cprint("Nécessite OS", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
             slow_type(
                 "La fonction clear() Nettoie le terminal\nEn effet, par exemple on affiche des choses puis...",
                 tps_btw_letters=0.025,
@@ -316,12 +321,13 @@ def info(fonction: str):
             input("")
             clear()
             slow_type(
-                "Le tout est effacé du terminal et repart de zéro\n",
+                "Le tout est effacé du terminal et repart de zéro.\n",
                 tps_btw_letters=0.025,
             )
             input("")
 
         case "cprint()":
+            clear()
             slow_type(
                 "La fonction cprint(texte, color)  affiche des textes dans le terminal avec une certaine couleur ANSI.\n",
                 tps_btw_letters=0.025,
@@ -363,13 +369,16 @@ def info(fonction: str):
                 return False
 
             clear()
+            cprint("Nécessite TIME", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
             slow_type(
                 "la fonction, slow_type(...)\n Elle est omniprésente ici, elle sert même tout simplement à afficher le texte ici présent.\nElle simule un effet de frappe caractère par caractère.",
                 tps_btw_letters=0.03,
             )
             print("")
             input("")
-            slow_type("Voici comment elle marche (8):   ", tps_btw_letters=0.03)
+            slow_type("Here how it works (8):   ", tps_btw_letters=0.03)
             input("")
             print("")
             print(
@@ -421,40 +430,208 @@ def info(fonction: str):
                     return
 
         case "loading_bar()":
-            slow_type('Show a loading_bar of n caract with the actual step on the cost and the pourcentage of chargement, le tout dans un temps donné.\n', tps_btw_letters=0.035)
-            slow_type('Here how it works:   \n', tps_btw_letters=0.035)
-            input('')
-            print(f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}tps{RESET}{LOG_DISCRET},{RESET} {JAUNE}symbol{RESET}{LOG_DISCRET}={RESET}{BLEU}'#'{RESET}{LOG_DISCRET},{RESET} {JAUNE}lenght{RESET}{LOG_DISCRET}={RESET}{VERT}10{RESET}{LOG_DISCRET}){RESET}\n")
-            slow_type('The tps is the total time of the bar.\nThe symbol ("#" by default) is used in the bar.\nAnd the lenght (10 by default) désigne le nombre de symboles de la barre.\n', tps_btw_letters=0.035)
-            input('')
-            slow_type('Exemple:\n', tps_btw_letters=0.035)
+            clear()
+            cprint("Nécessite TIME", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "Show a loading_bar of n caract with the actual step on the coast and the pourcentage of chargement, le tout dans un temps donné.\n",
+                tps_btw_letters=0.035,
+            )
+            slow_type("Here how it works (14):   \n", tps_btw_letters=0.035)
+            input("")
+            print(
+                f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}tps{RESET}{LOG_DISCRET},{RESET} {JAUNE}symbol{RESET}{LOG_DISCRET}={RESET}{BLEU}'#'{RESET}{LOG_DISCRET},{RESET} {JAUNE}lenght{RESET}{LOG_DISCRET}={RESET}{VERT}10{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                'The tps is the total time of the bar.\nThe symbol ("#" by default) is used in the bar.\nAnd the lenght (10 by default) désigne le nombre de symboles de la barre.\n',
+                tps_btw_letters=0.035,
+            )
+            input("")
+            slow_type("Exemple:\n", tps_btw_letters=0.035)
             loading_bar(2)
-            choix = input('You want to make your own?:  ').strip().lower()
+            choix = input("You want to make your own?:  ").strip().lower()
             if choix in continuer:
-                tps = valid_input('float', 'loading_bar(tps=', info=True)
-                symbol = str(input(f'loading_bar(tps={tps}, symbol='))
+
+                tps = valid_input(
+                    "float",
+                    f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}tps{RESET}{LOG_DISCRET}={RESET}{VERT}",
+                    info=True,
+                )
+                symbol = str(
+                    input(
+                        f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}tps{RESET}{LOG_DISCRET}={RESET}{VERT}{tps}{RESET}{LOG_DISCRET}, {RESET}{JAUNE}symbol{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                    )
+                )
                 if not symbol:
-                    symbol = '#'
-                lenght = valid_input(phrase=f'loading_bar(tps={tps}, symbol={symbol}, lenght=', info=True)
+                    symbol = "#"
+                lenght = valid_input(
+                    phrase=f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}tps{RESET}{LOG_DISCRET}={RESET}{VERT}{tps}{RESET}{LOG_DISCRET}, {RESET}{JAUNE}symbol{RESET}{LOG_DISCRET}={RESET}{BLEU}'{symbol}'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}lenght{RESET}{LOG_DISCRET}={RESET}{VERT}",
+                    info=True,
+                )
                 if not lenght:
-                    lenght=10
-                slow_type('Here your build\n', tps_btw_letters=0.035)
-                print(f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}{tps}{RESET}{LOG_DISCRET},{RESET} {JAUNE}{symbol}{RESET}{LOG_DISCRET},{RESET} {JAUNE}{lenght}{RESET}{LOG_DISCRET}){RESET}\n")
-                input('')
+                    lenght = 10
+                slow_type("Here your build\n", tps_btw_letters=0.035)
+                print(
+                    f"{ROSE_FLASH}loading_bar{RESET}{LOG_DISCRET}({RESET}{JAUNE}{tps}{RESET}{LOG_DISCRET},{RESET} {JAUNE}{symbol}{RESET}{LOG_DISCRET},{RESET} {JAUNE}{lenght}{RESET}{LOG_DISCRET}){RESET}\n"
+                )
+                input("")
                 loading_bar(tps, symbol, lenght)
-                input('')
+                input("")
                 return
             return
-        
+
         case "clear_lines()":
-            pass
+            clear()
+            cprint("Nécessite SYS, RANDOM", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+            slow_type(
+                "La fonction clear_lines(...) permet comme la fonction clear() de supprimer des lignes du terminal.\nCependant ici c'est un nombre donné des lignes et pas tout le terminal.\n",
+                tps_btw_letters=0.035,
+            )
+            slow_type("Here how it works (3):\n")
+            input("")
+            print(
+                f"{ROSE_FLASH}clear_lines{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}4{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The parameter n (1 by default) désigne le nb de lignes à suppr.\n",
+                tps_btw_letters=0.035,
+            )
+            print("")
+            slow_type("Exemple:\n", 0.5)
+            input("")
+            clear()
+            for _ in range(10):
+                print(random_password(25), end="\n")
+            print("")
+            n = valid_input(
+                info=True,
+                phrase=f"{ROSE_FLASH}clear_lines{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}",
+            )
+            clear_lines(n + 2)
+            input("")
+
         case "faire_titre_section()":
-            pass
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+            slow_type(
+                "La fonction faire_titre_section(...)  fait une ligne de symbols et centre le texte avant de refaire une ligne de symbols de n longueur\n",
+                tps_btw_letters=0.035,
+            )
+            slow_type("Here how it works (5):\n", tps_btw_letters=0.035)
+            input("")
+            print(
+                f"{ROSE_FLASH}faire_titre_section{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET},{RESET} {JAUNE}symbole{RESET}{LOG_DISCRET}={RESET}{BLEU}'-'{RESET}{LOG_DISCRET},{RESET} {JAUNE}largeur{RESET}{LOG_DISCRET}={RESET}{VERT}60{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                'The texte parameter is simply the text that will be written on the middle.\nThe symbole parameter ("-" by default) désigne what will be repeted on the line sur et dessous le texte.\nThe largeur parameter (60 by default) is the lenght of the line and on how much the text will be centred.\n',
+                tps_btw_letters=0.035,
+            )
+            slow_type("Exemple:\n", 0.5)
+            input("")
+            faire_titre_section("Prince-Elric 33!")
+            input("")
+            clear()
+            choix = input("Do you make to make your own? (y/n):  ").strip().lower()
+            if choix in continuer:
+                clear()
+                text = (
+                    input(
+                        f"{ROSE_FLASH}faire_titre_section{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                    )
+                    .strip()
+                    .lower()
+                    .rstrip(")")
+                )
+                if not text:
+                    text = "Prince-Elric 33!"
+                symbole = (
+                    input(
+                        f"{ROSE_FLASH}faire_titre_section{RESET}{LOG_DISCRET}({RESET}{JAUNE}text{RESET}{LOG_DISCRET}={RESET}{BLEU}'{text}'{RESET}{LOG_DISCRET},{RESET} {JAUNE}symbole{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                    )
+                    .strip()
+                    .lower()
+                    .rstrip(")")
+                )
+                if not symbole:
+                    symbole = "-"
+                lenght = valid_input(
+                    info=True,
+                    phrase=f"{ROSE_FLASH}faire_titre_section{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}={RESET}{BLEU}'{text}'{RESET}{LOG_DISCRET},{RESET} {JAUNE}symbole{RESET}{LOG_DISCRET}={RESET}{BLEU}'{symbole}'{RESET}{LOG_DISCRET},{RESET} {JAUNE}largeur{RESET}{LOG_DISCRET}={RESET}{VERT}",
+                )
+                if not lenght:
+                    lenght = 60
+                clear()
+                slow_type("Here your build:\n", tps_btw_letters=0.027)
+                print(
+                    f"{ROSE_FLASH}faire_titre_section{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}={RESET}{BLEU}'{text}'{RESET}{LOG_DISCRET},{RESET} {JAUNE}symbole{RESET}{LOG_DISCRET}={RESET}{BLEU}'{symbole}'{RESET}{LOG_DISCRET},{RESET} {JAUNE}largeur{RESET}{LOG_DISCRET}={RESET}{VERT}{lenght}{RESET}{LOG_DISCRET}){RESET}\n"
+                )
+                input("")
+                faire_titre_section(text, symbole, lenght)
+                print("")
+                input("")
+            return
+
         case "menu_options()":
-            pass
+            clear()
+            cprint("Nécessite MSVCRT", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "The menu_options(...) is used tens times in this code to create a real architecture of the code.\nWith this focntion we can easely navigate into diff section and make choice very visuals.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type("Here how it works (25):  \n")
+            input("")
+            print(
+                f"{ROSE_FLASH}menu_options{RESET}{LOG_DISCRET}({RESET}{JAUNE}options{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The options parameter is a list of every disponibles options\n",
+                tps_btw_letters=0.03,
+            )
+            choix = input("Do you want to make your own? (y/n):     ").strip().lower()
+            if choix in continuer:
+                options = []
+                while True:
+                    opt = (
+                        input(
+                            f'Add an option ({len(options)} already)("q" to quit):   '
+                        )
+                        .strip()
+                        .lower()
+                    )
+                    if opt in exit:
+                        break
+                    options.append(f"{len(options)+1}. {opt.capitalize()}")
+                options.append(f"{len(options)+1}. Exit")
+                menu_options(options)
+
 
         case "enlever_accents()":
-            pass
+            clear()
+            cprint("Nécessite UNICODEDATA", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type("The enlever_accents(...) fonction just make what she means, on an entered string she deletes the special things and return\n", tps_btw_letters=0.035)
+            slow_type("Here how it works (5):   ")
+            input('')
+            print('')
+            print(f"{ROSE_FLASH}enlever_accents{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}){RESET}\n")
+            stringg = input("Enter a texte with accents...    ")
+            if not stringg:
+                stringg = 'azerghbéfdhàùô'
+                print(stringg)
+            print(enlever_accents(stringg))
+            input('')
+
         case "formate_collections()":
             pass
         case "fullmaj()":
@@ -536,6 +713,7 @@ def info(fonction: str):
 
         case _:
             cprint("Invallid enter", ERROR)
+            input('')
 
 
 def menu_principal():
@@ -606,19 +784,19 @@ def menu_principal():
                 )
                 match fonct_term:
                     case "1. clear()":
-                        info('clear')
+                        info("clear()")
                     case "2. cprint(texte, color)":
-                        info('cprint()')
+                        info("cprint()")
                     case "3. slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET)":
-                        info('slow_type()')
+                        info("slow_type()")
                     case "4. loading_bar(tps, symbol='#', lenght=10)":
-                        pass
+                        info("loading_bar()")
                     case "5. clear_lines(n=1)":
-                        pass
+                        info("clear_lines()")
                     case "6. faire_titre_section(texte, symbole='-', largeur=60)":
-                        pass
+                        info("faire_titre_section()")
                     case "7. menu_options(options)":
-                        pass
+                        info("menu_options()")
                     case "8. Exit":
                         return
 
@@ -636,12 +814,13 @@ def menu_principal():
                         "6. random_username(n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True)",
                         "7. random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)",
                         "8. abreviation(word='')",
-                        "9. seq(txt='')" "10. Exit",
+                        "9. seq(txt='')",
+                        "10. Exit",
                     ]
                 )
                 match fonct_text:
                     case "1. enlever_accents(texte: str)":
-                        pass
+                        info("enlever_accents()")
                     case "2. formate_collections(*args)":
                         pass
                     case "3. fullmaj(txt)":
@@ -841,9 +1020,9 @@ def menu_principal():
                 return
 
 
-# faire_titre_section("Tools Menu!")
-# time.sleep(0.4)
-# menu_principal()
+faire_titre_section("Tools Menu!")
+time.sleep(0.4)
+menu_principal()
 
 
-info("loading_bar()")
+# info("faire_titre_section()")
