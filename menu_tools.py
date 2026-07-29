@@ -613,42 +613,54 @@ def info(fonction: str):
                 options.append(f"{len(options)+1}. Exit")
                 menu_options(options)
 
-
         case "enlever_accents()":
             clear()
             cprint("Nécessite UNICODEDATA", LOG_DISCRET)
             time.sleep(0.5)
             clear()
 
-            slow_type("The enlever_accents(...) fonction just make what she means, on an entered string she deletes the special things and return\n", tps_btw_letters=0.035)
+            slow_type(
+                "The enlever_accents(...) fonction just make what she means, on an entered string she deletes the special things and return\n",
+                tps_btw_letters=0.035,
+            )
             slow_type("Here how it works (5):   ")
-            input('')
-            print('')
-            print(f"{ROSE_FLASH}enlever_accents{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}){RESET}\n")
+            input("")
+            print("")
+            print(
+                f"{ROSE_FLASH}enlever_accents{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             stringg = input("Enter a texte with accents...    ")
             if not stringg:
-                stringg = 'azerghbéfdhàùô'
+                stringg = "azerghbéfdhàùô"
                 print(stringg)
             print(enlever_accents(stringg))
-            input('')
+            input("")
 
         case "formate_collections()":
             clear()
             cprint("Nécessite RIEN", LOG_DISCRET)
             time.sleep(0.5)
             clear()
-            
-            slow_type("The fonction formate_collections(...) just delete the born of the entered collection an ' .\n", tps_btw_letters=0.03)
+
+            slow_type(
+                "The fonction formate_collections(...) just delete the born of the entered collection an ' .\n",
+                tps_btw_letters=0.03,
+            )
             slow_type("Here how it works (6):   \n")
-            input('')
-            print(f"{ROSE_FLASH}formate_collections{RESET}{LOG_DISCRET}({RESET}{JAUNE}*args{RESET}{LOG_DISCRET}){RESET}\n")
-            slow_type("The *args means that we enter multiple things by count as one.\n", tps_btw_letters=0.03)
+            input("")
+            print(
+                f"{ROSE_FLASH}formate_collections{RESET}{LOG_DISCRET}({RESET}{JAUNE}*args{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The *args means that we enter multiple things by count as one.\n",
+                tps_btw_letters=0.03,
+            )
             slow_type("Exemple:    ", tps_btw_letters=0.03)
-            input('')
+            input("")
             clear()
-            print(f'BEFORE: countinuer -> {continuer}')
-            print(f'AFTER: countinuer -> {formate_collections(continuer)}')
-            input('')
+            print(f"BEFORE: countinuer -> {continuer}")
+            print(f"AFTER: countinuer -> {formate_collections(continuer)}")
+            input("")
 
         case "fullmaj()":
             clear()
@@ -656,21 +668,34 @@ def info(fonction: str):
             time.sleep(0.5)
             clear()
 
-            slow_type("La fonction fullmaj(...) renvoie le text entré comme si le mode de MAJ avait été défini différemment\n", tps_btw_letters=0.035)
+            slow_type(
+                "La fonction fullmaj(...) renvoie le text entré comme si le mode de MAJ avait été défini différemment\n",
+                tps_btw_letters=0.035,
+            )
             slow_type("Here how it works (26):\n", tps_btw_letters=0.035)
-            input('')
-            print(f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}){RESET}\n")
+            input("")
+            print(
+                f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             slow_type("Exemple:     ")
-            input('')
+            input("")
             clear()
-            texte = input(f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}").strip().rstrip(')')
+            texte = (
+                input(
+                    f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                )
+                .strip()
+                .rstrip(")")
+            )
             if not texte:
-                texte = 'Prince-Elric 33!'
+                texte = "Prince-Elric 33!"
             clear()
-            print(f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}'{texte}'{RESET}{LOG_DISCRET}){RESET}\n")
-            print(f'BEFORE -> {texte}')
-            print(f'AFTER -> {fullmaj(texte)}')
-            input('')
+            print(
+                f"{ROSE_FLASH}fullmaj{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}'{texte}'{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            print(f"BEFORE -> {texte}")
+            print(f"AFTER -> {fullmaj(texte)}")
+            input("")
 
         case "format_number()":
             clear()
@@ -678,29 +703,255 @@ def info(fonction: str):
             time.sleep(0.5)
             clear()
 
-            slow_type("La fonction format_number(...) renvoie le nombre formaté (sequencé en pattern de 3)\n", tps_btw_letters=0.035)
+            slow_type(
+                "La fonction format_number(...) renvoie le nombre formaté (sequencé en pattern de 3)\n",
+                tps_btw_letters=0.035,
+            )
             slow_type("Here how it works (1):\n", tps_btw_letters=0.035)
-            input('')
-            print(f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}){RESET}\n")
+            input("")
+            print(
+                f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             slow_type("Exemple:     ")
-            input('')
+            input("")
             clear()
-            num = input(f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{BLEU}").strip().rstrip(')')
+            num = (
+                input(
+                    f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                )
+                .strip()
+                .rstrip(")")
+            )
             if not num:
                 num = random.randrange(100000, pow(10, 9))
             clear()
-            print(f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{BLEU}'{num}'{RESET}{LOG_DISCRET}){RESET}\n")
-            print(f'BEFORE -> {num}')
-            print(f'AFTER -> {format_number(num)}')
-            input('')
-
+            print(
+                f"{ROSE_FLASH}format_number{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{BLEU}'{num}'{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            print(f"BEFORE -> {num}")
+            print(f"AFTER -> {format_number(num)}")
+            input("")
 
         case "random_password()":
-            pass
+            clear()
+            cprint("Nécessite STRING, RANDOM", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "La fonction random_password(...) crée des mots-de-passe de taille pré-définie en choisissant d'inclure les Majs, les Mins, les Digits, les Punct°.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type("Here how it works (17):  \n", tps_btw_letters=0.03)
+            input("")
+            print(
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}10{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The n parameter (10 by default) is the size of the password that will be create.\nThe Maj parameter (True by default) shows if there will be uppercase in the password.\nThe digits parameter (True by default) shows if there will be digits in the password.\nThe punctuation parameter (True by default) shows if there will be punctuation_signs in the password.\nThe space parameter (True by default) shows if there will be spaces ' ' in the password.\nThe tiret_bas parameter (False by default) shows if there will be '_' in the password\n",
+                tps_btw_letters=0.03,
+            )
+            input("Let's build yours!  ")
+            clear()
+            print(f"True -> {formate_collections(continuer)}")
+            n = valid_input(
+                "int",
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}",
+                True,
+            )
+            clear()
+            Maj = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            digits = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            punct = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            space = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            tiret_bas = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            slow_type(f"Here's your build:\n", tps_btw_letters=0.03)
+            print(
+                f"{ROSE_FLASH}random_password{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}{tiret_bas}{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            input("")
+            print(random_username(n, Maj, digits, punct, space, tiret_bas))
+            input("")
+
         case "random_username()":
-            pass
+            clear()
+            cprint("Nécessite STRING, RANDOM", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "La fonction random_username(...) crée des mots-de-passe de taille pré-définie en choisissant d'inclure les Majs, les Mins, les Digits, les Punct°.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type(
+                "Elle marche comme la fonction random_password et s'appuie même totalement dessus.",
+                tps_btw_letters=0.03,
+            )
+            choix = (
+                input("\nVoir la docu de random_password? (y/n):    ").lower().strip()
+            )
+            if choix in continuer:
+                info("random_password()")
+            clear()
+            slow_type(
+                "Here how it works (random_username)(1):  \n", tps_btw_letters=0.03
+            )
+            input("")
+            print(
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}10{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The n parameter (7 by default) is the size of the password that will be create.\nThe Maj parameter (True by default) shows if there will be uppercase in the password.\nThe digits parameter (True by default) shows if there will be digits in the password.\nThe punctuation parameter (False by default) shows if there will be punctuation_signs in the password.\nThe space parameter (False by default) shows if there will be spaces ' ' in the password.\nThe tiret_bas parameter (True by default) shows if there will be '_' in the password\n",
+                tps_btw_letters=0.03,
+            )
+            input("Let's build yours!  ")
+            clear()
+            print(f"True -> {formate_collections(continuer)}")
+            n = valid_input(
+                "int",
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}",
+                True,
+            )
+            clear()
+            Maj = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            digits = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            punct = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            space = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            tiret_bas = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            slow_type(f"Here's your build:\n", tps_btw_letters=0.03)
+            print(
+                f"{ROSE_FLASH}random_username{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}{tiret_bas}{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            input("")
+            print(random_username(n, Maj, digits, punct, space, tiret_bas))
+            input("")
+
         case "random_string()":
-            pass
+            clear()
+            cprint("Nécessite STRING, RANDOM", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "La fonction random_string(...) crée des mots-de-passe de taille pré-définie en choisissant d'inclure les Majs, les Mins, les Digits, les Punct°.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type(
+                "Elle marche comme la fonction random_password et s'appuie même totalement dessus.",
+                tps_btw_letters=0.03,
+            )
+            choix = (
+                input("\nVoir la docu de random_password? (y/n):    ").lower().strip()
+            )
+            if choix in continuer:
+                info("random_password()")
+            clear()
+            slow_type("Here how it works (random_string)(1):  \n", tps_btw_letters=0.03)
+            input("")
+            print(
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}10{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}True{RESET}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The n parameter (7 by default) is the size of the password that will be create.\nThe Maj parameter (True by default) shows if there will be uppercase in the password.\nThe digits parameter (True by default) shows if there will be digits in the password.\nThe punctuation parameter (False by default) shows if there will be punctuation_signs in the password.\nThe space parameter (True by default) shows if there will be spaces ' ' in the password.\nThe tiret_bas parameter (False by default) shows if there will be '_' in the password\n",
+                tps_btw_letters=0.03,
+            )
+            input("Let's build yours!  ")
+            clear()
+            print(f"True -> {formate_collections(continuer)}")
+            n = valid_input(
+                "int",
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}",
+                True,
+            )
+            clear()
+            Maj = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            digits = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            punct = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            space = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            tiret_bas = valid_input(
+                "bool",
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}",
+                info=True,
+            )
+            clear()
+            slow_type(f"Here's your build:\n", tps_btw_letters=0.03)
+            print(
+                f"{ROSE_FLASH}random_string{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}{n}{RESET}{LOG_DISCRET},{RESET} {JAUNE}Maj{RESET}{LOG_DISCRET}={RESET}{BLEU}{Maj}{RESET}{LOG_DISCRET},{RESET} {JAUNE}digits{RESET}{LOG_DISCRET}={RESET}{BLEU}{digits}{RESET}{LOG_DISCRET},{RESET} {JAUNE}punctuation{RESET}{LOG_DISCRET}={RESET}{BLEU}{punct}{LOG_DISCRET},{RESET} {JAUNE}space{RESET}{LOG_DISCRET}={RESET}{BLEU}{space}{LOG_DISCRET},{RESET} {JAUNE}tiret_bas{RESET}{LOG_DISCRET}={RESET}{BLEU}{tiret_bas}{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            input("")
+            print(random_string(n, Maj, digits, punct, space, tiret_bas))
+            input("")
+
         case "abreviation()":
             pass
         case "seq()":
@@ -770,7 +1021,7 @@ def info(fonction: str):
 
         case _:
             cprint("Invallid enter", ERROR)
-            input('')
+            input("")
 
 
 def menu_principal():
@@ -885,11 +1136,11 @@ def menu_principal():
                     case "4. format_number(n)":
                         info("format_number()")
                     case "5. random_password(n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False)":
-                        pass
+                        info("random_password()")
                     case "6. random_username(n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True)":
-                        pass
+                        info("random_username()")
                     case "7. random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)":
-                        pass
+                        info("random_string()")
                     case "8. abreviation(word='')":
                         pass
                     case "9. seq(txt='')":
