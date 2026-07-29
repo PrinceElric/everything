@@ -1,5 +1,5 @@
 from tools import *
-import time, random, string
+import time, random, string, subprocess
 
 
 def menu_ANSI():
@@ -904,23 +904,110 @@ def info(fonction: str):
             time.sleep(0.5)
             clear()
 
-            slow_type("La fonction seq(...) renvoie le nombre max de chaine continue dans le texte.\n", tps_btw_letters=0.03)
+            slow_type(
+                "La fonction seq(...) renvoie le nombre max de chaine continue dans le texte.\n",
+                tps_btw_letters=0.03,
+            )
             slow_type("Here how it works (14):  \n", tps_btw_letters=0.03)
-            input('')
-            print(f"{ROSE_FLASH}seq{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}''{RESET}{LOG_DISCRET}){RESET}\n")
+            input("")
+            print(
+                f"{ROSE_FLASH}seq{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET}={RESET}{BLEU}''{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             slow_type("Exemple: ", tps_btw_letters=0.03)
-            input('')
+            input("")
             clear()
-            text = ''.join(random.choices(['A', 'B', 'C', 'D', 'E'], k=90))
-            print(f'Text => {text}')
-            print(f'Seq => {seq(text)}')
-            input('')
-
+            text = "".join(random.choices(["A", "B", "C", "D", "E"], k=90))
+            print(f"Text => {text}")
+            print(f"Seq => {seq(text)}")
+            input("")
 
         case "copier_txt()":
-            pass
+            clear()
+            cprint("Nécessite SUBPROCESS", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "La fonction copier_txt(...) copie le texte entré dans le presse papier.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type("Here how it works (1):   ", tps_btw_letters=0.03)
+            input("")
+            print(
+                f"\n{ROSE_FLASH}copier_txt{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type("The text entered is directly copied in the paper-press.\n")
+            input("Exemple:  ")
+            clear()
+            txt = (
+                input(
+                    f"{ROSE_FLASH}copier_txt{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                )
+                .strip()
+                .rstrip(")")
+            )
+            clear()
+            print(
+                f"{RESET}Here your build:\n\n\t{ROSE_FLASH}copier_txt{RESET}{LOG_DISCRET}({RESET}{JAUNE}texte{RESET}{LOG_DISCRET}={RESET}{BLEU}{txt}{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            print("")
+            loading_bar(1.67)
+            copier_txt(txt)
+            cprint("Copie de text successfully executed!", SUCCESS)
+            input("")
+
         case "detect_shutdown()":
-            pass
+            clear()
+            cprint("Nécessite OS", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "detect_shutdown() launch two times the command for the unactivation of the system stop.\n",
+                tps_btw_letters=0.03,
+            )
+            print(f"\n\t{ROSE_FLASH}detect_shutdown{RESET}{LOG_DISCRET}(){RESET}\n")
+            input(f"\n{LOG_DISCRET}Exemples:  {RESET}")
+            shutdown_A()
+            clear_lines()
+            detect_shutdown()
+            input("")
+            cprint(
+                "You see there that the line 'Le système n’étant pas en cours d’arrêt, il est impossible d’annuler l’arrêt du système.(1116)'\nwas repeated two times cause there was not stop system defined.",
+                LOG_DISCRET,
+            )
+            input("")
+            clear()
+            for i in range(1, 6):
+                if i == 1:
+                    a = RESET
+                elif i == 2:
+                    a = JAUNE_FLASH
+                elif i == 3:
+                    a = ROUGE_FLASH
+                elif i == 4:
+                    a = ERROR
+                print(
+                    f"\rBut what would happens if we launch a {a}system stop{RESET}",
+                    end="",
+                )
+                time.sleep(0.7)
+            cmd = subprocess.Popen(
+                "cmd.exe", creationflags=subprocess.CREATE_NEW_CONSOLE
+            )
+            time.sleep(0.5)
+            cmd.kill()
+            os.system("shutdown -s -t 20")
+            copier_txt("shutdown -a")
+            input("\nunactive:  ")
+            clear()
+            detect_shutdown()
+            cprint(
+                "\nHere the line was print just once cause the first was really to cancel and the other to show the execution.\n",
+                LOG_DISCRET,
+            )
+            input("")
+
         case "shutdown_A()":
             pass
         case "hach_word()":
@@ -1104,7 +1191,7 @@ def menu_principal():
                     case "8. abreviation(word='')":
                         info("abreviation()")
                     case "9. seq(txt='')":
-                        info('seq()')
+                        info("seq()")
                     case "10. Exit":
                         return
 
@@ -1128,9 +1215,9 @@ def menu_principal():
                 )
                 match fonct_sys:
                     case "1. copier_txt(texte)":
-                        pass
+                        info("copier_txt()")
                     case "2. detect_shutdown()":
-                        pass
+                        info("detect_shutdown()")
                     case "3. shutdown_A()":
                         pass
                     case "4. hach_word(word)":
