@@ -953,7 +953,41 @@ def info(fonction: str):
             input("")
 
         case "abreviation()":
-            pass
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "La fonction abreviation(...) sert à abréger une chaine de caractère -> En fonction de sa taille et de la position de ses lettres.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type("Here how it works (15):   \n", tps_btw_letters=0.03)
+            input("")
+            print(
+                f"{ROSE_FLASH}abreviation{RESET}{LOG_DISCRET}({RESET}{JAUNE}word{RESET}{LOG_DISCRET}={RESET}{BLEU}''{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The fonction define word on nothing by default, if when launched she sees that word is empty she asks for an enter.\nAfter that she look at the 'word', if he has space she makes diff abrev for each word else just one.\nIf the 'word' is shorter or equal to 2caract the word won't be changed.\n",
+                tps_btw_letters=0.035,
+            )
+            input("Exemple:    ")
+            clear()
+            word = (
+                input(
+                    f"{ROSE_FLASH}abreviation{RESET}{LOG_DISCRET}({RESET}{JAUNE}word{RESET}{LOG_DISCRET}={RESET}{BLEU}"
+                )
+                .strip()
+                .rstrip(")")
+            )
+            clear()
+            print(
+                f'\n {RESET}{LOG_DISCRET}Here your build{RESET}\n{ROSE_FLASH}abreviation{RESET}{LOG_DISCRET}({RESET}{JAUNE}word{RESET}{LOG_DISCRET}={RESET}{BLEU}"{word}"{RESET}{LOG_DISCRET}){RESET}\n'
+            )
+            print(f"BEFORE: {word}")
+            print(f"AFTER: {abreviation(word)}")
+            input("")
+
         case "seq()":
             pass
 
@@ -1142,7 +1176,7 @@ def menu_principal():
                     case "7. random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)":
                         info("random_string()")
                     case "8. abreviation(word='')":
-                        pass
+                        info("abreviation()")
                     case "9. seq(txt='')":
                         pass
                     case "10. Exit":
