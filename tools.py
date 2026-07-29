@@ -423,7 +423,7 @@ def cprint(texte, color):
     print(f"{color}{texte}{RESET}")
 
 
-def slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET):
+def slow_type(texte, tps_total=0, tps_btw_letters=0.03, color=LOG_DISCRET):
     """Print string character by character with tiny delay. and color if you want"""
     for letter in texte:
         if tps_total:
@@ -443,14 +443,14 @@ def loading_bar(tps, symbol="#", lenght=10):
         barre = symbol * i
         vide = "." * (lenght - i)
 
-        clear()
+        clear_lines()
         cprint(f"[{barre}{vide}]    {i}/{lenght}  ({pourcentage:.1f}%)", LOG_DISCRET)
         time.sleep(tps / lenght)
 
-    clear_lines(1)
+    clear_lines()
     cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
-    time.sleep(0.3)
-    clear_lines(1)
+    time.sleep(0.4)
+    clear_lines()
 
 
 def clear_lines(n=1):
@@ -641,7 +641,7 @@ def copier_txt(texte):
 
 
 def detect_shutdown():
-    """shutdown -a twice with sleep of 0.4 btw the two"""
+    """shutdown -a two times with sleep of 0.4 btw the two"""
     for _ in range(2):
         os.system("shutdown -a")
         time.sleep(0.4)
