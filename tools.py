@@ -358,7 +358,43 @@ ALERTE_CRITIQUE = "\033[97m" + FOND_ROUGE + GRAS  # Texte Blanc sur Fond Rouge
 continuer = ("continue", "c", "cont", "go", "next", "1", "y", "yes", "o", "oui")
 exit = ("exit", "ex", "quitter", "quit", "q", "0", "n", "no", "non")
 others = ("other", "o", "autre")
-colors = ('BARR2', 'SURLIGN2_BLANC', 'NOIR_INVISIBLE', 'SOULIGN2', 'ITALIC', 'GRAS', 'RESET', 'CYAN', 'ROSE', 'BLEU', 'JAUNE', 'VERT', 'GRIS', 'ROUGE', 'CYAN_FLASH', 'ROSE_FLASH', 'BLEU_FLASH', 'JAUNE_FLASH', 'VERT_FLASH', 'ROUGE_FLASH', 'FOND_GRIS', 'FOND_CYAN', 'FOND_ROSE', 'FOND_BLEU', 'FOND_JAUNE', 'FOND_VERT', 'FOND_ROUGE', 'FOND_NOIR', 'ALERTE_CRITIQUE', 'LOG_DISCRET', 'MENU_ACTIF', 'STYLE_TITRE', 'SUCCESS', 'WARNING', 'ERROR')
+colors = (
+    "BARR2",
+    "SURLIGN2_BLANC",
+    "NOIR_INVISIBLE",
+    "SOULIGN2",
+    "ITALIC",
+    "GRAS",
+    "RESET",
+    "CYAN",
+    "ROSE",
+    "BLEU",
+    "JAUNE",
+    "VERT",
+    "GRIS",
+    "ROUGE",
+    "CYAN_FLASH",
+    "ROSE_FLASH",
+    "BLEU_FLASH",
+    "JAUNE_FLASH",
+    "VERT_FLASH",
+    "ROUGE_FLASH",
+    "FOND_GRIS",
+    "FOND_CYAN",
+    "FOND_ROSE",
+    "FOND_BLEU",
+    "FOND_JAUNE",
+    "FOND_VERT",
+    "FOND_ROUGE",
+    "FOND_NOIR",
+    "ALERTE_CRITIQUE",
+    "LOG_DISCRET",
+    "MENU_ACTIF",
+    "STYLE_TITRE",
+    "SUCCESS",
+    "WARNING",
+    "ERROR",
+)
 
 
 # -------------------------------------------------------------------------------
@@ -561,10 +597,15 @@ def random_string(
 def abreviation(word=""):
     """return word abrevated, first letter + len + last letter"""
     if not word:
-        word = str(input("Enter a word!:    ")).lower()
+        word = str(input("Enter a word!:    ")).lower().strip()
     if not word.isalpha() and " " not in word:
         cprint("Invalid enter!", ERROR)
         abreviation()
+    if len(word.split()) != len(word):
+        texte = ""
+        for i in word.split():
+            texte += i[0] + str(len(i)) + i[len(i) - 1] + " "
+        return texte
     if len(word) > 2:
         return word[0] + str(len(word)) + word[len(word) - 1]
     else:
@@ -803,7 +844,7 @@ def valid_input(type="int", phrase="", info=False):
         phrase = phrase or "enter a number"
         while True:
             if info:
-                entree = input(f"{phrase}").strip().rstrip(')')
+                entree = input(f"{phrase}").strip().rstrip(")")
             else:
                 entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip()
             try:
@@ -816,7 +857,7 @@ def valid_input(type="int", phrase="", info=False):
     elif type == "bool":
         phrase = phrase or "enter True/Yes or False/No"
         if info:
-            entree = input(f"{phrase}").strip().rstrip(')').lower()
+            entree = input(f"{phrase}").strip().rstrip(")").lower()
         else:
             entree = input(f"{SOULIGN2}{phrase}:{RESET}    ").strip().lower()
         return entree in continuer
