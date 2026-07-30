@@ -1043,6 +1043,8 @@ def info(fonction: str):
             pass
         case "fibonacci()":
             pass
+        case "A1Z26()":
+            pass
 
         case "pendu_game()":
             pass
@@ -1286,7 +1288,8 @@ def menu_principal():
                         "2. brute_force()",
                         "3. morse(txt='')",
                         "4. fibonacci()",
-                        "5. Exit",
+                        "5. A1Z26(direct: str=False)"
+                        "6. Exit",
                     ]
                 )
                 match fonct_crypto:
@@ -1298,7 +1301,9 @@ def menu_principal():
                         pass
                     case "4. fibonacci()":
                         pass
-                    case "5. Exit":
+                    case "5. A1Z26(direct: str=False)":
+                        pass
+                    case "6. Exit":
                         return
 
         def menu_specifik():
