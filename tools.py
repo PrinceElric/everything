@@ -653,7 +653,7 @@ def shutdown_A():
 
 
 def hach_word(word):
-    """genere the hach of a word and return a 128 carac string in hexadecimal"""
+    """genere the hach of a word and return a 64 carac string in hexadecimal"""
     return hashlib.sha256(word.encode()).hexdigest()
 
 
@@ -663,7 +663,7 @@ def shutdown(temps=40, kill=False):
     def load_config(chemin="config.json"):
         """Charge la configuration JSON en toute sécurité. Renvoie un dict vide si échec."""
         if not os.path.exists(chemin):
-            return {}
+            return {"password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"}
         try:
             with open(chemin, "r", encoding="utf-8") as f:
                 return json.load(f)
@@ -790,6 +790,7 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
+# shutdown(kill=True)
 
 _timers = {}
 
@@ -1829,7 +1830,7 @@ def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
 
     def affichage():
         clear()
-        faire_titre_section("Word Correspondance Game!")
+        faire_titre_section("Word Guessing Game!")
         print("")
         for i in alphabet:
             if i in letters_green:
@@ -1889,7 +1890,8 @@ def word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10):
                 return
             elif enter.lower() == "re":
                 cprint("Restarting the game.", WARNING)
-                exec(open(__file__).read())
+                time.sleep(0.3)
+                word_guess_game()
             elif enter == "1":
                 cprint(f"The word was: {SURLIGN2_BLANC}{word}", ERROR)
                 return
