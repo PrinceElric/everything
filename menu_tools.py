@@ -494,7 +494,7 @@ def info(fonction: str):
             slow_type("Here how it works (3):\n")
             input("")
             print(
-                f"{ROSE_FLASH}clear_lines{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}4{RESET}{LOG_DISCRET}){RESET}\n"
+                f"{ROSE_FLASH}clear_lines{RESET}{LOG_DISCRET}({RESET}{JAUNE}n{RESET}{LOG_DISCRET}={RESET}{VERT}1{RESET}{LOG_DISCRET}){RESET}\n"
             )
             slow_type(
                 "The parameter n (1 by default) désigne le nb de lignes à suppr.\n",
@@ -1009,9 +1009,43 @@ def info(fonction: str):
             input("")
 
         case "shutdown_A()":
-            pass
+            clear()
+            cprint("Nécessite OS", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "Really not usefull, just shutdown -a. Nothing more, the funct has for goal of make the call easier.\n"
+            )
+            input("")
+
         case "hach_word()":
-            pass
+            clear()
+            cprint("Nécessite HASHLIB", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type("return the hach of a word with the hach_word(...) fucntion!\n")
+            slow_type("\nHere how it works (1):   ")
+            input("")
+            print(
+                f"\n{ROSE_FLASH}hach_word{RESET}{LOG_DISCRET}({RESET}{JAUNE}word{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type("Exemple:  ")
+            input("")
+            clear_lines(3)
+            print("\n")
+            word = (
+                input(
+                    f"\t{ROSE_FLASH}hach_word{RESET}{LOG_DISCRET}({RESET}{JAUNE}word{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}"
+                )
+                .strip()
+                .rstrip(")")
+            )
+            print(f"\nBEFORE => {word}")
+            print(f"AFTER => {hach_word(word)}")
+            input("")
+
         case "shutdown()":
             pass
         case "start_timer()":
@@ -1221,19 +1255,19 @@ def menu_principal():
                     case "2. detect_shutdown()":
                         info("detect_shutdown()")
                     case "3. shutdown_A()":
-                        pass
+                        info("shutdown_A()")
                     case "4. hach_word(word)":
-                        pass
+                        info("hach_word()")
                     case "5. shutdown(temps=40, kill=False)":
-                        pass
+                        info("shutdown()")
                     case "6. start_timer(nom='default', entrées=False)":
-                        pass
+                        info("start_timer()")
                     case "7. stop_timer(nom='default', entrées=False)":
-                        pass
+                        info("stop_timer()")
                     case "8. human_time(n)":
-                        pass
+                        info("human_time()")
                     case "9. valid_input(type='int', phrase='')":
-                        pass
+                        info("valid_input()")
                     case "10. Exit":
                         return
 
@@ -1288,8 +1322,7 @@ def menu_principal():
                         "2. brute_force()",
                         "3. morse(txt='')",
                         "4. fibonacci()",
-                        "5. A1Z26(direct: str=False)"
-                        "6. Exit",
+                        "5. A1Z26(direct: str=False)" "6. Exit",
                     ]
                 )
                 match fonct_crypto:
