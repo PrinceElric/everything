@@ -3,7 +3,7 @@ import time, sys
 name, just_namee, a, b = "", "", 0, 0
 
 
-def azer():
+def name():
     global name, just_namee, a, b
     a, b = 0, 0
     name = str(input("Enter your name: "))
@@ -14,19 +14,19 @@ def azer():
     if b == 1:
         pass
     elif name:
-        tyuiop()
+        check_username()
     else:
         while name == "" or name == " ":
             name = str(input("Enter your name: "))
             a += 1
-        tyuiop()
+        check_username()
         just_namee = name
         if "Elric" in name or "elric" in name:
             print("Admin is there")
             b = 1
     if a >= 10:
         print(f"{a}, c'est bien trop, tu vas me recommencer tout ça")
-        azer()
+        name()
     elif b == 1:
         print(f"Welcome to the game {name} sama the Master of the world")
     elif a >= 2:
@@ -40,7 +40,7 @@ def azer():
         print(f"Welcome to the game {name}")
 
 
-def tyuiop():
+def check_username():
     global name
     username = name
     if len(username) >= 12:
@@ -85,7 +85,7 @@ def fonction_password():
                 pass
 
 
-azer()
+name()
 time.sleep(1)
 start_password, password, size = "", "", 0
 print(f"{just_namee}, you have to define a password")
