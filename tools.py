@@ -1236,6 +1236,70 @@ def fibonacci():
             return
 
 
+def A1Z26(direct: str = False):
+    """Here the mythical encodage in A1_Z26 to in and out code."""
+
+    def in_A1Z26(*args):
+        alphab, char = string.ascii_lowercase, ""
+        for word in list(*args):
+            for letter in word:
+                letter = letter.lower()
+                if letter not in alphab:
+                    if not letter == word[-1]:
+                        char += letter + "-"
+                    else:
+                        char += letter
+                    continue
+                ind = alphab.index(letter) + 1
+                if not letter == word[-1]:
+                    char += str(ind) + "-"
+                else:
+                    char += str(ind)
+            char += "  "
+        return char
+
+    def out_A1Z26(*args):
+        alphab = string.ascii_lowercase
+        result_words = []
+        for word in list(*args):
+            tokens = word.split("-") if word else []
+            decoded = ""
+            for token in tokens:
+                token = token.strip()
+                if not token:
+                    continue
+                if token.isdigit():
+                    n = int(token)
+                    if 1 <= n <= 26:
+                        decoded += alphab[n - 1]
+                    else:
+                        decoded += token
+                else:
+                    decoded += token
+            result_words.append(decoded)
+        return " ".join(result_words)
+
+    if direct and direct == "in_A1Z26()":
+        text = input("\nEnter the text to encode:  ").strip().split()
+        return in_A1Z26(text)
+    elif direct and direct == "out_A1Z26()":
+        text = input("\nEnter the text to decode:  ").strip().split("  ")
+        return out_A1Z26(text)
+
+    choix = menu_options(["1. Encode to A1-Z26", "2. Decode from A1-Z26", "3. Exit"])
+    match choix:
+        case "1. Encode to A1-Z26":
+            text = input("\nEnter the text to encode:  ").strip().split()
+            return in_A1Z26(text)
+
+        case "2. Decode from A1-Z26":
+            text = input("\nEnter the text to decode:  ").strip().split("  ")
+            return out_A1Z26(text)
+
+        case "3. Exit":
+            return
+
+
 # -------------------------------------------------------------------------------
 
 # --- Jeux ---
