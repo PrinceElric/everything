@@ -283,8 +283,10 @@ mots_921
 
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
-from mots_francais import mots
-
+try:
+    from mots_francais import mots
+except:
+    mots = []
 try:
     import pyautogui as pag
 except ImportError:
