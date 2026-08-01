@@ -787,6 +787,9 @@ def shutdown(temps=40, kill=False):
 
             force_shutdown(password=password)
             print("")
+    cmd = subprocess.Popen("cmd.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+    time.sleep(0.7)
+    cmd.kill()
     clear()
     print(f"{SUCCESS}Arrêt annulé.{RESET}")
     detect_shutdown()
