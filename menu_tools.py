@@ -1,4 +1,4 @@
-sys.path.append(r"C:\Users\Elric\OneDrive\Desktop\treh\everything")
+# sys.path.append(r"C:\Users\Elric\OneDrive\Desktop\treh\everything")
 from tools import *
 import time, random, string, subprocess
 
@@ -1048,7 +1048,33 @@ def info(fonction: str):
             input("")
 
         case "shutdown()":
-            pass
+            clear()
+            cprint("Nécessite SUBPROCESS, OS, SYS, JSON, TIME", LOG_DISCRET)
+            time.sleep(0.7)
+            clear()
+
+            slow_type(
+                "The shutdown(...) function is used to shutdown the computer in a defined time.\nThe fonction is full of parfeux and is very safe to use, it can be cancelled or not depending on the parameters.\n",
+            )
+            slow_type("Here how it works (131):   ")
+            input("")
+            print(
+                f"\n{ROSE_FLASH}shutdown{RESET}{LOG_DISCRET}({RESET}{JAUNE}temps{RESET}{LOG_DISCRET}={RESET}{VERT}40{RESET}{LOG_DISCRET}, {RESET}{JAUNE}kill{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The temps parameter (40 by default) is the time in seconds before the shutdown.\nThe kill parameter (False by default) shows if the shutdown will be cancellable or not.\n")
+            input("Exemple:  ")
+            clear()
+            slow_type('Here your build:\n', tps_btw_letters=0.03)
+            print(f"\n{ROSE_FLASH}shutdown{RESET}{LOG_DISCRET}({RESET}{JAUNE}temps{RESET}{LOG_DISCRET}={RESET}{VERT}120{RESET}{LOG_DISCRET}, {RESET}{JAUNE}kill{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
+            input("Let's launch it!  ")
+            while True:
+                clear()
+                shutdown(120, False)
+                a = input("")
+                if a not in continuer:
+                    break
+
         case "start_timer()":
             pass
         case "stop_timer()":
@@ -1417,6 +1443,3 @@ def menu_principal():
 faire_titre_section("Tools Menu!")
 time.sleep(0.4)
 menu_principal()
-
-
-# info("faire_titre_section()")
