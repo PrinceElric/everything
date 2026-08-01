@@ -283,6 +283,7 @@ mots_921
 
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
+sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
 try:
     from mots_francais import mots
 except:
@@ -291,7 +292,6 @@ try:
     import pyautogui as pag
 except ImportError:
     pag = None  # Évite le plantage si absent
-# sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
 
 # -------------------------------------------------------------------------------
 # 2. INITIALISATION
