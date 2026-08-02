@@ -1075,10 +1075,26 @@ def info(fonction: str):
                 if a not in continuer:
                     break
 
-        case "start_timer()":
-            pass
-        case "stop_timer()":
-            pass
+        case "timers()":
+            clear()
+            cprint("Nécessite TIME", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type("This is a general section for timer functions.\nThe timers(...) functions are used to calcul time of processus execution.\n\n Here how it works:  ", tps_btw_letters=0.03)
+            input('')
+            print(f"\n{ROSE_FLASH}start_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'default'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
+            print(f"{ROSE_FLASH}stop_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'default'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type("The entrées parameter (False by default) counts the time during the input if enabled.\n")
+            slow_type("The start_timer(...) function init the timer and the stop_timer(...) return the time since the start.")
+            input("\nExemple:  ")
+            clear()
+            print(f"\nHere the build:\n{ROSE_FLASH}start_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'test'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
+            start_timer("test", True)
+            input("Stop the timer!  ")
+            print(stop_timer("test", True))
+            input("")
+
         case "human_time()":
             pass
         case "valid_input()":
@@ -1288,9 +1304,9 @@ def menu_principal():
                     case "5. shutdown(temps=40, kill=False)":
                         info("shutdown()")
                     case "6. start_timer(nom='default', entrées=False)":
-                        info("start_timer()")
+                        info("timers()")
                     case "7. stop_timer(nom='default', entrées=False)":
-                        info("stop_timer()")
+                        info("timers()")
                     case "8. human_time(n)":
                         info("human_time()")
                     case "9. valid_input(type='int', phrase='')":
