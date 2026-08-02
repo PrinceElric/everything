@@ -452,7 +452,7 @@ def loading_bar(tps, symbol="#", lenght=10, exe=False):
 
     clear_lines()
     slow_type(f"[{symbol * lenght}]    {lenght}/{lenght} (100.0%)", tps_total=0.4, color=VERT_FLASH)
-    time.sleep(0.4)
+    time.sleep(0.3)
     if exe:
         clear()
     else:
@@ -899,7 +899,7 @@ def ecrire_log(
     date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ligne_log = f"[{date_str}] [{type_log}] {message}\n"
 
-    if chemin_fichier in ["données", "donnée", "donnee", "donnees"]:
+    if chemin_fichier in ["données", "donnée", "donnee", "donnees"] or chemin_fichier == r"C:\Users\elric\Desktop\vs code\all that\données.md":
         chemin_fichier = r"C:\Users\elric\Desktop\vs code\all that\données.md"
     elif chemin_fichier in ["temp", "tempo", "diary", "temporaire"]:
         chemin_fichier = r"C:\Users\elric\Desktop\vs code\all that\tempo diary.md"
