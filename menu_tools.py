@@ -1260,6 +1260,7 @@ def menu_principal():
                         "7. menu_options(options)",
                         "8. Exit",
                     ]
+                    , 'menu_terminal'
                 )
                 match fonct_term:
                     case "1. clear()":
@@ -1296,6 +1297,7 @@ def menu_principal():
                         "9. seq(txt='')",
                         "10. Exit",
                     ]
+                    , 'menu_text'
                 )
                 match fonct_text:
                     case "1. enlever_accents(texte: str)":
@@ -1330,12 +1332,12 @@ def menu_principal():
                         "3. shutdown_A()",
                         "4. hach_word(word)",
                         "5. shutdown(temps=40, kill=False)",
-                        "6. start_timer(nom='default', entrées=False)",
-                        "7. stop_timer(nom='default', entrées=False)",
-                        "8. human_time(n)",
-                        "9. valid_input(type='int', phrase='')",
-                        "10. Exit",
+                        "6. timers(nom='default', entrées=False)",
+                        "7. human_time(n)",
+                        "8. valid_input(type='int', phrase='')",
+                        "9. Exit",
                     ]
+                    , 'menu_system'
                 )
                 match fonct_sys:
                     case "1. copier_txt(texte)":
@@ -1462,6 +1464,7 @@ def menu_principal():
                     "8. Outils Spécifiques au Projet",
                     "9. Exit",
                 ]
+                , 'menu_fonctions'
             )
             match section:
                 case "1. Terminal":
@@ -1485,7 +1488,7 @@ def menu_principal():
 
     while True:
         principal = menu_options(
-            ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"]
+            ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"], 'menu_principal'
         )
         match principal:
             case "1. Show CONSTANTES":
