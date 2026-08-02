@@ -1062,11 +1062,14 @@ def info(fonction: str):
                 f"\n{ROSE_FLASH}shutdown{RESET}{LOG_DISCRET}({RESET}{JAUNE}temps{RESET}{LOG_DISCRET}={RESET}{VERT}40{RESET}{LOG_DISCRET}, {RESET}{JAUNE}kill{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
             )
             slow_type(
-                "The temps parameter (40 by default) is the time in seconds before the shutdown.\nThe kill parameter (False by default) shows if the shutdown will be cancellable or not.\n")
+                "The temps parameter (40 by default) is the time in seconds before the shutdown.\nThe kill parameter (False by default) shows if the shutdown will be cancellable or not.\n"
+            )
             input("Exemple:  ")
             clear()
-            slow_type('Here your build:\n', tps_btw_letters=0.03)
-            print(f"\n{ROSE_FLASH}shutdown{RESET}{LOG_DISCRET}({RESET}{JAUNE}temps{RESET}{LOG_DISCRET}={RESET}{VERT}120{RESET}{LOG_DISCRET}, {RESET}{JAUNE}kill{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type("Here your build:\n", tps_btw_letters=0.03)
+            print(
+                f"\n{ROSE_FLASH}shutdown{RESET}{LOG_DISCRET}({RESET}{JAUNE}temps{RESET}{LOG_DISCRET}={RESET}{VERT}120{RESET}{LOG_DISCRET}, {RESET}{JAUNE}kill{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             input("Let's launch it!  ")
             while True:
                 clear()
@@ -1081,22 +1084,64 @@ def info(fonction: str):
             time.sleep(0.5)
             clear()
 
-            slow_type("This is a general section for timer functions.\nThe timers(...) functions are used to calcul time of processus execution.\n\n Here how it works:  ", tps_btw_letters=0.03)
-            input('')
-            print(f"\n{ROSE_FLASH}start_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'default'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
-            print(f"{ROSE_FLASH}stop_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'default'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
-            slow_type("The entrées parameter (False by default) counts the time during the input if enabled.\n")
-            slow_type("The start_timer(...) function init the timer and the stop_timer(...) return the time since the start.")
+            slow_type(
+                "This is a general section for timer functions.\nThe timers(...) functions are used to calcul time of processus execution.\n\n Here how it works:  ",
+                tps_btw_letters=0.03,
+            )
+            input("")
+            print(
+                f"\n{ROSE_FLASH}start_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'default'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            print(
+                f"{ROSE_FLASH}stop_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'default'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type(
+                "The entrées parameter (False by default) counts the time during the input if enabled.\n"
+            )
+            slow_type(
+                "The start_timer(...) function init the timer and the stop_timer(...) return the time since the start."
+            )
             input("\nExemple:  ")
             clear()
-            print(f"\nHere the build:\n{ROSE_FLASH}start_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'test'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n")
+            print(
+                f"\nHere the build:\n{ROSE_FLASH}start_timer{RESET}{LOG_DISCRET}({RESET}{JAUNE}nom{RESET}{LOG_DISCRET}={RESET}{BLEU_FLASH}'test'{RESET}{LOG_DISCRET}, {RESET}{JAUNE}entrées{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             start_timer("test", True)
             input("Stop the timer!  ")
             print(stop_timer("test", True))
             input("")
 
         case "human_time()":
-            pass
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                "The human_time(...) function is used to convert a time in seconds into a human readable format.\n"
+            )
+            slow_type("Here how it works (1):  ")
+            input("")
+            print(
+                f"\n{ROSE_FLASH}human_time{RESET}{LOG_DISCRET}({RESET}{JAUNE}seconds{RESET}{LOG_DISCRET}: {RESET}{VERT}float{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            slow_type("Exemple:  ")
+            input("")
+            clear()
+
+            seconds = valid_input(
+                "float",
+                f"{ROSE_FLASH}human_time{RESET}{LOG_DISCRET}({RESET}{JAUNE}seconds{RESET}{LOG_DISCRET}= {RESET}{VERT}",
+                True,
+            )
+            clear()
+            print(
+                f"\nHere the build:\n{ROSE_FLASH}human_time{RESET}{LOG_DISCRET}({RESET}{JAUNE}seconds{RESET}{LOG_DISCRET}= {RESET}{VERT}{seconds}{RESET}{LOG_DISCRET}){RESET}\n"
+            )
+            print(f"BEFORE: {seconds}")
+            print(f"AFTER: {human_time(seconds)}")
+            input("")
+
         case "valid_input()":
             pass
 
@@ -1303,15 +1348,13 @@ def menu_principal():
                         info("hach_word()")
                     case "5. shutdown(temps=40, kill=False)":
                         info("shutdown()")
-                    case "6. start_timer(nom='default', entrées=False)":
+                    case "6. timers(nom='default', entrées=False)":
                         info("timers()")
-                    case "7. stop_timer(nom='default', entrées=False)":
-                        info("timers()")
-                    case "8. human_time(n)":
+                    case "7. human_time(n)":
                         info("human_time()")
-                    case "9. valid_input(type='int', phrase='')":
+                    case "8. valid_input(type='int', phrase='')":
                         info("valid_input()")
-                    case "10. Exit":
+                    case "9. Exit":
                         return
 
         def menu_journal():
