@@ -438,7 +438,7 @@ def slow_type(texte, tps_total=0, tps_btw_letters=0.03, color=LOG_DISCRET):
             print(f"{color}{letter}{RESET}", end="", flush=True)
 
 
-def loading_bar(tps, symbol="#", lenght=10):
+def loading_bar(tps, symbol="#", lenght=10, exe=False):
     """Barre de progression avec étapes X/Y et pourcentage exact."""
     pourc1 = 100 / lenght
     for i in range(1, lenght + 1):
@@ -451,10 +451,12 @@ def loading_bar(tps, symbol="#", lenght=10):
         time.sleep(tps / lenght)
 
     clear_lines()
-    cprint(f"{symbol * lenght}    {lenght}/{lenght} (100.0%)", VERT_FLASH)
+    slow_type(f"[{symbol * lenght}]    {lenght}/{lenght} (100.0%)", tps_total=0.4, color=VERT_FLASH)
     time.sleep(0.4)
-    clear_lines()
-
+    if exe:
+        clear()
+    else:
+        clear_lines()
 
 def clear_lines(n=1):
     """Efface un nombre de lignes donne dans le terminal."""
@@ -810,9 +812,6 @@ def start_timer(nom="default", entrees=False):
     _timers[nom] = start
 
 
-start_timer()
-
-
 def stop_timer(nom="default", entrees=False):
     """Arrête chrono et affiche/renvoie le temps écoulé."""
     global _timers
@@ -822,18 +821,35 @@ def stop_timer(nom="default", entrees=False):
 
     fin = time.process_time() if not entrees else time.perf_counter()
     duree = fin - _timers[nom]
-    print(f"[{nom}] {duree:.6f} s")
+    # print(f"[{nom}] {duree:.6f} s")
     return duree
 
 
-def human_time(n):
-    """Convert big # of sec into a digit info (00h:00min:00s)"""
-    h, minutes, sec = 00, 00, 00
-    h = n // 3600
-    n = n % 3600
-    minutes = n // 60
-    sec = n % 60
-    print(f"{h:02d}h:{minutes:02d}min:{sec:02d}s")
+def human_time(seconds: float) -> str:
+    """Convertit un temps en secondes vers un format lisible."""
+    if seconds is None or seconds <= 0:
+        return "0s"
+
+    if seconds < 1:
+        return f"{seconds * 1000:.2f} ms"
+
+    units = [
+        ("d", 86400),
+        ("h", 3600),
+        ("m", 60),
+        ("s", 1),
+    ]
+
+    parts = []
+    total_seconds = int(seconds)
+
+    for unit, unit_seconds in units:
+        if total_seconds >= unit_seconds:
+            value = total_seconds // unit_seconds
+            total_seconds %= unit_seconds
+            parts.append(f"{value}{unit}")
+
+    return " ".join(parts)
 
 
 def valid_input(type="int", phrase="", info=False):
@@ -2080,3 +2096,11 @@ def kanekicount(number, base):
     while number > base:
         number, n = number - base, n + 1
         print(f"{number}    {n}")
+
+# -------------------------------------------------------------------------------
+
+# --- Executables ---
+
+
+loading_bar(0.5, symbol="*", lenght=10, exe=True)
+start_timer()
