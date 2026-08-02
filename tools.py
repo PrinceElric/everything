@@ -451,12 +451,17 @@ def loading_bar(tps, symbol="#", lenght=10, exe=False):
         time.sleep(tps / lenght)
 
     clear_lines()
-    slow_type(f"[{symbol * lenght}]    {lenght}/{lenght} (100.0%)", tps_total=0.4, color=VERT_FLASH)
+    slow_type(
+        f"[{symbol * lenght}]    {lenght}/{lenght} (100.0%)",
+        tps_total=0.4,
+        color=VERT_FLASH,
+    )
     time.sleep(0.3)
     if exe:
         clear()
     else:
         clear_lines()
+
 
 def clear_lines(n=1):
     """Efface un nombre de lignes donne dans le terminal."""
@@ -480,6 +485,8 @@ def menu_options(options, titre="=== MENU INTERACTIF ==="):
 
     while True:
         clear()
+        if not "=" in titre:
+            titre = f"=== {titre.upper()} ==="
         print(titre)
         # Afficher options
         for i in range(taille):
@@ -899,7 +906,10 @@ def ecrire_log(
     date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ligne_log = f"[{date_str}] [{type_log}] {message}\n"
 
-    if chemin_fichier in ["données", "donnée", "donnee", "donnees"] or chemin_fichier == r"C:\Users\elric\Desktop\vs code\all that\données.md":
+    if (
+        chemin_fichier in ["données", "donnée", "donnee", "donnees"]
+        or chemin_fichier == r"C:\Users\elric\Desktop\vs code\all that\données.md"
+    ):
         chemin_fichier = r"C:\Users\elric\Desktop\vs code\all that\données.md"
     elif chemin_fichier in ["temp", "tempo", "diary", "temporaire"]:
         chemin_fichier = r"C:\Users\elric\Desktop\vs code\all that\tempo diary.md"
@@ -2097,10 +2107,11 @@ def kanekicount(number, base):
         number, n = number - base, n + 1
         print(f"{number}    {n}")
 
+
 # -------------------------------------------------------------------------------
 
 # --- Executables ---
 
 
-loading_bar(0.5, symbol="*", lenght=10, exe=True)
+loading_bar(0.4, symbol="*", lenght=10, exe=True)
 start_timer()
