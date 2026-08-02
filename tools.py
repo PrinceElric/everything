@@ -283,6 +283,7 @@ mots_921
 
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
+
 sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
 try:
     from mots_francais import mots
@@ -471,14 +472,13 @@ def faire_titre_section(texte, symbole="-", largeur=60):
     print(symbole * largeur)
 
 
-def menu_options(options):
+def menu_options(options, titre="=== MENU INTERACTIF ==="):
     """enter a list of options, show a interactif select menu, return the option chose"""
     index, taille = 0, len(options)
 
     while True:
         clear()
-        print("=== CHOISIS TON DESTIN (Z: Haut, S: Bas, Entrée: OK) ===")
-
+        print(titre)
         # Afficher options
         for i in range(taille):
             if i == index:
@@ -665,7 +665,9 @@ def shutdown(temps=40, kill=False):
     def load_config(chemin="config.json"):
         """Charge la configuration JSON en toute sécurité. Renvoie un dict vide si échec."""
         if not os.path.exists(chemin):
-            return {"password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"}
+            return {
+                "password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"
+            }
         try:
             with open(chemin, "r", encoding="utf-8") as f:
                 return json.load(f)
@@ -795,39 +797,33 @@ def shutdown(temps=40, kill=False):
     detect_shutdown()
     clear()
 
+
 # shutdown(kill=True)
 
 _timers = {}
 
 
-def start_timer(nom="default", entrées=False):
+def start_timer(nom="default", entrees=False):
     """Démarre ou réinitialise un chrono avec un nom donné."""
     global _timers
-    if entrées:
-        start = time.process_time()
-    else:
-        start = time.perf_counter()
+    start = time.process_time() if not entrees else time.perf_counter()
     _timers[nom] = start
-    return start
 
 
 start_timer()
 
 
-def stop_timer(nom="default", entrées=False):
-    """Affiche temps écoulé pour le chrono spécifié."""
+def stop_timer(nom="default", entrees=False):
+    """Arrête chrono et affiche/renvoie le temps écoulé."""
     global _timers
     if nom not in _timers:
         print(f"{ERROR}Erreur : Chrono '{nom}' non démarré.{RESET}")
-        return
+        return None
 
-    if entrées:
-        fin = time.process_time()
-    else:
-        fin = time.perf_counter()
-
-    print(f"[{nom}] {fin - _timers[nom]:.6f} s")
-    return fin - _timers[nom]
+    fin = time.process_time() if not entrees else time.perf_counter()
+    duree = fin - _timers[nom]
+    print(f"[{nom}] {duree:.6f} s")
+    return duree
 
 
 def human_time(n):
