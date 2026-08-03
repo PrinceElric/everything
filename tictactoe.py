@@ -18,6 +18,7 @@ def afficher_grille():
         print()
 
 
+
 def verifier_victoire(symbole):
     # Vérifie les lignes
     for ligne in vars["grille"]:
