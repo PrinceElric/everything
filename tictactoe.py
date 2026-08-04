@@ -37,7 +37,6 @@ def tictactoe_game(game_style="solo"):
 
         return False
 
-    slow_type("Bienvenue dans le jeu TicTacToe!\n", color=WARNING)
 
     def est_grille_pleine():
         return all(cell != " " for ligne in vars["grille"] for cell in ligne)
@@ -72,16 +71,44 @@ def tictactoe_game(game_style="solo"):
         cases_libres = [
             (i, j) for i in range(3) for j in range(3) if vars["grille"][i][j] == " "
         ]
-        if cases_libres:
-            ligne, col = random.choice(cases_libres)
-            if game_style == "ia":
-                symbole = (
-                    f"{ROUGE}X{RESET}" if vars["tour"] % 2 == 0 else f"{BLEU}O{RESET}"
-                )
-                vars["grille"][ligne][col] = symbole
-            else:
-                vars["grille"][ligne][col] = f"{BLEU}O{RESET}"
+        symbole = f"{ROUGE}X{RESET}" if vars["tour"] % 2 == 0 else f"{BLEU}O{RESET}"
+        adversaire = (
+            f"{BLEU}O{RESET}" if symbole == f"{ROUGE}X{RESET}" else f"{ROUGE}X{RESET}"
+        )
 
+        def trouver_coup_gagnant(symbole_recherche):
+            for ligne, col in cases_libres:
+                vars["grille"][ligne][col] = symbole_recherche
+                gagne = verifier_victoire(symbole_recherche)
+                vars["grille"][ligne][col] = " "
+                if gagne:
+                    return ligne, col
+            return None
+
+        if cases_libres:
+            # Priorité à l'attaque : si l'IA peut gagner immédiatement, elle joue cette case.
+            coup_attaque = trouver_coup_gagnant(symbole)
+            if coup_attaque:
+                ligne, col = coup_attaque
+                vars["grille"][ligne][col] = symbole
+                slow_type("L'IA joue pour gagner!\n", color=WARNING)
+                return
+
+            # Défense : si l'adversaire peut gagner au prochain tour, bloquer.
+            coup_defense = trouver_coup_gagnant(adversaire)
+            if coup_defense:
+                ligne, col = coup_defense
+                vars["grille"][ligne][col] = symbole
+                slow_type("L'IA bloque votre mouvement!\n", color=WARNING)
+                return
+
+            slow_type("L'IA réfléchit...\n", color=WARNING)
+            time.sleep(0.3)
+            ligne, col = random.choice(cases_libres)
+            vars["grille"][ligne][col] = symbole
+
+
+    slow_type("Bienvenue dans le jeu TicTacToe!\n", color=WARNING)
     while (
         not verifier_victoire(f"{ROUGE}X{RESET}")
         and not verifier_victoire(f"{BLEU}O{RESET}")
