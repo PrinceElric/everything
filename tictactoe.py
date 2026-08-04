@@ -1,10 +1,22 @@
 from tools import *
 import time, random
 
+def game_style_selection():
+    choix = menu_options(
+        ['1. Solo (Joueur contre IA)', '2. Multi (Joueur contre Joueur)', '3. IA vs IA']
+    )
+    while True:
+        if choix == '1. Solo (Joueur contre IA)':
+            return "solo"
+        elif choix == '2. Multi (Joueur contre Joueur)':
+            return "multi"
+        elif choix == '3. IA vs IA':
+            return "ia"
 
+tictactoe_game_style = game_style_selection()
 def tictactoe_game(game_style="solo"):
     faire_titre_section("TicTacToe Game!")
-    time.sleep(0.4)
+    time.sleep(0.3)
     clear()
 
     vars = {"grille": [[" " for _ in range(3)] for _ in range(3)], "tour": 0}
@@ -36,7 +48,6 @@ def tictactoe_game(game_style="solo"):
             return True
 
         return False
-
 
     def est_grille_pleine():
         return all(cell != " " for ligne in vars["grille"] for cell in ligne)
@@ -104,9 +115,21 @@ def tictactoe_game(game_style="solo"):
 
             slow_type("L'IA réfléchit...\n", color=WARNING)
             time.sleep(0.3)
+            cases_vip, cases_centre = [(0, 0), (0, 2), (2, 0), (2, 2)], [
+                (1, 1)
+            ]  # Coins and centre
+            # Priorité aux cases vips, puis au centre, sinon choix aléatoire
+            for ligne, col in cases_vip:
+                if vars["grille"][ligne][col] == " ":
+                    vars["grille"][ligne][col] = symbole
+                    return
+            for ligne, col in cases_centre:
+                if vars["grille"][ligne][col] == " ":
+                    vars["grille"][ligne][col] = symbole
+                    return
+
             ligne, col = random.choice(cases_libres)
             vars["grille"][ligne][col] = symbole
-
 
     slow_type("Bienvenue dans le jeu TicTacToe!\n", color=WARNING)
     while (
