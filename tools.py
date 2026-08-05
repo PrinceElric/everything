@@ -282,6 +282,7 @@ mots_921
 # -------------------------------------------------------------------------------
 
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
+from menu_tools import *
 from datetime import datetime
 
 sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
