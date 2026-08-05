@@ -69,17 +69,23 @@ l'affichage dans le terminal :
         VERT
         JAUNE
         BLEU
+        NOIR
+        BLANC
         ...
 
     • Couleurs haute intensité
         ROUGE_FLASH
         VERT_FLASH
         JAUNE_FLASH
+        BLEU_FLASH
+        NOIR_FLASH
+        BLANC_FLASH
         ...
 
     • Couleurs de fond
         FOND_ROUGE
         FOND_BLEU
+        FOND_BLANC
         ...
 
     • Styles prédéfinis
@@ -339,6 +345,8 @@ ROUGE = "\033[31m"
 VERT = "\033[32m"
 JAUNE = "\033[33m"
 BLEU = "\033[34m"
+NOIR = "\033[30m"
+BLANC = "\033[37m"
 ROSE = "\033[35m"
 CYAN = "\033[36m"
 
@@ -347,8 +355,21 @@ ROUGE_FLASH = "\033[91m"
 VERT_FLASH = "\033[92m"
 JAUNE_FLASH = "\033[93m"
 BLEU_FLASH = "\033[94m"
+NOIR_FLASH = "\033[90m"
+BLANC_FLASH = "\033[97m"
 ROSE_FLASH = "\033[95m"
 CYAN_FLASH = "\033[96m"
+
+# --- Couleurs de Fond ---
+FOND_NOIR = "\033[40m"
+FOND_ROUGE = "\033[41m"
+FOND_VERT = "\033[42m"
+FOND_JAUNE = "\033[43m"
+FOND_BLEU = "\033[44m"
+FOND_ROSE = "\033[45m"
+FOND_CYAN = "\033[46m"
+FOND_GRIS = "\033[100m"  # Fond sombre discret
+FOND_BLANC = "\033[107m"  # Fond blanc haute luminosité
 
 # --- Couleurs de Fond ---
 FOND_NOIR = "\033[40m"
@@ -390,12 +411,16 @@ colors = (
     "VERT",
     "GRIS",
     "ROUGE",
+    "NOIR",
+    "BLANC",
     "CYAN_FLASH",
     "ROSE_FLASH",
     "BLEU_FLASH",
     "JAUNE_FLASH",
     "VERT_FLASH",
     "ROUGE_FLASH",
+    "NOIR_FLASH",
+    "BLANC_FLASH",
     "FOND_GRIS",
     "FOND_CYAN",
     "FOND_ROSE",
@@ -655,6 +680,18 @@ def seq(txt=""):
     return max_len
 
 
+def arc_en_ciel(txt, mode='normal'):
+    for i in txt:
+        if mode == 'normal':
+            print(f"\033[38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
+        elif mode == 'gras':
+            print(f"\033[1;38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
+        elif mode == 'italic':
+            print(f"\033[3;38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
+        elif mode == 'underline':
+            print(f"\033[4;38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
+arc_en_ciel("Hello, World!", mode='normal')
+input("\nPress Enter to continue...")
 # -------------------------------------------------------------------------------
 
 # --- System ---
@@ -2373,6 +2410,10 @@ def match_color(color):
             color = VERT_FLASH
         case "ROUGE_FLASH":
             color = ROUGE_FLASH
+        case "NOIR_FLASH":
+            color = NOIR_FLASH
+        case "BLANC_FLASH":
+            color = BLANC_FLASH
         case "FOND_GRIS":
             color = FOND_GRIS
         case "FOND_CYAN":

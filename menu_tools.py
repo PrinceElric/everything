@@ -54,7 +54,9 @@ def menu_ANSI():
                     "5. BLEU",
                     "6. ROSE",
                     "7. CYAN",
-                    "8. Exit",
+                    "8. NOIR",
+                    "9. BLANC",
+                    "10. Exit",
                 ]
             )
             match classic_color:
@@ -79,7 +81,13 @@ def menu_ANSI():
                 case "7. CYAN":
                     cprint("\nPrince-Elric 33!", CYAN)
                     input("")
-                case "8. Exit":
+                case "8. NOIR":
+                    cprint("\nPrince-Elric 33!", NOIR)
+                    input("")
+                case "9. BLANC":
+                    cprint("\nPrince-Elric 33!", BLANC)
+                    input("")
+                case "10. Exit":
                     return
 
     def menu_couleurs_intenses():
@@ -94,7 +102,9 @@ def menu_ANSI():
                     "4. BLEU_FLASH",
                     "5. ROSE_FLASH",
                     "6. CYAN_FLASH",
-                    "7. Exit",
+                    "7. NOIR_FLASH",
+                    "8. BLANC_FLASH",
+                    "9. Exit",
                 ]
             )
             match intense_color:
@@ -116,7 +126,13 @@ def menu_ANSI():
                 case "6. CYAN_FLASH":
                     cprint("\nPrince-Elric 33!", CYAN_FLASH)
                     input("")
-                case "7. Exit":
+                case "7. NOIR_FLASH":
+                    cprint("\nPrince-Elric 33!", NOIR_FLASH)
+                    input("")
+                case "8. BLANC_FLASH":
+                    cprint("\nPrince-Elric 33!", BLANC_FLASH)
+                    input("")
+                case "9. Exit":
                     return
 
     def menu_color_fond():
@@ -133,7 +149,8 @@ def menu_ANSI():
                     "6. FOND_ROSE",
                     "7. FOND_CYAN",
                     "8. FOND_GRIS",
-                    "9. Exit",
+                    "9. FOND_BLANC",
+                    "10. Exit",
                 ]
             )
             match color_fond:
@@ -161,7 +178,10 @@ def menu_ANSI():
                 case "8. FOND_GRIS":
                     cprint("\nPrince-Elric 33!", FOND_GRIS)
                     input("")
-                case "9. Exit":
+                case "9. FOND_BLANC":
+                    cprint("\nPrince-Elric 33!", FOND_BLANC)
+                    input("")
+                case "10. Exit":
                     return
 
     def menu_styles_predef():
@@ -1387,7 +1407,8 @@ def menu_principal():
                     "6. Crypto",
                     "7. Jeux",
                     "8. Outils Spécifiques au Projet",
-                    "9. Exit",
+                    "9. Executables",
+                    "10. Exit",
                 ],
                 "menu_fonctions",
             )
@@ -1408,7 +1429,9 @@ def menu_principal():
                     menu_game()
                 case "8. Outils Spécifiques au Projet":
                     menu_specifik()
-                case "9. Exit":
+                case "9. Executables":
+                    pass
+                case "10. Exit":
                     return
 
     while True:
