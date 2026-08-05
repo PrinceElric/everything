@@ -275,6 +275,7 @@ mots_921
 
 • kanekicount(number, base)
     Soustrait une valeur de base jusqu'à atteindre zéro.
+
 • def match_color(color):
     Renvoie la couleur ANSI correspondante à un nom donné.
 

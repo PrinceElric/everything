@@ -233,81 +233,6 @@ def menu_ANSI():
                 return
 
 
-# def match_color(color):
-#     match color:
-#         case "BARR2":
-#             color = BARR2
-#         case "SURLIGN2_BLANC":
-#             color = SURLIGN2_BLANC
-#         case "GRAS":
-#             color = GRAS
-#         case "ITALIC":
-#             color = ITALIC
-#         case "SOULIGN2":
-#             color = SOULIGN2
-#         case "NOIR_INVISIBLE":
-#             color = NOIR_INVISIBLE
-#         case "RESET":
-#             color = RESET
-#         case "CYAN":
-#             color = CYAN
-#         case "ROSE":
-#             color = ROSE
-#         case "BLEU":
-#             color = BLEU
-#         case "JAUNE":
-#             color = JAUNE
-#         case "VERT":
-#             color = VERT
-#         case "GRIS":
-#             color = GRIS
-#         case "ROUGE":
-#             color = ROUGE
-#         case "CYAN_FLASH":
-#             color = CYAN_FLASH
-#         case "ROSE_FLASH":
-#             color = ROSE_FLASH
-#         case "BLEU_FLASH":
-#             color = BLEU_FLASH
-#         case "JAUNE_FLASH":
-#             color = JAUNE_FLASH
-#         case "VERT_FLASH":
-#             color = VERT_FLASH
-#         case "ROUGE_FLASH":
-#             color = ROUGE_FLASH
-#         case "FOND_GRIS":
-#             color = FOND_GRIS
-#         case "FOND_CYAN":
-#             color = FOND_CYAN
-#         case "FOND_ROSE":
-#             color = FOND_ROSE
-#         case "FOND_BLEU":
-#             color = FOND_BLEU
-#         case "FOND_JAUNE":
-#             color = FOND_JAUNE
-#         case "FOND_VERT":
-#             color = FOND_VERT
-#         case "FOND_ROUGE":
-#             color = FOND_ROUGE
-#         case "FOND_NOIR":
-#             color = FOND_NOIR
-#         case "ALERTE_CRITIQUE":
-#             color = ALERTE_CRITIQUE
-#         case "LOG_DISCRET":
-#             color = LOG_DISCRET
-#         case "MENU_ACTIF":
-#             color = MENU_ACTIF
-#         case "STYLE_TITRE":
-#             color = STYLE_TITRE
-#         case "SUCCESS":
-#             color = SUCCESS
-#         case "WARNING":
-#             color = WARNING
-#         case "ERROR":
-#             color = ERROR
-#     return color
-
-
 def info(fonction: str):
     match fonction:
         case "clear()":
@@ -1259,8 +1184,8 @@ def menu_principal():
                         "6. faire_titre_section(texte, symbole='-', largeur=60)",
                         "7. menu_options(options)",
                         "8. Exit",
-                    ]
-                    , 'menu_terminal'
+                    ],
+                    "menu_terminal",
                 )
                 match fonct_term:
                     case "1. clear()":
@@ -1296,8 +1221,8 @@ def menu_principal():
                         "8. abreviation(word='')",
                         "9. seq(txt='')",
                         "10. Exit",
-                    ]
-                    , 'menu_text'
+                    ],
+                    "menu_text",
                 )
                 match fonct_text:
                     case "1. enlever_accents(texte: str)":
@@ -1336,8 +1261,8 @@ def menu_principal():
                         "7. human_time(n)",
                         "8. valid_input(type='int', phrase='')",
                         "9. Exit",
-                    ]
-                    , 'menu_system'
+                    ],
+                    "menu_system",
                 )
                 match fonct_sys:
                     case "1. copier_txt(texte)":
@@ -1463,8 +1388,8 @@ def menu_principal():
                     "7. Jeux",
                     "8. Outils Spécifiques au Projet",
                     "9. Exit",
-                ]
-                , 'menu_fonctions'
+                ],
+                "menu_fonctions",
             )
             match section:
                 case "1. Terminal":
@@ -1488,7 +1413,8 @@ def menu_principal():
 
     while True:
         principal = menu_options(
-            ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"], 'menu_principal'
+            ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"],
+            "menu_principal",
         )
         match principal:
             case "1. Show CONSTANTES":
