@@ -867,6 +867,9 @@ def info(fonction: str):
             print(f"Seq => {seq(text)}")
             input("")
 
+        case "arc_en_ciel()":
+            pass
+        
         case "copier_txt()":
             clear()
             cprint("Nécessite SUBPROCESS", LOG_DISCRET)
@@ -1240,7 +1243,8 @@ def menu_principal():
                         "7. random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)",
                         "8. abreviation(word='')",
                         "9. seq(txt='')",
-                        "10. Exit",
+                        "10. arc_en_ciel(txt, mode='normal')",
+                        "11. Exit",
                     ],
                     "menu_text",
                 )
@@ -1263,7 +1267,9 @@ def menu_principal():
                         info("abreviation()")
                     case "9. seq(txt='')":
                         info("seq()")
-                    case "10. Exit":
+                    case "10. arc_en_ciel(txt, mode='normal')":
+                        info("arc_en_ciel()")
+                    case "11. Exit":
                         return
 
         def menu_system():
