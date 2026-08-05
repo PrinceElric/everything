@@ -474,8 +474,11 @@ def clear():
 
 def cprint(texte, color):
     """Affiche texte coloré puis réinitialise style."""
+    if '§' in texte and '!' in texte:
+        texte = texte.replace('§', color).replace('!', RESET)
+        print(texte)
+        return
     print(f"{color}{texte}{RESET}")
-
 
 def slow_type(texte, tps_total=0, tps_btw_letters=0.03, color=LOG_DISCRET):
     """Print string character by character with tiny delay. and color if you want"""
