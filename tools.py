@@ -2097,7 +2097,7 @@ def tictactoe_game():
                         return ligne, col
                 return None
 
-            if cases_libres:
+            if cases_libres and len(cases_libres) < 7:
                 # Priorité à l'attaque : si l'IA peut gagner immédiatement, elle joue cette case.
                 coup_attaque = trouver_coup_gagnant(symbole)
                 if coup_attaque:
@@ -2129,10 +2129,10 @@ def tictactoe_game():
                         vars["grille"][ligne][col] = symbole
                         return
 
-                ligne, col = random.choice(cases_libres)
-                vars["grille"][ligne][col] = symbole
+            ligne, col = random.choice(cases_libres)
+            vars["grille"][ligne][col] = symbole
 
-        slow_type("Bienvenue dans le jeu TicTacToe!\n", color=WARNING)
+        slow_type("Bienvenue dans le jeu TicTacToe!\n", color=WARNING, tps_total=1)
         while (
             not verifier_victoire(f"{ROUGE}X{RESET}")
             and not verifier_victoire(f"{BLEU}O{RESET}")
