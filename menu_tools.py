@@ -811,7 +811,7 @@ def info(fonction: str):
         case "abreviation()":
             clear()
             cprint("Nécessite RIEN", LOG_DISCRET)
-            time.sleep(0.5)
+            time.sleep(0.4)
             clear()
 
             slow_type(
@@ -847,7 +847,7 @@ def info(fonction: str):
         case "seq()":
             clear()
             cprint("Nécessite RIEN", LOG_DISCRET)
-            time.sleep(0.5)
+            time.sleep(0.4)
             clear()
 
             slow_type(
@@ -868,8 +868,34 @@ def info(fonction: str):
             input("")
 
         case "arc_en_ciel()":
-            pass
-        
+            clear()
+            cprint("Nécessite RANDOM", LOG_DISCRET)
+            time.sleep(0.4)
+            clear()
+
+            slow_type(
+                "La fonction arc_en_ciel(...) renvoie le texte entré avec un dégradé de couleur arc-en-ciel.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type("Here how it works (16):  \n", tps_btw_letters=0.03)
+            input("")
+            print(f"{ROSE_FLASH}arc_en_ciel{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET},{RESET} {JAUNE}mode{RESET}{LOG_DISCRET}={RESET}{BLEU}'normal'{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type(
+                "The txt parameter is the text that will be degrade.\nThe mode parameter (normal by default) is the mode of basic degradation.\nIn more there are the modes: 'gras', 'italic', 'underline', 'surligne' and 'ansi'.\n",
+                tps_btw_letters=0.027,
+            )
+            slow_type("\nExemple:  ", tps_btw_letters=0.03)
+            input("")
+            clear()
+            text, mode = input("Entrez le texte à dégrader ('Prince-Elric 33!' by default): "), input("Entrez le mode de dégradation (normal by default): ").lower().strip()
+            if not mode:
+                mode = "normal"
+            if not text:
+                text = "Prince-Elric 33!"
+            print(f"Texte dégradé: {arc_en_ciel(text, mode=mode)}")
+            input("")
+
+
         case "copier_txt()":
             clear()
             cprint("Nécessite SUBPROCESS", LOG_DISCRET)

@@ -696,6 +696,9 @@ def arc_en_ciel(txt, mode="normal"):
     """print txt with random color for each letter, mode can be normal, gras, italic, underline, surligne or ANSI"""
     textee = []
     for i in txt:
+        if i == " ":
+            textee.append(" ")
+            continue
         if mode == "normal":
             textee.append(f"\033[38;5;{random.randint(16, 231)}m{i}{RESET}")
         elif mode == "gras":
@@ -706,10 +709,10 @@ def arc_en_ciel(txt, mode="normal"):
             textee.append(f"\033[4;38;5;{random.randint(16, 231)}m{i}{RESET}")
         elif mode == "surligne":
             textee.append(f"\033[48;5;{random.randint(16, 231)}m{i}{RESET}")
-        elif mode == "ANSI":
+        elif mode == "ansi":
             textee.append(f"{match_color(random.choice(colors))}{i}{RESET}")
 
-        return "".join(textee)
+    return "".join(textee)
 
 
 # -------------------------------------------------------------------------------
