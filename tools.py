@@ -173,6 +173,9 @@ mots_921
 • seq(txt="")
     return the max continue chaine of a carac in txt
 
+• arc_en_ciel(txt, mode="normal")
+    Affiche un texte avec des couleurs aléatoires pour chaque caractère.
+
 
 -------------------------------------------------------------------------------
 
@@ -680,18 +683,26 @@ def seq(txt=""):
     return max_len
 
 
-def arc_en_ciel(txt, mode='normal'):
+def arc_en_ciel(txt, mode="normal"):
+    """print txt with random color for each letter, mode can be normal, gras, italic, underline, surligne or ANSI"""
+    textee = []
     for i in txt:
-        if mode == 'normal':
-            print(f"\033[38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
-        elif mode == 'gras':
-            print(f"\033[1;38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
-        elif mode == 'italic':
-            print(f"\033[3;38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
-        elif mode == 'underline':
-            print(f"\033[4;38;5;{random.randint(16, 231)}m{i}{RESET}", end="")
-arc_en_ciel("Hello, World!", mode='normal')
-input("\nPress Enter to continue...")
+        if mode == "normal":
+            textee.append(f"\033[38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "gras":
+            textee.append(f"\033[1;38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "italic":
+            textee.append(f"\033[3;38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "underline":
+            textee.append(f"\033[4;38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "surligne":
+            textee.append(f"\033[48;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "ANSI":
+            textee.append(f"{match_color(random.choice(colors))}{i}{RESET}")
+
+        return "".join(textee)
+
+
 # -------------------------------------------------------------------------------
 
 # --- System ---
