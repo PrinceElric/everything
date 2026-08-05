@@ -233,79 +233,79 @@ def menu_ANSI():
                 return
 
 
-def match_color(color):
-    match color:
-        case "BARR2":
-            color = BARR2
-        case "SURLIGN2_BLANC":
-            color = SURLIGN2_BLANC
-        case "GRAS":
-            color = GRAS
-        case "ITALIC":
-            color = ITALIC
-        case "SOULIGN2":
-            color = SOULIGN2
-        case "NOIR_INVISIBLE":
-            color = NOIR_INVISIBLE
-        case "RESET":
-            color = RESET
-        case "CYAN":
-            color = CYAN
-        case "ROSE":
-            color = ROSE
-        case "BLEU":
-            color = BLEU
-        case "JAUNE":
-            color = JAUNE
-        case "VERT":
-            color = VERT
-        case "GRIS":
-            color = GRIS
-        case "ROUGE":
-            color = ROUGE
-        case "CYAN_FLASH":
-            color = CYAN_FLASH
-        case "ROSE_FLASH":
-            color = ROSE_FLASH
-        case "BLEU_FLASH":
-            color = BLEU_FLASH
-        case "JAUNE_FLASH":
-            color = JAUNE_FLASH
-        case "VERT_FLASH":
-            color = VERT_FLASH
-        case "ROUGE_FLASH":
-            color = ROUGE_FLASH
-        case "FOND_GRIS":
-            color = FOND_GRIS
-        case "FOND_CYAN":
-            color = FOND_CYAN
-        case "FOND_ROSE":
-            color = FOND_ROSE
-        case "FOND_BLEU":
-            color = FOND_BLEU
-        case "FOND_JAUNE":
-            color = FOND_JAUNE
-        case "FOND_VERT":
-            color = FOND_VERT
-        case "FOND_ROUGE":
-            color = FOND_ROUGE
-        case "FOND_NOIR":
-            color = FOND_NOIR
-        case "ALERTE_CRITIQUE":
-            color = ALERTE_CRITIQUE
-        case "LOG_DISCRET":
-            color = LOG_DISCRET
-        case "MENU_ACTIF":
-            color = MENU_ACTIF
-        case "STYLE_TITRE":
-            color = STYLE_TITRE
-        case "SUCCESS":
-            color = SUCCESS
-        case "WARNING":
-            color = WARNING
-        case "ERROR":
-            color = ERROR
-    return color
+# def match_color(color):
+#     match color:
+#         case "BARR2":
+#             color = BARR2
+#         case "SURLIGN2_BLANC":
+#             color = SURLIGN2_BLANC
+#         case "GRAS":
+#             color = GRAS
+#         case "ITALIC":
+#             color = ITALIC
+#         case "SOULIGN2":
+#             color = SOULIGN2
+#         case "NOIR_INVISIBLE":
+#             color = NOIR_INVISIBLE
+#         case "RESET":
+#             color = RESET
+#         case "CYAN":
+#             color = CYAN
+#         case "ROSE":
+#             color = ROSE
+#         case "BLEU":
+#             color = BLEU
+#         case "JAUNE":
+#             color = JAUNE
+#         case "VERT":
+#             color = VERT
+#         case "GRIS":
+#             color = GRIS
+#         case "ROUGE":
+#             color = ROUGE
+#         case "CYAN_FLASH":
+#             color = CYAN_FLASH
+#         case "ROSE_FLASH":
+#             color = ROSE_FLASH
+#         case "BLEU_FLASH":
+#             color = BLEU_FLASH
+#         case "JAUNE_FLASH":
+#             color = JAUNE_FLASH
+#         case "VERT_FLASH":
+#             color = VERT_FLASH
+#         case "ROUGE_FLASH":
+#             color = ROUGE_FLASH
+#         case "FOND_GRIS":
+#             color = FOND_GRIS
+#         case "FOND_CYAN":
+#             color = FOND_CYAN
+#         case "FOND_ROSE":
+#             color = FOND_ROSE
+#         case "FOND_BLEU":
+#             color = FOND_BLEU
+#         case "FOND_JAUNE":
+#             color = FOND_JAUNE
+#         case "FOND_VERT":
+#             color = FOND_VERT
+#         case "FOND_ROUGE":
+#             color = FOND_ROUGE
+#         case "FOND_NOIR":
+#             color = FOND_NOIR
+#         case "ALERTE_CRITIQUE":
+#             color = ALERTE_CRITIQUE
+#         case "LOG_DISCRET":
+#             color = LOG_DISCRET
+#         case "MENU_ACTIF":
+#             color = MENU_ACTIF
+#         case "STYLE_TITRE":
+#             color = STYLE_TITRE
+#         case "SUCCESS":
+#             color = SUCCESS
+#         case "WARNING":
+#             color = WARNING
+#         case "ERROR":
+#             color = ERROR
+#     return color
 
 
 def info(fonction: str):
