@@ -307,11 +307,20 @@ mots_921
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
 
-sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 try:
     from mots_francais import mots
-except:
+except Exception:
     mots = []
+    json_path = os.path.join(current_dir, "mots_francais.json")
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, encoding="utf-8") as f:
+                mots = json.load(f)
+        except Exception:
+            mots = []
 try:
     import pyautogui as pag
 except ImportError:
@@ -1424,13 +1433,17 @@ def pendu_game(mode="normal"):
         mots_921 = list(filter(lambda x: True if len(x) > 5 else False, mots_921))
         nonlocal mots, count_down, letter, letters, count_pendu, false_answers, pendu_etapes, word
         mots = mots_921.copy()
-        mots, letter, letters, count_pendu, false_answers, count_down = (
+        letter, letters, count_pendu, false_answers, count_down = (
             "",
             [],
             0,
             [],
             6,
         )
+        if not mots:
+            raise ValueError(
+                "La liste des mots du pendu est vide. Vérifiez que mots_francais.py ou mots_francais.json est présent."
+            )
         word = random.choice(mots)
         word = enlever_accents(word).lower()
         pendu_etapes = (
@@ -1556,7 +1569,7 @@ def pendu_game(mode="normal"):
         if choice in ["y", "yes", "o", "oui", "1"]:
             run()
         else:
-            sys.exit()
+            return
 
     def main(mode="normal"):
         while True:
@@ -2038,13 +2051,12 @@ def dice(n_faces=6, n=1):
     simulation, total = 0, 0
     for i in range(n):
         simulation = random.randint(1, n_faces)
-        slow_type(f"{i+1} -> {simulation}", 0.05)
-        print("\n")
+        slow_type(f"{i+1} -> {simulation}\n", 0.20)
         total += simulation
     print("\n")
     slow_type(f"total = {total}", 0.05)
     input("")
-    return
+    return total
 
 
 def tictactoe_game():
@@ -2308,7 +2320,7 @@ def menu_game():
             case "6. Word guessing Game":
                 word_guess_game()
             case "7. Dice simulator Game":
-                face, dices = input("How many face (0 by def):    "), input(
+                face, dices = input("How many face (6 by def):    "), input(
                     "How many dice? (1 by def):    "
                 )
                 face, dices = int(face) if face else 6, int(dices) if dices else 1
