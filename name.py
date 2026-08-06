@@ -1,23 +1,21 @@
 import time, sys
+from tools import *
 
 name, just_namee, a, b = "", "", 0, 0
 
 
 def name():
     global name, just_namee, a, b
-    a, b = 0, 0
-    name = str(input("Enter your name: "))
+    a, b, name = 0, 0, input("Enter your name: ")
     just_namee = name
     if "Elric" in name or "elric" in name:
         print("Admin is there")
         b = 1
-    if b == 1:
-        pass
     elif name:
         check_username()
     else:
         while name == "" or name == " ":
-            name = str(input("Enter your name: "))
+            name = input("Enter your name: ")
             a += 1
         check_username()
         just_namee = name
@@ -44,62 +42,57 @@ def check_username():
     global name
     username = name
     if len(username) >= 12:
-        print("username too long")
-        sys.exit()
+        cprint("username too long", ERROR)
+        name()
     elif " " in username:
-        print("username must not have spaces")
-        sys.exit()
+        cprint("username must not have spaces", ERROR)
+        name()
     elif not username.isalpha():
-        print("username must be alphabetical")
-        sys.exit()
+        cprint("username must be alphabetical", ERROR)
+        name()
     else:
-        print("username ok")
+        cprint("username ok", VERT_FLASH)
 
 
 def fonction_password():
-    global password, size
-    password, size, verif = "", "", ""
+    global password
+    password, verif = "", ""
     password = str(input("Enter your password: "))
     while password == "" or password == " ":
         password = str(input("Enter your password: "))
-    size = len(password)
-    if not 5 < size < 15:
+    if not 5 < len(password) < 15:
         print("password has a not valid length")
-        sys.exit()
+        fonction_password()
     if " " in password:
         print("password must not have spaces")
     else:
-        verif = input(f"pls {just_namee}, enter a second time your password: ")
+        verif = input(f"{just_namee}, enter a second time your password: ")
         while verif != password:
             print(f"{just_namee}, the password are not the same")
             verif = input(f"{just_namee}, reenter your password ('abc' to remake it): ")
             if verif == "abc":
                 fonction_password()
-                break
             while verif == "" or verif == " ":
                 verif = input(f"pls {just_namee}, reenter your password to be sure: ")
             if verif == password:
                 print("password ok")
                 break
-            else:
-                pass
 
 
 name()
-time.sleep(1)
+time.sleep(0.7)
 start_password, password, size = "", "", 0
 print(f"{just_namee}, you have to define a password")
 if b == 1:
     just_namee = "Elric"
     print(f"for the user {just_namee}sama, the password is already defined:")
     password = "Elric33160"
-    size = len(password)
 else:
     fonction_password()
 hide_password = password[-3:]
-for i in range(size - 3):
+for i in range(len(password) - 3):
     start_password += "*"
 print()
 print(f" your username is {just_namee.capitalize()}")
 print(f" your password is {start_password + hide_password}")
-input('')
+input()
