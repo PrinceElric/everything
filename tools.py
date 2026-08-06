@@ -326,6 +326,31 @@ try:
 except ImportError:
     pag = None  # Évite le plantage si absent
 
+
+def load_config(chemin="config.json"):
+    """Charge la configuration JSON en toute sécurité. Renvoie un dict vide si échec."""
+    if not os.path.exists(chemin):
+        return {}
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+config = load_config()
+
+
+def save_config(data, chemin="config.json"):
+    """Sauvegarde les données dans un fichier JSON. Renvoie un booléen de succès."""
+    try:
+        with open(chemin, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+        return True
+    except Exception:
+        return False
+
+
 # -------------------------------------------------------------------------------
 # 2. INITIALISATION
 # -------------------------------------------------------------------------------
@@ -474,11 +499,12 @@ def clear():
 
 def cprint(texte, color):
     """Affiche texte coloré puis réinitialise style."""
-    if '§' in texte and '!' in texte: # balises de repère
-        texte = texte.replace('§', color).replace('!', RESET)
+    if "§" in texte and "!" in texte:  # balises de repère
+        texte = texte.replace("§", color).replace("!", RESET)
         print(texte)
         return
     print(f"{color}{texte}{RESET}")
+
 
 def slow_type(texte, tps_total=0, tps_btw_letters=0.03, color=LOG_DISCRET):
     """Print string character by character with tiny delay. and color if you want"""
@@ -747,33 +773,14 @@ def hach_word(word):
 
 def shutdown(temps=40, kill=False):
     """Arrêt du PC avec protection par mot de passe et bien d'autres."""
+    global config
+    configuration = config.copy()
 
-    def load_config(chemin="config.json"):
-        """Charge la configuration JSON en toute sécurité. Renvoie un dict vide si échec."""
-        if not os.path.exists(chemin):
-            return {
-                "password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"
-            }
-        try:
-            with open(chemin, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return {
-                "password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"
-            }
-
-    def save_config(data, chemin="config.json"):
-        """Sauvegarde les données dans un fichier JSON. Renvoie un booléen de succès."""
-        try:
-            with open(chemin, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=4, ensure_ascii=False)
-            return True
-        except Exception:
-            return False
-        copier_txt("shutdown -a")
-
-    config = load_config()
-    password_reel = config["password"]
+    if not configuration:
+        configuration = {
+            "password": "199e4be985e52e949b9628336ec91b740b03d6911c0096a5156370f118ea6405"
+        }
+    password_reel = configuration["password"]
 
     def launch_shutdown(temps):
         shutdown_A()
@@ -2273,7 +2280,6 @@ def tictactoe_game():
     launch_tic_tac_toe(game_style=tictactoe_game_style)
 
 
-
 def menu_game():
     """Le menu des jeux organisé par catégories."""
     while True:
@@ -2282,9 +2288,9 @@ def menu_game():
                 "1. Jeux de Mots",
                 "2. Classiques & Stratégie",
                 "3. Hasard & Nombres",
-                "4. Exit"
+                "4. Exit",
             ],
-            "Games Menu"
+            "Games Menu",
         )
 
         match categorie:
@@ -2294,9 +2300,9 @@ def menu_game():
                         "1. Pendu Game",
                         "2. Code Names Game",
                         "3. Word guessing Game",
-                        "4. Retour"
+                        "4. Retour",
                     ],
-                    "Jeux de Mots Menu"
+                    "Jeux de Mots Menu",
                 )
                 match choix:
                     case "1. Pendu Game":
@@ -2331,9 +2337,9 @@ def menu_game():
                     [
                         "1. Rock, Paper, Scissor Game",
                         "2. Tic Tac Toe Game",
-                        "3. Retour"
+                        "3. Retour",
                     ],
-                    "Classiques & Stratégie Menu"
+                    "Classiques & Stratégie Menu",
                 )
                 match choix:
                     case "1. Rock, Paper, Scissor Game":
@@ -2347,9 +2353,9 @@ def menu_game():
                         "1. Number Guessing Game",
                         "2. Pile ou Face Game",
                         "3. Dice simulator Game",
-                        "4. Retour"
+                        "4. Retour",
                     ],
-                    "Hasard & Nombres Menu"
+                    "Hasard & Nombres Menu",
                 )
                 match choix:
                     case "1. Number Guessing Game":
@@ -2357,12 +2363,18 @@ def menu_game():
                     case "2. Pile ou Face Game":
                         pile_face_game()
                     case "3. Dice simulator Game":
-                        face, dices = input("How many face (6 by def):    "), input("How many dice? (1 by def):    ")
-                        face, dices = int(face) if face else 6, int(dices) if dices else 1
+                        face, dices = input("How many face (6 by def):    "), input(
+                            "How many dice? (1 by def):    "
+                        )
+                        face, dices = int(face) if face else 6, (
+                            int(dices) if dices else 1
+                        )
                         dice(face, dices)
 
             case "4. Exit":
                 return
+
+
 # -------------------------------------------------------------------------------
 
 # --- Outils du projet ---
