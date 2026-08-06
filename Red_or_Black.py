@@ -3,8 +3,20 @@ import random, time
 
 
 def Red_or_Black_game(mode="normal"):
-    '''mode normal, +50 or easy'''
-    familys, values, historique, stats, color, card, tour, mise, prediction = (
+    """mode normal, +50 or easy"""
+    (
+        familys,
+        values,
+        historique,
+        stats,
+        color,
+        card,
+        tour,
+        mise,
+        prediction,
+        last_mise,
+        last_prediction,
+    ) = (
         ["♥", "♦", "♣", "♠"],
         [
             "2",
@@ -28,11 +40,13 @@ def Red_or_Black_game(mode="normal"):
         1,
         0,
         "",
+        0,
+        "",
     )
     cards = [f"{value}{color}" for color in familys for value in values]
 
     def game(tour=1):
-        nonlocal stats, color, card, mise, prediction
+        nonlocal stats, color, card, mise, prediction, last_mise, last_prediction
         random.shuffle(cards)
         card = cards.pop()
         historique.append(card)
@@ -47,22 +61,91 @@ def Red_or_Black_game(mode="normal"):
         )
         if tour != 1:
             while True:
-                mise = input("Enter a mise:   ")
-                if mise == "all":
-                    mise = config['sold']
-                    clear_lines(2)
+                mise = input("Enter a mise:   ").strip().lower()
+                if "all" in mise and "-" in mise:
+                    mise = mise.replace("all", "").replace("-", "")
+                    mise = mise.strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    if int(mise) >= config["sold"]:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    mise = config["sold"] - int(mise)
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+                elif mise == "all":
+                    mise = config["sold"]
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+                elif "last" in mise and ("-" in mise or "+" in mise):
+                    operateur = "+" if "+" in mise else "-"
+                    mise = mise.replace("last", "").replace("-", "").replace("+", "")
+                    mise = mise.strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    if operateur == "+":
+                        if last_mise + int(mise) >= config["sold"]:
+                            cprint("incorrect", ERROR)
+                            time.sleep(0.3)
+                            clear_lines(2)
+                            continue
+                        mise = last_mise + int(mise)
+                        clear_lines()
+                        print(f"Enter a mise:   {mise}")
+                    else:
+                        if last_mise - int(mise) <= 0:
+                            cprint("incorrect", ERROR)
+                            time.sleep(0.3)
+                            clear_lines(2)
+                            continue
+                        mise = last_mise - int(mise)
+                        clear_lines()
+                        print(f"Enter a mise:   {mise}")
+
+                elif mise == "last":
+                    if last_mise > config["sold"]:
+                        clear_lines()
+                        continue
+                    mise = last_mise
+                    clear_lines()
                     print(f"Enter a mise:   {mise}")
                 elif not mise.isdigit() or int(mise) > config["sold"]:
                     cprint("incorrect", ERROR)
                     time.sleep(0.3)
                     clear_lines(2)
                     continue
-                mise = int(mise)
-                prediction = input("Enter your prediction (R/N):   ").lower()
-                if prediction in ["r", "red", "rouge", "1", "sang", "s", "b", "blood"]:
+                mise, last_mise = int(mise), int(mise)
+                prediction = input("Enter your prediction (R/N):   ").lower().strip()
+                if prediction == "last":
+                    prediction = last_prediction
+                elif prediction in ["ch", "change", "not", "c"]:
+                    prediction = (
+                        f"{ROUGE_FLASH}Rouge{RESET}"
+                        if last_prediction == f"{NOIR}Noir{RESET}"
+                        else f"{NOIR}Noir{RESET}"
+                    )
+                elif prediction in [
+                    "r",
+                    "red",
+                    "rouge",
+                    "1",
+                    "sang",
+                    "s",
+                    "b",
+                    "blood",
+                ]:
                     prediction = f"{ROUGE_FLASH}Rouge{RESET}"
                 else:
                     prediction = f"{NOIR}Noir{RESET}"
+                last_prediction = prediction
                 cprint(f"You chosed §{prediction}!", SOULIGN2)
                 time.sleep(0.35)
                 break
@@ -115,7 +198,7 @@ def Red_or_Black_game(mode="normal"):
                 cprint(f"You lost €{mise}!", ROUGE_FLASH)
             input()
             mise = 0
-            clear_lines(4)
+            clear_lines(5)
             print("----------------------------------------------\n")
 
         print(f"mise : {mise} €")
@@ -126,6 +209,8 @@ def Red_or_Black_game(mode="normal"):
     while config["sold"] > 0:
         game(tour)
         affichage()
+        if mode == "easy" and config["sold"] <= 10:
+            break
         tour += 1
 
 
