@@ -1602,7 +1602,7 @@ def paper_scissor_game():
 
     while True:
         computer = random.choice(choices)
-        player = input("Enter your choice (q to quit): ")
+        player = input("\nEnter your choice (q to quit): ")
         if player.lower() == "q":
             break
         cheat = player != player.lower()
@@ -2273,70 +2273,96 @@ def tictactoe_game():
     launch_tic_tac_toe(game_style=tictactoe_game_style)
 
 
+
 def menu_game():
-    """the game jeux!!"""
+    """Le menu des jeux organisé par catégories."""
     while True:
-        faire_titre_section("Games Menu")
-        choice = menu_options(
+        categorie = menu_options(
             [
-                "1. Pendu Game",
-                "2. Rock, Paper, Scissor Game",
-                "3. Number Guessing Game",
-                "4. Code Names Game",
-                "5. Pile ou Face Game",
-                "6. Word guessing Game",
-                "7. Dice simulator Game",
-                "8. Tic Tac Toe Game",
-                "9. Exit",
-            ]
+                "1. Jeux de Mots",
+                "2. Classiques & Stratégie",
+                "3. Hasard & Nombres",
+                "4. Exit"
+            ],
+            "Games Menu"
         )
-        match choice:
-            case "1. Pendu Game":
-                mode = menu_options(
+
+        match categorie:
+            case "1. Jeux de Mots":
+                choix = menu_options(
                     [
-                        "1. Normal",
-                        "2. Facile",
-                        "3. Très Facile",
-                        "4. Difficile",
-                        "5. Debug",
-                        "6. Exit",
-                    ]
+                        "1. Pendu Game",
+                        "2. Code Names Game",
+                        "3. Word guessing Game",
+                        "4. Retour"
+                    ],
+                    "Jeux de Mots Menu"
                 )
-                match mode:
-                    case "1. Normal":
-                        pendu_game("normal")
-                    case "2. Facile":
-                        pendu_game("facile")
-                    case "3. Très Facile":
-                        pendu_game("tr_facile")
-                    case "4. Difficile":
-                        pendu_game("difficile")
-                    case "5. Debug":
-                        pendu_game("debug")
-                    case "6. Exit":
-                        break
-            case "2. Rock, Paper, Scissor Game":
-                paper_scissor_game()
-            case "3. Number Guessing Game":
-                number_guess_game()
-            case "4. Code Names Game":
-                code_names_game()
-            case "5. Pile ou Face Game":
-                pile_face_game()
-            case "6. Word guessing Game":
-                word_guess_game()
-            case "7. Dice simulator Game":
-                face, dices = input("How many face (6 by def):    "), input(
-                    "How many dice? (1 by def):    "
+                match choix:
+                    case "1. Pendu Game":
+                        mode = menu_options(
+                            [
+                                "1. Normal",
+                                "2. Facile",
+                                "3. Très Facile",
+                                "4. Difficile",
+                                "5. Debug",
+                                "6. Exit",
+                            ]
+                        )
+                        match mode:
+                            case "1. Normal":
+                                pendu_game("normal")
+                            case "2. Facile":
+                                pendu_game("facile")
+                            case "3. Très Facile":
+                                pendu_game("tr_facile")
+                            case "4. Difficile":
+                                pendu_game("difficile")
+                            case "5. Debug":
+                                pendu_game("debug")
+                    case "2. Code Names Game":
+                        code_names_game()
+                    case "3. Word guessing Game":
+                        word_guess_game()
+
+            case "2. Classiques & Stratégie":
+                choix = menu_options(
+                    [
+                        "1. Rock, Paper, Scissor Game",
+                        "2. Tic Tac Toe Game",
+                        "3. Retour"
+                    ],
+                    "Classiques & Stratégie Menu"
                 )
-                face, dices = int(face) if face else 6, int(dices) if dices else 1
-                dice(face, dices)
-            case "8. Tic Tac Toe Game":
-                tictactoe_game()
-            case "9. Exit":
+                match choix:
+                    case "1. Rock, Paper, Scissor Game":
+                        paper_scissor_game()
+                    case "2. Tic Tac Toe Game":
+                        tictactoe_game()
+
+            case "3. Hasard & Nombres":
+                choix = menu_options(
+                    [
+                        "1. Number Guessing Game",
+                        "2. Pile ou Face Game",
+                        "3. Dice simulator Game",
+                        "4. Retour"
+                    ],
+                    "Hasard & Nombres Menu"
+                )
+                match choix:
+                    case "1. Number Guessing Game":
+                        number_guess_game()
+                    case "2. Pile ou Face Game":
+                        pile_face_game()
+                    case "3. Dice simulator Game":
+                        face, dices = input("How many face (6 by def):    "), input("How many dice? (1 by def):    ")
+                        face, dices = int(face) if face else 6, int(dices) if dices else 1
+                        dice(face, dices)
+
+            case "4. Exit":
                 return
-
-
 # -------------------------------------------------------------------------------
 
 # --- Outils du projet ---
