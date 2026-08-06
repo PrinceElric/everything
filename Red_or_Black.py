@@ -2,7 +2,8 @@ from tools import *
 import random, time
 
 
-def Red_or_Black_game(mode=''):
+def Red_or_Black_game(mode="normal"):
+    '''mode normal, +50 or easy'''
     familys, values, historique, stats, color, card, tour, mise, prediction = (
         ["♥", "♦", "♣", "♠"],
         [
@@ -47,7 +48,11 @@ def Red_or_Black_game(mode=''):
         if tour != 1:
             while True:
                 mise = input("Enter a mise:   ")
-                if not mise.isdigit() or int(mise) > config["sold"]:
+                if mise == "all":
+                    mise = config['sold']
+                    clear_lines(2)
+                    print(f"Enter a mise:   {mise}")
+                elif not mise.isdigit() or int(mise) > config["sold"]:
                     cprint("incorrect", ERROR)
                     time.sleep(0.3)
                     clear_lines(2)
@@ -89,11 +94,23 @@ def Red_or_Black_game(mode=''):
         print("----------------------------------------------\n")
         if tour >= 2:
             if prediction == color:
-                config["sold"] += mise
+                if mode == "normal":
+                    config["sold"] += mise
+                elif mode == "+50":
+                    config["sold"] += 1.5 * mise
+                elif mode == "easy":
+                    config["sold"] += mise * 2
+
                 cprint(f"You predicted {prediction} and §you Won!!", SUCCESS)
                 cprint(f"You won €{mise*2}!", VERT_FLASH)
             else:
-                config["sold"] -= mise
+                if mode == "normal":
+                    config["sold"] -= mise
+                elif mode == "+50":
+                    config["sold"] -= 1.5 * mise
+                elif mode == "easy":
+                    config["sold"] -= 0.9 * mise
+
                 cprint(f"You predicted {prediction}  §(wrong...)!", ERROR)
                 cprint(f"You lost €{mise}!", ROUGE_FLASH)
             input()
