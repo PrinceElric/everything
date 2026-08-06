@@ -293,9 +293,12 @@ mots_921
 
 --- Executables ---
 
-• start_timer()
+• clear()
 
 • loading_bar(0.4, symbol="*", lenght=10, exe=True)
+
+• start_timer()
+
 
 ===============================================================================
 """
