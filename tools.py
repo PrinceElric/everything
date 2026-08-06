@@ -474,7 +474,7 @@ def clear():
 
 def cprint(texte, color):
     """Affiche texte coloré puis réinitialise style."""
-    if '§' in texte and '!' in texte:
+    if '§' in texte and '!' in texte: # balises de repère
         texte = texte.replace('§', color).replace('!', RESET)
         print(texte)
         return
