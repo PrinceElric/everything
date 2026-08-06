@@ -22,14 +22,12 @@ K♠  7♥  A♦  3♣  Q♠
 add :
     journal de transactions
 
-    last montant
-
     name start (de name)
 
     choix de prediction en focntion de stats
     si == alors random
-
-    add a random mise and random predition
+    
+    h for the half of the sold in mise
 
 
 add to tools
