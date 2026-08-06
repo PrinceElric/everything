@@ -2518,6 +2518,6 @@ def match_color(color):
 
 # --- Executables ---
 
-
+clear()
 loading_bar(0.4, symbol="*", lenght=10, exe=True)
 start_timer()
