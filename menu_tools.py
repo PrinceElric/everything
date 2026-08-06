@@ -54,7 +54,9 @@ def menu_ANSI():
                     "5. BLEU",
                     "6. ROSE",
                     "7. CYAN",
-                    "8. Exit",
+                    "8. NOIR",
+                    "9. BLANC",
+                    "10. Exit",
                 ]
             )
             match classic_color:
@@ -79,7 +81,13 @@ def menu_ANSI():
                 case "7. CYAN":
                     cprint("\nPrince-Elric 33!", CYAN)
                     input("")
-                case "8. Exit":
+                case "8. NOIR":
+                    cprint("\nPrince-Elric 33!", NOIR)
+                    input("")
+                case "9. BLANC":
+                    cprint("\nPrince-Elric 33!", BLANC)
+                    input("")
+                case "10. Exit":
                     return
 
     def menu_couleurs_intenses():
@@ -94,7 +102,9 @@ def menu_ANSI():
                     "4. BLEU_FLASH",
                     "5. ROSE_FLASH",
                     "6. CYAN_FLASH",
-                    "7. Exit",
+                    "7. NOIR_FLASH",
+                    "8. BLANC_FLASH",
+                    "9. Exit",
                 ]
             )
             match intense_color:
@@ -116,7 +126,13 @@ def menu_ANSI():
                 case "6. CYAN_FLASH":
                     cprint("\nPrince-Elric 33!", CYAN_FLASH)
                     input("")
-                case "7. Exit":
+                case "7. NOIR_FLASH":
+                    cprint("\nPrince-Elric 33!", NOIR_FLASH)
+                    input("")
+                case "8. BLANC_FLASH":
+                    cprint("\nPrince-Elric 33!", BLANC_FLASH)
+                    input("")
+                case "9. Exit":
                     return
 
     def menu_color_fond():
@@ -133,7 +149,8 @@ def menu_ANSI():
                     "6. FOND_ROSE",
                     "7. FOND_CYAN",
                     "8. FOND_GRIS",
-                    "9. Exit",
+                    "9. FOND_BLANC",
+                    "10. Exit",
                 ]
             )
             match color_fond:
@@ -161,7 +178,10 @@ def menu_ANSI():
                 case "8. FOND_GRIS":
                     cprint("\nPrince-Elric 33!", FOND_GRIS)
                     input("")
-                case "9. Exit":
+                case "9. FOND_BLANC":
+                    cprint("\nPrince-Elric 33!", FOND_BLANC)
+                    input("")
+                case "10. Exit":
                     return
 
     def menu_styles_predef():
@@ -231,81 +251,6 @@ def menu_ANSI():
                 menu_styles_predef()
             case "6. Exit":
                 return
-
-
-def match_color(color):
-    match color:
-        case "BARR2":
-            color = BARR2
-        case "SURLIGN2_BLANC":
-            color = SURLIGN2_BLANC
-        case "GRAS":
-            color = GRAS
-        case "ITALIC":
-            color = ITALIC
-        case "SOULIGN2":
-            color = SOULIGN2
-        case "NOIR_INVISIBLE":
-            color = NOIR_INVISIBLE
-        case "RESET":
-            color = RESET
-        case "CYAN":
-            color = CYAN
-        case "ROSE":
-            color = ROSE
-        case "BLEU":
-            color = BLEU
-        case "JAUNE":
-            color = JAUNE
-        case "VERT":
-            color = VERT
-        case "GRIS":
-            color = GRIS
-        case "ROUGE":
-            color = ROUGE
-        case "CYAN_FLASH":
-            color = CYAN_FLASH
-        case "ROSE_FLASH":
-            color = ROSE_FLASH
-        case "BLEU_FLASH":
-            color = BLEU_FLASH
-        case "JAUNE_FLASH":
-            color = JAUNE_FLASH
-        case "VERT_FLASH":
-            color = VERT_FLASH
-        case "ROUGE_FLASH":
-            color = ROUGE_FLASH
-        case "FOND_GRIS":
-            color = FOND_GRIS
-        case "FOND_CYAN":
-            color = FOND_CYAN
-        case "FOND_ROSE":
-            color = FOND_ROSE
-        case "FOND_BLEU":
-            color = FOND_BLEU
-        case "FOND_JAUNE":
-            color = FOND_JAUNE
-        case "FOND_VERT":
-            color = FOND_VERT
-        case "FOND_ROUGE":
-            color = FOND_ROUGE
-        case "FOND_NOIR":
-            color = FOND_NOIR
-        case "ALERTE_CRITIQUE":
-            color = ALERTE_CRITIQUE
-        case "LOG_DISCRET":
-            color = LOG_DISCRET
-        case "MENU_ACTIF":
-            color = MENU_ACTIF
-        case "STYLE_TITRE":
-            color = STYLE_TITRE
-        case "SUCCESS":
-            color = SUCCESS
-        case "WARNING":
-            color = WARNING
-        case "ERROR":
-            color = ERROR
-    return color
 
 
 def info(fonction: str):
@@ -866,7 +811,7 @@ def info(fonction: str):
         case "abreviation()":
             clear()
             cprint("Nécessite RIEN", LOG_DISCRET)
-            time.sleep(0.5)
+            time.sleep(0.4)
             clear()
 
             slow_type(
@@ -902,7 +847,7 @@ def info(fonction: str):
         case "seq()":
             clear()
             cprint("Nécessite RIEN", LOG_DISCRET)
-            time.sleep(0.5)
+            time.sleep(0.4)
             clear()
 
             slow_type(
@@ -921,6 +866,35 @@ def info(fonction: str):
             print(f"Text => {text}")
             print(f"Seq => {seq(text)}")
             input("")
+
+        case "arc_en_ciel()":
+            clear()
+            cprint("Nécessite RANDOM", LOG_DISCRET)
+            time.sleep(0.4)
+            clear()
+
+            slow_type(
+                "La fonction arc_en_ciel(...) renvoie le texte entré avec un dégradé de couleur arc-en-ciel.\n",
+                tps_btw_letters=0.03,
+            )
+            slow_type("Here how it works (16):  \n", tps_btw_letters=0.03)
+            input("")
+            print(f"{ROSE_FLASH}arc_en_ciel{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET},{RESET} {JAUNE}mode{RESET}{LOG_DISCRET}={RESET}{BLEU}'normal'{RESET}{LOG_DISCRET}){RESET}\n")
+            slow_type(
+                "The txt parameter is the text that will be degrade.\nThe mode parameter (normal by default) is the mode of basic degradation.\nIn more there are the modes: 'gras', 'italic', 'underline', 'surligne' and 'ansi'.\n",
+                tps_btw_letters=0.027,
+            )
+            slow_type("\nExemple:  ", tps_btw_letters=0.03)
+            input("")
+            clear()
+            text, mode = input("Entrez le texte à dégrader ('Prince-Elric 33!' by default): "), input("Entrez le mode de dégradation (normal by default): ").lower().strip()
+            if not mode:
+                mode = "normal"
+            if not text:
+                text = "Prince-Elric 33!"
+            print(f"Texte dégradé: {arc_en_ciel(text, mode=mode)}")
+            input("")
+
 
         case "copier_txt()":
             clear()
@@ -1259,8 +1233,8 @@ def menu_principal():
                         "6. faire_titre_section(texte, symbole='-', largeur=60)",
                         "7. menu_options(options)",
                         "8. Exit",
-                    ]
-                    , 'menu_terminal'
+                    ],
+                    "menu_terminal",
                 )
                 match fonct_term:
                     case "1. clear()":
@@ -1295,9 +1269,10 @@ def menu_principal():
                         "7. random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)",
                         "8. abreviation(word='')",
                         "9. seq(txt='')",
-                        "10. Exit",
-                    ]
-                    , 'menu_text'
+                        "10. arc_en_ciel(txt, mode='normal')",
+                        "11. Exit",
+                    ],
+                    "menu_text",
                 )
                 match fonct_text:
                     case "1. enlever_accents(texte: str)":
@@ -1318,7 +1293,9 @@ def menu_principal():
                         info("abreviation()")
                     case "9. seq(txt='')":
                         info("seq()")
-                    case "10. Exit":
+                    case "10. arc_en_ciel(txt, mode='normal')":
+                        info("arc_en_ciel()")
+                    case "11. Exit":
                         return
 
         def menu_system():
@@ -1336,8 +1313,8 @@ def menu_principal():
                         "7. human_time(n)",
                         "8. valid_input(type='int', phrase='')",
                         "9. Exit",
-                    ]
-                    , 'menu_system'
+                    ],
+                    "menu_system",
                 )
                 match fonct_sys:
                     case "1. copier_txt(texte)":
@@ -1462,9 +1439,10 @@ def menu_principal():
                     "6. Crypto",
                     "7. Jeux",
                     "8. Outils Spécifiques au Projet",
-                    "9. Exit",
-                ]
-                , 'menu_fonctions'
+                    "9. Executables",
+                    "10. Exit",
+                ],
+                "menu_fonctions",
             )
             match section:
                 case "1. Terminal":
@@ -1483,12 +1461,15 @@ def menu_principal():
                     menu_game()
                 case "8. Outils Spécifiques au Projet":
                     menu_specifik()
-                case "9. Exit":
+                case "9. Executables":
+                    pass
+                case "10. Exit":
                     return
 
     while True:
         principal = menu_options(
-            ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"], 'menu_principal'
+            ["1. Show CONSTANTES", "2. Show DONNÉES", "3. Show FONCTIONS", "4. Exit"],
+            "menu_principal",
         )
         match principal:
             case "1. Show CONSTANTES":

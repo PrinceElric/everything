@@ -69,17 +69,23 @@ l'affichage dans le terminal :
         VERT
         JAUNE
         BLEU
+        NOIR
+        BLANC
         ...
 
     • Couleurs haute intensité
         ROUGE_FLASH
         VERT_FLASH
         JAUNE_FLASH
+        BLEU_FLASH
+        NOIR_FLASH
+        BLANC_FLASH
         ...
 
     • Couleurs de fond
         FOND_ROUGE
         FOND_BLEU
+        FOND_BLANC
         ...
 
     • Styles prédéfinis
@@ -166,6 +172,9 @@ mots_921
 
 • seq(txt="")
     return the max continue chaine of a carac in txt
+
+• arc_en_ciel(txt, mode="normal")
+    Affiche un texte avec des couleurs aléatoires pour chaque caractère.
 
 
 -------------------------------------------------------------------------------
@@ -257,6 +266,8 @@ mots_921
     The word_guess_game were you input word and make color on letter -> /help
 • dice(face=6, n=1)
     Simule n lances de dés à n_faces faces.
+• Tictac_toe_game()
+    Simule le jeu du morpion avec diff styles de jeux.
 • menu_game()
     Lance le menu de jeux.
 
@@ -274,6 +285,18 @@ mots_921
 • kanekicount(number, base)
     Soustrait une valeur de base jusqu'à atteindre zéro.
 
+• def match_color(color):
+    Renvoie la couleur ANSI correspondante à un nom donné.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--- Executables ---
+
+• start_timer()
+
+• loading_bar(0.4, symbol="*", lenght=10, exe=True)
+
 ===============================================================================
 """
 
@@ -284,11 +307,20 @@ mots_921
 import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
 from datetime import datetime
 
-sys.path.append(r"C:\Users\elric\Desktop\vs code\all that")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 try:
     from mots_francais import mots
-except:
+except Exception:
     mots = []
+    json_path = os.path.join(current_dir, "mots_francais.json")
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, encoding="utf-8") as f:
+                mots = json.load(f)
+        except Exception:
+            mots = []
 try:
     import pyautogui as pag
 except ImportError:
@@ -325,6 +357,8 @@ ROUGE = "\033[31m"
 VERT = "\033[32m"
 JAUNE = "\033[33m"
 BLEU = "\033[34m"
+NOIR = "\033[30m"
+BLANC = "\033[37m"
 ROSE = "\033[35m"
 CYAN = "\033[36m"
 
@@ -333,8 +367,21 @@ ROUGE_FLASH = "\033[91m"
 VERT_FLASH = "\033[92m"
 JAUNE_FLASH = "\033[93m"
 BLEU_FLASH = "\033[94m"
+NOIR_FLASH = "\033[90m"
+BLANC_FLASH = "\033[97m"
 ROSE_FLASH = "\033[95m"
 CYAN_FLASH = "\033[96m"
+
+# --- Couleurs de Fond ---
+FOND_NOIR = "\033[40m"
+FOND_ROUGE = "\033[41m"
+FOND_VERT = "\033[42m"
+FOND_JAUNE = "\033[43m"
+FOND_BLEU = "\033[44m"
+FOND_ROSE = "\033[45m"
+FOND_CYAN = "\033[46m"
+FOND_GRIS = "\033[100m"  # Fond sombre discret
+FOND_BLANC = "\033[107m"  # Fond blanc haute luminosité
 
 # --- Couleurs de Fond ---
 FOND_NOIR = "\033[40m"
@@ -376,12 +423,16 @@ colors = (
     "VERT",
     "GRIS",
     "ROUGE",
+    "NOIR",
+    "BLANC",
     "CYAN_FLASH",
     "ROSE_FLASH",
     "BLEU_FLASH",
     "JAUNE_FLASH",
     "VERT_FLASH",
     "ROUGE_FLASH",
+    "NOIR_FLASH",
+    "BLANC_FLASH",
     "FOND_GRIS",
     "FOND_CYAN",
     "FOND_ROSE",
@@ -423,8 +474,11 @@ def clear():
 
 def cprint(texte, color):
     """Affiche texte coloré puis réinitialise style."""
+    if '§' in texte and '!' in texte: # balises de repère
+        texte = texte.replace('§', color).replace('!', RESET)
+        print(texte)
+        return
     print(f"{color}{texte}{RESET}")
-
 
 def slow_type(texte, tps_total=0, tps_btw_letters=0.03, color=LOG_DISCRET):
     """Print string character by character with tiny delay. and color if you want"""
@@ -639,6 +693,29 @@ def seq(txt=""):
             cur_len = 1
 
     return max_len
+
+
+def arc_en_ciel(txt, mode="normal"):
+    """print txt with random color for each letter, mode can be normal, gras, italic, underline, surligne or ANSI"""
+    textee = []
+    for i in txt:
+        if i == " ":
+            textee.append(" ")
+            continue
+        if mode == "normal":
+            textee.append(f"\033[38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "gras":
+            textee.append(f"\033[1;38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "italic":
+            textee.append(f"\033[3;38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "underline":
+            textee.append(f"\033[4;38;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "surligne":
+            textee.append(f"\033[48;5;{random.randint(16, 231)}m{i}{RESET}")
+        elif mode == "ansi":
+            textee.append(f"{match_color(random.choice(colors))}{i}{RESET}")
+
+    return "".join(textee)
 
 
 # -------------------------------------------------------------------------------
@@ -1362,13 +1439,17 @@ def pendu_game(mode="normal"):
         mots_921 = list(filter(lambda x: True if len(x) > 5 else False, mots_921))
         nonlocal mots, count_down, letter, letters, count_pendu, false_answers, pendu_etapes, word
         mots = mots_921.copy()
-        mots, letter, letters, count_pendu, false_answers, count_down = (
+        letter, letters, count_pendu, false_answers, count_down = (
             "",
             [],
             0,
             [],
             6,
         )
+        if not mots:
+            raise ValueError(
+                "La liste des mots du pendu est vide. Vérifiez que mots_francais.py ou mots_francais.json est présent."
+            )
         word = random.choice(mots)
         word = enlever_accents(word).lower()
         pendu_etapes = (
@@ -1494,7 +1575,7 @@ def pendu_game(mode="normal"):
         if choice in ["y", "yes", "o", "oui", "1"]:
             run()
         else:
-            sys.exit()
+            return
 
     def main(mode="normal"):
         while True:
@@ -1976,13 +2057,220 @@ def dice(n_faces=6, n=1):
     simulation, total = 0, 0
     for i in range(n):
         simulation = random.randint(1, n_faces)
-        slow_type(f"{i+1} -> {simulation}", 0.05)
-        print("\n")
+        slow_type(f"{i+1} -> {simulation}\n", 0.20)
         total += simulation
     print("\n")
     slow_type(f"total = {total}", 0.05)
     input("")
-    return
+    return total
+
+
+def tictactoe_game():
+    def game_style_selection():
+        choix = menu_options(
+            [
+                "1. Solo (Joueur contre IA)",
+                "2. Multi (Joueur contre Joueur)",
+                "3. IA vs IA",
+            ]
+        )
+        while True:
+            if choix == "1. Solo (Joueur contre IA)":
+                return "solo"
+            elif choix == "2. Multi (Joueur contre Joueur)":
+                return "multi"
+            elif choix == "3. IA vs IA":
+                return "ia"
+
+    tictactoe_game_style = game_style_selection()
+
+    def launch_tic_tac_toe(game_style="solo"):
+        faire_titre_section("TicTacToe Game!")
+        time.sleep(0.3)
+        clear()
+
+        vars = {"grille": [[" " for _ in range(3)] for _ in range(3)], "tour": 0}
+
+        def afficher_grille():
+            for i in range(3):
+                for j in range(3):
+                    if j == 2:
+                        print(vars["grille"][i][j], end="  ")
+                    else:
+                        print(vars["grille"][i][j], end=" | ")
+                print()
+
+        def verifier_victoire(symbole):
+            # Vérifie les lignes
+            for ligne in vars["grille"]:
+                if all(cell == symbole for cell in ligne):
+                    return True
+
+            # Vérifie les colonnes
+            for col in range(3):
+                if all(vars["grille"][row][col] == symbole for row in range(3)):
+                    return True
+
+            # Vérifie les diagonales
+            if all(vars["grille"][i][i] == symbole for i in range(3)) or all(
+                vars["grille"][i][2 - i] == symbole for i in range(3)
+            ):
+                return True
+
+            return False
+
+        def est_grille_pleine():
+            return all(cell != " " for ligne in vars["grille"] for cell in ligne)
+
+        def coup_joueur():
+            while True:
+                try:
+                    pos = input("Entrez votre coup (1-9): ")
+                    num = int(pos)
+                    if num < 1 or num > 9:
+                        cprint("Veuillez entrer un nombre entre 1 et 9.", color=ERROR)
+                        time.sleep(0.34)
+                        clear_lines()
+                        continue
+                    ligne = (num - 1) // 3
+                    col = (num - 1) % 3
+                    if vars["grille"][ligne][col] != " ":
+                        cprint("Cette case est déjà occupée!", color=ERROR)
+                        time.sleep(0.34)
+                        clear_lines()
+                        continue
+                    if game_style == "multi":
+                        symbole = (
+                            f"{ROUGE}X{RESET}"
+                            if vars["tour"] % 2 == 0
+                            else f"{BLEU}O{RESET}"
+                        )
+                        vars["grille"][ligne][col] = symbole
+                    else:
+                        vars["grille"][ligne][col] = f"{ROUGE}X{RESET}"
+                    break
+                except ValueError:
+                    cprint("Entrée invalide!")
+                    time.sleep(0.34)
+                    clear_lines()
+
+        def coup_ia():
+            cases_libres = [
+                (i, j)
+                for i in range(3)
+                for j in range(3)
+                if vars["grille"][i][j] == " "
+            ]
+            symbole = f"{ROUGE}X{RESET}" if vars["tour"] % 2 == 0 else f"{BLEU}O{RESET}"
+            adversaire = (
+                f"{BLEU}O{RESET}"
+                if symbole == f"{ROUGE}X{RESET}"
+                else f"{ROUGE}X{RESET}"
+            )
+
+            def trouver_coup_gagnant(symbole_recherche):
+                for ligne, col in cases_libres:
+                    vars["grille"][ligne][col] = symbole_recherche
+                    gagne = verifier_victoire(symbole_recherche)
+                    vars["grille"][ligne][col] = " "
+                    if gagne:
+                        return ligne, col
+                return None
+
+            if cases_libres and len(cases_libres) < 7:
+                # Priorité à l'attaque : si l'IA peut gagner immédiatement, elle joue cette case.
+                coup_attaque = trouver_coup_gagnant(symbole)
+                if coup_attaque:
+                    ligne, col = coup_attaque
+                    vars["grille"][ligne][col] = symbole
+                    slow_type("L'IA joue pour gagner!\n", color=WARNING)
+                    return
+
+                # Défense : si l'adversaire peut gagner au prochain tour, bloquer.
+                coup_defense = trouver_coup_gagnant(adversaire)
+                if coup_defense:
+                    ligne, col = coup_defense
+                    vars["grille"][ligne][col] = symbole
+                    slow_type("L'IA bloque votre mouvement!\n", color=WARNING)
+                    return
+
+                slow_type("L'IA réfléchit...\n", color=WARNING)
+                time.sleep(0.3)
+                cases_vip, cases_centre = [(0, 0), (0, 2), (2, 0), (2, 2)], [
+                    (1, 1)
+                ]  # Coins and centre
+                # Priorité aux cases vips, puis au centre, sinon choix aléatoire
+                for ligne, col in cases_vip:
+                    if vars["grille"][ligne][col] == " ":
+                        vars["grille"][ligne][col] = symbole
+                        return
+                for ligne, col in cases_centre:
+                    if vars["grille"][ligne][col] == " ":
+                        vars["grille"][ligne][col] = symbole
+                        return
+
+            ligne, col = random.choice(cases_libres)
+            vars["grille"][ligne][col] = symbole
+
+        slow_type("Bienvenue dans le jeu TicTacToe!\n", color=WARNING, tps_total=1)
+        while (
+            not verifier_victoire(f"{ROUGE}X{RESET}")
+            and not verifier_victoire(f"{BLEU}O{RESET}")
+            and not est_grille_pleine()
+        ):
+            afficher_grille()
+            if game_style == "solo":
+                if vars["tour"] % 2 == 0:
+                    coup_joueur()
+                else:
+                    coup_ia()
+            elif game_style == "multi":
+                coup_joueur()
+            elif game_style == "ia":
+                coup_ia()
+                time.sleep(0.7)
+            vars["tour"] += 1
+            time.sleep(0.5)
+            clear()
+        afficher_grille()
+        if game_style == "multi":
+            if verifier_victoire(f"{ROUGE}X{RESET}"):
+                slow_type("Le joueur 1 (X) a gagné! 🎉\n", color=WARNING)
+            elif verifier_victoire(f"{BLEU}O{RESET}"):
+                slow_type("Le joueur 2 (O) a gagné! 🎉\n", color=WARNING)
+            else:
+                slow_type("Match nul!\n", color=WARNING)
+
+        elif game_style == "solo":
+            if verifier_victoire(f"{ROUGE}X{RESET}"):
+                slow_type("Vous avez gagné! 🎉\n", color=WARNING)
+            elif verifier_victoire(f"{BLEU}O{RESET}"):
+                slow_type("L'IA a gagné! 🎉\n", color=WARNING)
+            else:
+                slow_type("Match nul!\n", color=WARNING)
+
+        else:  # game_style == 'ia'
+            if verifier_victoire(f"{ROUGE}X{RESET}"):
+                slow_type("L'IA 1 (X) a gagné! 🎉\n", color=WARNING)
+            elif verifier_victoire(f"{BLEU}O{RESET}"):
+                slow_type("L'IA 2 (O) a gagné! 🎉\n", color=WARNING)
+            else:
+                slow_type("Match nul!\n", color=WARNING)
+
+        continue_choice = menu_options(["1. Rejouer", "2. Quitter"])
+        if continue_choice == "1. Rejouer":
+            mode_change = menu_options(["1. Garder le mode", "2. Le changer"])
+            if mode_change == "1. Garder le mode":
+                launch_tic_tac_toe(game_style)
+            else:
+                tictactoe_game_style = game_style_selection()
+                launch_tic_tac_toe(game_style=tictactoe_game_style)
+        else:
+            slow_type("Merci d'avoir joué! À bientôt!\n", color=WARNING)
+            time.sleep(0.67)
+            clear()
+
+    launch_tic_tac_toe(game_style=tictactoe_game_style)
 
 
 def menu_game():
@@ -1998,7 +2286,8 @@ def menu_game():
                 "5. Pile ou Face Game",
                 "6. Word guessing Game",
                 "7. Dice simulator Game",
-                "8. Exit",
+                "8. Tic Tac Toe Game",
+                "9. Exit",
             ]
         )
         match choice:
@@ -2037,14 +2326,14 @@ def menu_game():
             case "6. Word guessing Game":
                 word_guess_game()
             case "7. Dice simulator Game":
-                face = input("How many face (0 by def):    ")
-                dices = input("How many dice? (1 by def):    ")
-                if not face:
-                    face = 6
-                if not dices:
-                    dices = 1
+                face, dices = input("How many face (6 by def):    "), input(
+                    "How many dice? (1 by def):    "
+                )
+                face, dices = int(face) if face else 6, int(dices) if dices else 1
                 dice(face, dices)
-            case "8. Exit":
+            case "8. Tic Tac Toe Game":
+                tictactoe_game()
+            case "9. Exit":
                 return
 
 
@@ -2106,6 +2395,85 @@ def kanekicount(number, base):
     while number > base:
         number, n = number - base, n + 1
         print(f"{number}    {n}")
+
+
+def match_color(color):
+    match color:
+        case "BARR2":
+            color = BARR2
+        case "SURLIGN2_BLANC":
+            color = SURLIGN2_BLANC
+        case "GRAS":
+            color = GRAS
+        case "ITALIC":
+            color = ITALIC
+        case "SOULIGN2":
+            color = SOULIGN2
+        case "NOIR_INVISIBLE":
+            color = NOIR_INVISIBLE
+        case "RESET":
+            color = RESET
+        case "CYAN":
+            color = CYAN
+        case "ROSE":
+            color = ROSE
+        case "BLEU":
+            color = BLEU
+        case "JAUNE":
+            color = JAUNE
+        case "VERT":
+            color = VERT
+        case "GRIS":
+            color = GRIS
+        case "ROUGE":
+            color = ROUGE
+        case "CYAN_FLASH":
+            color = CYAN_FLASH
+        case "ROSE_FLASH":
+            color = ROSE_FLASH
+        case "BLEU_FLASH":
+            color = BLEU_FLASH
+        case "JAUNE_FLASH":
+            color = JAUNE_FLASH
+        case "VERT_FLASH":
+            color = VERT_FLASH
+        case "ROUGE_FLASH":
+            color = ROUGE_FLASH
+        case "NOIR_FLASH":
+            color = NOIR_FLASH
+        case "BLANC_FLASH":
+            color = BLANC_FLASH
+        case "FOND_GRIS":
+            color = FOND_GRIS
+        case "FOND_CYAN":
+            color = FOND_CYAN
+        case "FOND_ROSE":
+            color = FOND_ROSE
+        case "FOND_BLEU":
+            color = FOND_BLEU
+        case "FOND_JAUNE":
+            color = FOND_JAUNE
+        case "FOND_VERT":
+            color = FOND_VERT
+        case "FOND_ROUGE":
+            color = FOND_ROUGE
+        case "FOND_NOIR":
+            color = FOND_NOIR
+        case "ALERTE_CRITIQUE":
+            color = ALERTE_CRITIQUE
+        case "LOG_DISCRET":
+            color = LOG_DISCRET
+        case "MENU_ACTIF":
+            color = MENU_ACTIF
+        case "STYLE_TITRE":
+            color = STYLE_TITRE
+        case "SUCCESS":
+            color = SUCCESS
+        case "WARNING":
+            color = WARNING
+        case "ERROR":
+            color = ERROR
+    return color
 
 
 # -------------------------------------------------------------------------------
