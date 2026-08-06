@@ -2,7 +2,7 @@ from tools import *
 import random, time
 
 
-def Red_or_Black_game():
+def Red_or_Black_game(mode=''):
     familys, values, historique, stats, color, card, tour, mise, prediction = (
         ["♥", "♦", "♣", "♠"],
         [
@@ -36,8 +36,8 @@ def Red_or_Black_game():
         card = cards.pop()
         historique.append(card)
         stats = {
-            "Rouge": f'%{(len(list(filter(lambda x: True if "♥" in x or "♦" in x else False, cards))) * 100)// 52}',
-            "Noir": f'%{(len(list(filter(lambda x: True if "♣" in x or "♠" in x else False, cards))) * 100)// 52}',
+            "Rouge": f'%{(len(list(filter(lambda x: True if "♥" in x or "♦" in x else False, cards))) * 100)// len(cards):.2f}',
+            "Noir": f'%{(len(list(filter(lambda x: True if "♣" in x or "♠" in x else False, cards))) * 100)// len(cards):.2f}',
         }
         color = (
             f"{ROUGE_FLASH}Rouge{RESET}"
@@ -76,20 +76,20 @@ def Red_or_Black_game():
         for i in range(30):
             random_card = random.choice(cards)
             print(
-                f"\r{' ' * 13}[ {ROUGE if "♥" in random_card or "♦" in random_card else NOIR}{random_card}{RESET} ] ",
+                f"\r{' ' * 15}[ {ROUGE if "♥" in random_card or "♦" in random_card else NOIR}{random_card}{RESET} ] ",
                 end="",
                 flush=True,
             )
             time.sleep(0.02 + (i * 0.01))
         print(
-            f"\r{' ' * 13}[ {ROUGE if "♥" in card or "♦" in card else NOIR}{card}{RESET} ]   \n"
+            f"\r{' ' * 15}[ {ROUGE if "♥" in card or "♦" in card else NOIR}{card}{RESET} ]   \n"
         )
-        print(f"{' ' * 6}{ROUGE_FLASH}Rouge{RESET}{' ' * 11}{NOIR}Noir{RESET}")
-        print(f"{' ' * 7}{stats['Rouge']}{' ' * 12}{stats['Noir']}\n")
+        print(f"{' ' * 6}{ROUGE_FLASH}Rouge{RESET}{' ' * 13}{NOIR}Noir{RESET}")
+        print(f"{' ' * 6}{stats['Rouge']}{' ' * 11}{stats['Noir']}\n")
         print("----------------------------------------------\n")
         if tour >= 2:
             if prediction == color:
-                config["sold"] += mise * 2
+                config["sold"] += mise
                 cprint(f"You predicted {prediction} and §you Won!!", SUCCESS)
                 cprint(f"You won €{mise*2}!", VERT_FLASH)
             else:
@@ -98,6 +98,7 @@ def Red_or_Black_game():
                 cprint(f"You lost €{mise}!", ROUGE_FLASH)
             input()
             mise = 0
+            clear_lines(4)
             print("----------------------------------------------\n")
 
         print(f"mise : {mise} €")
