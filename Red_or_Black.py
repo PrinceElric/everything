@@ -117,6 +117,53 @@ def Red_or_Black_game(mode="normal"):
                     mise = last_mise
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
+
+                elif "half" in mise and ("-" in mise or "+" in mise):
+                    operateur = "+" if "+" in mise else "-"
+                    mise = mise.replace("half", "").replace("-", "").replace("+", "").replace("h", "")
+                    mise = mise.strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    if operateur == "+":
+                        if config["sold"] // 2 + int(mise) >= config["sold"]:
+                            cprint("incorrect", ERROR)
+                            time.sleep(0.3)
+                            clear_lines(2)
+                            continue
+                        mise = config["sold"] // 2 + int(mise)
+                    else:
+                        if config["sold"] // 2 - int(mise) <= 0:
+                            cprint("incorrect", ERROR)
+                            time.sleep(0.3)
+                            clear_lines(2)
+                            continue
+                        mise = config["sold"] // 2 - int(mise)
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+
+                elif mise == "half" or mise == "h":
+                    mise = config["sold"] // 2
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+                elif any(x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]):
+                    val = mise
+                    for x in ["rand", "random", "aleatoire", "aléatoire", "r"]:
+                        val = val.replace(x, "")
+                    val = val.strip()
+                    parts = val.split()
+
+                    if len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit():  # Syntaxe: "r 50 200"
+                        mise = random.randrange(int(parts[0]), min(int(parts[1]), config["sold"]))
+                    elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
+                        mise = random.randrange(int(parts[0]), config["sold"])
+                    else:
+                        mise = random.randrange(20, config["sold"])  # Syntaxe: "r"
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+
                 elif not mise.isdigit() or int(mise) > config["sold"]:
                     cprint("incorrect", ERROR)
                     time.sleep(0.3)
@@ -124,8 +171,14 @@ def Red_or_Black_game(mode="normal"):
                     continue
                 mise, last_mise = int(mise), int(mise)
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
-                if prediction == "last":
+                if prediction in exit:
+                    clear_lines(2)
+                    continue
+                elif prediction == "last":
                     prediction = last_prediction
+                elif prediction in ["ra", "rand", "random", "aleatoire", "aléatoire"]:
+                    Colors_list = (f"{ROUGE_FLASH}Rouge{RESET}", f"{NOIR}Noir{RESET}")
+                    prediction = random.choice(Colors_list)
                 elif prediction in ["ch", "change", "not", "c"]:
                     prediction = (
                         f"{ROUGE_FLASH}Rouge{RESET}"
@@ -185,7 +238,10 @@ def Red_or_Black_game(mode="normal"):
                     config["sold"] += mise * 2
 
                 cprint(f"You predicted {prediction} and §you Won!!", SUCCESS)
-                cprint(f"You won €{mise*2}!", VERT_FLASH)
+                cprint(
+                    f"You won €{mise if mode == "normal" else 1.5 * mise if mode == "+50" else mise * 2}!",
+                    VERT_FLASH,
+                )
             else:
                 if mode == "normal":
                     config["sold"] -= mise
@@ -195,7 +251,10 @@ def Red_or_Black_game(mode="normal"):
                     config["sold"] -= 0.9 * mise
 
                 cprint(f"You predicted {prediction}  §(wrong...)!", ERROR)
-                cprint(f"You lost €{mise}!", ROUGE_FLASH)
+                cprint(
+                    f"You lost €{mise if mode == "normal" else 1.5 * mise if mode == "+50" else mise * 0.9}!",
+                    ROUGE_FLASH,
+                )
             input()
             mise = 0
             clear_lines(5)
@@ -206,7 +265,7 @@ def Red_or_Black_game(mode="normal"):
         print(hist_str)
         print("\n+--------------------------------------------------+")
 
-    while config["sold"] > 0:
+    while config["sold"] > 0 and cards:
         game(tour)
         affichage()
         if mode == "easy" and config["sold"] <= 10:
