@@ -6,8 +6,6 @@ import time, random, string, subprocess
 def menu_ANSI():
     def menu_styles_txt():
         while True:
-            faire_titre_section(" Menu styles de texte")
-            time.sleep(0.4)
             style_txt = menu_options(
                 [
                     "1. Gras",
@@ -17,7 +15,8 @@ def menu_ANSI():
                     "5. Noir_Invisible",
                     "6. Barré",
                     "7. Exit",
-                ]
+                ],
+                "menu_styles_txt"
             )
             match style_txt:
                 case "1. Gras":
@@ -1172,9 +1171,7 @@ def info(fonction: str):
 def menu_principal():
     def menu_CONSTANTES():
         while True:
-            faire_titre_section("CONSTANTES Menu!")
-            time.sleep(0.4)
-            constante = menu_options(["1. ANSI colors", "2. Listes", "3. Exit"])
+            constante = menu_options(["1. ANSI colors", "2. Listes", "3. Exit"], "CONSTANTES Menu")
             match constante:
                 case "1. ANSI colors":
                     menu_ANSI()
@@ -1221,8 +1218,6 @@ def menu_principal():
 
         def menu_terminal():
             while True:
-                faire_titre_section(" Menu de Fonctions de terminal")
-                time.sleep(0.5)
                 fonct_term = menu_options(
                     [
                         "1. clear()",
@@ -1256,8 +1251,6 @@ def menu_principal():
 
         def menu_text():
             while True:
-                faire_titre_section(" Menu de Fonctions de Text")
-                time.sleep(0.5)
                 fonct_text = menu_options(
                     [
                         "1. enlever_accents(texte: str)",
@@ -1300,8 +1293,6 @@ def menu_principal():
 
         def menu_system():
             while True:
-                faire_titre_section(" Menu de Fonctions de system")
-                time.sleep(0.5)
                 fonct_sys = menu_options(
                     [
                         "1. copier_txt(texte)",
@@ -1338,8 +1329,6 @@ def menu_principal():
 
         def menu_journal():
             while True:
-                faire_titre_section(" Menu de Fonctions de journalisation")
-                time.sleep(0.5)
                 fonct_journal = menu_options(
                     [
                         "1. ecrire_log(message, type_log='INFO', chemin)",
@@ -1347,7 +1336,8 @@ def menu_principal():
                         "3. log_warning(message, type_log='WARNING', chemin)",
                         "4. log_error(message, type_log='ERROR', chemin)",
                         "5. Exit",
-                    ]
+                    ],
+                    "menu_journal"
                 )
                 match fonct_journal:
                     case "1. ecrire_log(message, type_log='INFO', chemin)":
@@ -1363,13 +1353,12 @@ def menu_principal():
 
         def menu_automat():
             while True:
-                faire_titre_section(" Menu de Fonctions d'Automatisation")
-                time.sleep(0.5)
                 fonct_auto = menu_options(
                     [
                         "1. afk_mouse(n=0, kill=False)",
                         "2. Exit",
-                    ]
+                    ],
+                    "menu_automat"
                 )
                 match fonct_auto:
                     case "1. afk_mouse(n=0, kill=False)":
@@ -1379,8 +1368,6 @@ def menu_principal():
 
         def menu_crypto():
             while True:
-                faire_titre_section(" Menu de Fonctions de Crypto")
-                time.sleep(0.5)
                 fonct_crypto = menu_options(
                     [
                         "1. cesar_code()",
@@ -1388,7 +1375,8 @@ def menu_principal():
                         "3. morse(txt='')",
                         "4. fibonacci()",
                         "5. A1Z26(direct: str=False)" "6. Exit",
-                    ]
+                    ],
+                    "menu_crypto"
                 )
                 match fonct_crypto:
                     case "1. cesar_code()":
@@ -1406,15 +1394,15 @@ def menu_principal():
 
         def menu_specifik():
             while True:
-                faire_titre_section(" Menu de Fonctions de Spécifiques")
-                time.sleep(0.5)
                 fonct_sys = menu_options(
                     [
                         "1. trouver_nom(objet)",
                         "2. fonct_mots()",
                         "3. kanekicount(number, base)",
-                        "4. Exit",
-                    ]
+                        "4. match_color(color)",
+                        "5. Exit",
+                    ],
+                    "menu_specifik"
                 )
                 match fonct_sys:
                     case "1. trouver_nom(objet)":
@@ -1423,12 +1411,12 @@ def menu_principal():
                         pass
                     case "3. kanekicount(number, base)":
                         pass
-                    case "4. Exit":
+                    case "4. match_color(color)":
+                        pass
+                    case "5. Exit":
                         return
 
         while True:
-            faire_titre_section("Sections de Fonctions disponibles")
-            time.sleep(0.4)
             section = menu_options(
                 [
                     "1. Terminal",
@@ -1483,6 +1471,4 @@ def menu_principal():
                 return
 
 
-faire_titre_section("Tools Menu!")
-time.sleep(0.4)
 menu_principal()
