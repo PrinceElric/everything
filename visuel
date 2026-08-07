@@ -5,7 +5,7 @@
 
 ------------------------------------------------------------------
 
-#   Card   Guess   Bet     Result     Change      Balance
+#   Card   Guess   Mise     Result     Change      Balance
 
 01  K♥     Rouge   100 €   WIN        +100 €      1100 €
 02  4♠     Rouge    50 €   LOSS        -50 €      1050 €
