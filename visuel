@@ -1,32 +1,40 @@
 '''
-+--------------------------------------------------+
++----------------------------------------------------------------+
 
-             RED OR BLACK
+                         TRANSACTION HISTORY
 
-             [ K♠ ]
+------------------------------------------------------------------
 
-      Rouge           Noir
-       %50            %50
+#   Card   Guess   Bet     Result     Change      Balance
 
-----------------------------------------------
+01  K♥     Rouge   100 €   WIN        +100 €      1100 €
+02  4♠     Rouge    50 €   LOSS        -50 €      1050 €
+03  A♦     Rouge   200 €   WIN        +200 €      1250 €
+04  8♣     Noir    120 €   LOSS       -120 €      1130 €
+05  J♦     Rouge    80 €   WIN         +80 €      1210 €
 
-Mise : 50 €
-Solde : 1275 €
+------------------------------------------------------------------
 
-Historique :
+Wins           : 3
+Losses         : 2
+Win rate       : 60.0 %
 
-K♠  7♥  A♦  3♣  Q♠
+Total Won      : +380 €
+Total Lost     : -170 €
 
-+--------------------------------------------------+
+Net Profit     : +210 €
+Current Balance: 1210 €
+
+------------------------------------------------------------------
 
 add :
     journal de transactions
 
-    name start (de name)
 
-
-add to tools
+add to tools : 
 
     return a list of commun and uncommun element of two list
+    add a factiorrel fonct
+    add name and pssword +  un fonction qui apelle le code comme fait normaleme,t
 
 '''
