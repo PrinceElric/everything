@@ -411,16 +411,6 @@ FOND_CYAN = "\033[46m"
 FOND_GRIS = "\033[100m"  # Fond sombre discret
 FOND_BLANC = "\033[107m"  # Fond blanc haute luminosité
 
-# --- Couleurs de Fond ---
-FOND_NOIR = "\033[40m"
-FOND_ROUGE = "\033[41m"
-FOND_VERT = "\033[42m"
-FOND_JAUNE = "\033[43m"
-FOND_BLEU = "\033[44m"
-FOND_ROSE = "\033[45m"
-FOND_CYAN = "\033[46m"
-FOND_GRIS = "\033[100m"  # Fond sombre discret
-
 # --- Super Fusions  ---
 ERROR = ROUGE_FLASH + GRAS + SOULIGN2
 WARNING = JAUNE_FLASH + ITALIC
