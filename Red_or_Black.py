@@ -16,7 +16,7 @@ def Red_or_Black_game(mode="normal"):
         prediction,
         last_mise,
         last_prediction,
-        journal
+        journal,
     ) = (
         ["♥", "♦", "♣", "♠"],
         [
@@ -43,7 +43,7 @@ def Red_or_Black_game(mode="normal"):
         "",
         0,
         "",
-        []
+        [],
     )
     cards = [f"{value}{color}" for color in familys for value in values]
     if mode == "+50":
@@ -321,22 +321,38 @@ def Red_or_Black_game(mode="normal"):
                     f"You lost €{mise * 1.5 if mode == '+50' else mise * 0.9 if mode == 'easy' else mise * 1.7 if mode == 'hard' else mise}!",
                     ROUGE_FLASH,
                 )
-                
+
                 journal.append(
                     {
                         "card": card,  # ok
                         "guess": prediction,  # ok
-                        "mise": f'{mise} €',  # ok
-                        "change": f'{VERT_FLASH}+{mise} €{RESET}' if prediction == color else f'{ROUGE_FLASH}-{mise} €{RESET}',  # positif ou négatif # NON
+                        "mise": f"{mise} €",  # ok
+                        "change": (
+                            f"{VERT_FLASH}+{mise} €{RESET}"
+                            if prediction == color
+                            else f"{ROUGE_FLASH}-{mise} €{RESET}"
+                        ),  # positif ou négatif # NON
                         "balance": f'{config["sold"]} €',  # ok
-                        "result": f'{VERT_FLASH}WIN{RESET}' if prediction == color else f'{ROUGE_FLASH}LOSS{RESET}',  # NON
+                        "result": (
+                            f"{VERT_FLASH}WIN{RESET}"
+                            if prediction == color
+                            else f"{ROUGE_FLASH}LOSS{RESET}"
+                        ),  # NON
                     }
                 )
-                afficher_journal = input('enter if journal').lower().strip()
-                if afficher_journal in ["j", "jour", "journal", "st", "stat", "lo", "logic"]:
+                afficher_journal = input("enter if journal").lower().strip()
+                if afficher_journal in [
+                    "j",
+                    "jour",
+                    "journal",
+                    "st",
+                    "stat",
+                    "lo",
+                    "logic",
+                ]:
                     print(journal)
                     for i in journal[0].values():
-                        print(i, end='   ')
+                        print(i, end="   ")
                     input()
                     journal_transactions()
             mise = 0
@@ -361,4 +377,3 @@ def Red_or_Black_game(mode="normal"):
 
 
 Red_or_Black_game()
-
