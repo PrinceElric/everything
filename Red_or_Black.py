@@ -16,6 +16,7 @@ def Red_or_Black_game(mode="normal"):
         prediction,
         last_mise,
         last_prediction,
+        journal
     ) = (
         ["♥", "♦", "♣", "♠"],
         [
@@ -42,6 +43,7 @@ def Red_or_Black_game(mode="normal"):
         "",
         0,
         "",
+        []
     )
     cards = [f"{value}{color}" for color in familys for value in values]
     if mode == "+50":
@@ -52,6 +54,8 @@ def Red_or_Black_game(mode="normal"):
         random.shuffle(cards)
         card = cards.pop()
         historique.append(card)
+        if not cards:
+            return
         stats = {
             "Rouge": (
                 len(
@@ -261,15 +265,16 @@ def Red_or_Black_game(mode="normal"):
                 break
 
     def affichage():
-        nonlocal stats, color, mise
-        random_card = random.choice(cards)
+        nonlocal stats, color, mise, journal
+        if not cards:
+            return
         clear()
         hist_affichage = [
             f"{ROUGE_FLASH}{x}{RESET}" if "♥" in x or "♦" in x else f"{NOIR}{x}{RESET}"
             for x in historique
         ]
         hist_str = " ".join(hist_affichage)
-        print("+--------------------------------------------------+\n")
+        print(f"+{'-' * 50}+\n")
         print(f"{' ' * 13}RED OR BLACK\n")
         for i in range(30):
             random_card = random.choice(cards)
@@ -284,7 +289,7 @@ def Red_or_Black_game(mode="normal"):
         )
         print(f"{' ' * 6}{ROUGE_FLASH}Rouge{RESET}{' ' * 13}{NOIR}Noir{RESET}")
         print(f"{' ' * 6}%{stats['Rouge']:.2f}{' ' * 11}%{stats['Noir']:.2f}\n")
-        print("----------------------------------------------\n")
+        print(f"{'-'*46}\n")
         if tour >= 2:
             if prediction == color:
                 if mode == "+50":
@@ -316,24 +321,44 @@ def Red_or_Black_game(mode="normal"):
                     f"You lost €{mise * 1.5 if mode == '+50' else mise * 0.9 if mode == 'easy' else mise * 1.7 if mode == 'hard' else mise}!",
                     ROUGE_FLASH,
                 )
-            journal = input()
-            if journal in ["j", "jour", "journal", "st", "stat", "lo", "logic"]:
-                pass
+                
+                journal.append(
+                    {
+                        "card": card,  # ok
+                        "guess": prediction,  # ok
+                        "mise": f'{mise} €',  # ok
+                        "change": f'{VERT_FLASH}+{mise} €{RESET}' if prediction == color else f'{ROUGE_FLASH}-{mise} €{RESET}',  # positif ou négatif # NON
+                        "balance": f'{config["sold"]} €',  # ok
+                        "result": f'{VERT_FLASH}WIN{RESET}' if prediction == color else f'{ROUGE_FLASH}LOSS{RESET}',  # NON
+                    }
+                )
+                afficher_journal = input('enter if journal').lower().strip()
+                if afficher_journal in ["j", "jour", "journal", "st", "stat", "lo", "logic"]:
+                    print(journal)
+                    for i in journal[0].values():
+                        print(i, end='   ')
+                    input()
+                    journal_transactions()
             mise = 0
             clear_lines(5)
-            print("----------------------------------------------\n")
+            print(f"{'-' * 46}\n")
 
         print(f"mise : {mise} €")
         print(f"solde : {config['sold']} €\n")
         print(hist_str)
-        print("\n+--------------------------------------------------+")
+        print(f"\n+{'-' * 50}+")
 
-    while config["sold"] > 0 and cards:
+    def journal_transactions():
+        clear()
+        print(f"+{'-' * 64}+\n")
+        print(f"{' ' * 25}TRANSACTION HISTORY\n")
+        print(f"{'-' * 66}\n")
+
+    while config["sold"] > 10 and cards:
         game(tour)
         affichage()
-        if mode == "easy" and config["sold"] <= 10:
-            break
         tour += 1
 
 
 Red_or_Black_game()
+
