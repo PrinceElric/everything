@@ -3,7 +3,7 @@ import random, time
 
 
 def Red_or_Black_game(mode="normal"):
-    """mode normal, +50 or easy"""
+    """mode normal, +50, easy or hard"""
     (
         familys,
         values,
@@ -44,6 +44,8 @@ def Red_or_Black_game(mode="normal"):
         "",
     )
     cards = [f"{value}{color}" for color in familys for value in values]
+    if mode == "+50":
+        config["sold"] *= 1.5
 
     def game(tour=1):
         nonlocal stats, color, card, mise, prediction, last_mise, last_prediction
@@ -51,8 +53,24 @@ def Red_or_Black_game(mode="normal"):
         card = cards.pop()
         historique.append(card)
         stats = {
-            "Rouge": f'%{(len(list(filter(lambda x: True if "♥" in x or "♦" in x else False, cards))) * 100)// len(cards):.2f}',
-            "Noir": f'%{(len(list(filter(lambda x: True if "♣" in x or "♠" in x else False, cards))) * 100)// len(cards):.2f}',
+            "Rouge": (
+                len(
+                    list(
+                        filter(lambda x: True if "♥" in x or "♦" in x else False, cards)
+                    )
+                )
+                * 100
+            )
+            / len(cards),
+            "Noir": (
+                len(
+                    list(
+                        filter(lambda x: True if "♣" in x or "♠" in x else False, cards)
+                    )
+                )
+                * 100
+            )
+            / len(cards),
         }
         color = (
             f"{ROUGE_FLASH}Rouge{RESET}"
@@ -118,9 +136,14 @@ def Red_or_Black_game(mode="normal"):
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
 
-                elif "half" in mise and ("-" in mise or "+" in mise):
+                elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
                     operateur = "+" if "+" in mise else "-"
-                    mise = mise.replace("half", "").replace("-", "").replace("+", "").replace("h", "")
+                    mise = (
+                        mise.replace("half", "")
+                        .replace("-", "")
+                        .replace("+", "")
+                        .replace("h", "")
+                    )
                     mise = mise.strip()
                     if not mise.isdigit():
                         cprint("incorrect", ERROR)
@@ -148,15 +171,21 @@ def Red_or_Black_game(mode="normal"):
                     mise = config["sold"] // 2
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
-                elif any(x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]):
+                elif any(
+                    x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
+                ):
                     val = mise
                     for x in ["rand", "random", "aleatoire", "aléatoire", "r"]:
                         val = val.replace(x, "")
                     val = val.strip()
                     parts = val.split()
 
-                    if len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit():  # Syntaxe: "r 50 200"
-                        mise = random.randrange(int(parts[0]), min(int(parts[1]), config["sold"]))
+                    if (
+                        len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit()
+                    ):  # Syntaxe: "r 50 200"
+                        mise = random.randrange(
+                            int(parts[0]), min(int(parts[1]), config["sold"])
+                        )
                     elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
                         mise = random.randrange(int(parts[0]), config["sold"])
                     else:
@@ -170,21 +199,49 @@ def Red_or_Black_game(mode="normal"):
                     clear_lines(2)
                     continue
                 mise, last_mise = int(mise), int(mise)
+
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
                 if prediction in exit:
                     clear_lines(2)
                     continue
                 elif prediction == "last":
                     prediction = last_prediction
-                elif prediction in ["ra", "rand", "random", "aleatoire", "aléatoire"]:
-                    Colors_list = (f"{ROUGE_FLASH}Rouge{RESET}", f"{NOIR}Noir{RESET}")
-                    prediction = random.choice(Colors_list)
+                elif prediction in [
+                    "ra",
+                    "rand",
+                    "random",
+                    "aleatoire",
+                    "aléatoire",
+                    "al",
+                ]:
+                    prediction = random.choice(
+                        [f"{ROUGE_FLASH}Rouge{RESET}", f"{NOIR}Noir{RESET}"]
+                    )
                 elif prediction in ["ch", "change", "not", "c"]:
                     prediction = (
                         f"{ROUGE_FLASH}Rouge{RESET}"
                         if last_prediction == f"{NOIR}Noir{RESET}"
                         else f"{NOIR}Noir{RESET}"
                     )
+                elif prediction in [
+                    "st",
+                    "stat",
+                    "stats",
+                    "lo",
+                    "logic",
+                    "be",
+                    "best",
+                    "better",
+                ]:
+                    pourc_red, pourc_black = float(stats["Rouge"]), float(stats["Noir"])
+                    if pourc_black < pourc_red:
+                        prediction = f"{ROUGE_FLASH}Rouge{RESET}"
+                    elif pourc_red < pourc_black:
+                        prediction = f"{NOIR}Noir{RESET}"
+                    else:
+                        prediction = random.choice(
+                            [f"{ROUGE_FLASH}Rouge{RESET}", f"{NOIR}Noir{RESET}"]
+                        )
                 elif prediction in [
                     "r",
                     "red",
@@ -223,39 +280,45 @@ def Red_or_Black_game(mode="normal"):
             )
             time.sleep(0.02 + (i * 0.01))
         print(
-            f"\r{' ' * 15}[ {ROUGE if "♥" in card or "♦" in card else NOIR}{card}{RESET} ]   \n"
+            f"\r{' ' * 15}[ {ROUGE if '♥' in card or '♦' in card else NOIR}{card}{RESET} ]   \n"
         )
         print(f"{' ' * 6}{ROUGE_FLASH}Rouge{RESET}{' ' * 13}{NOIR}Noir{RESET}")
-        print(f"{' ' * 6}{stats['Rouge']}{' ' * 11}{stats['Noir']}\n")
+        print(f"{' ' * 6}%{stats['Rouge']:.2f}{' ' * 11}%{stats['Noir']:.2f}\n")
         print("----------------------------------------------\n")
         if tour >= 2:
             if prediction == color:
-                if mode == "normal":
-                    config["sold"] += mise
-                elif mode == "+50":
+                if mode == "+50":
                     config["sold"] += 1.5 * mise
                 elif mode == "easy":
                     config["sold"] += mise * 2
+                elif mode == "hard":
+                    config["sold"] += mise * 0.7
+                else:
+                    config["sold"] += mise
 
                 cprint(f"You predicted {prediction} and §you Won!!", SUCCESS)
                 cprint(
-                    f"You won €{mise if mode == "normal" else 1.5 * mise if mode == "+50" else mise * 2}!",
+                    f"You won €{mise * 1.5 if mode == '+50' else mise * 2 if mode == 'easy' else mise * 0.7 if mode == 'hard' else mise}!",
                     VERT_FLASH,
                 )
             else:
-                if mode == "normal":
-                    config["sold"] -= mise
-                elif mode == "+50":
+                if mode == "+50":
                     config["sold"] -= 1.5 * mise
                 elif mode == "easy":
                     config["sold"] -= 0.9 * mise
+                elif mode == "hard":
+                    config["sold"] -= 1.7 * mise
+                else:
+                    config["sold"] -= mise
 
                 cprint(f"You predicted {prediction}  §(wrong...)!", ERROR)
                 cprint(
-                    f"You lost €{mise if mode == "normal" else 1.5 * mise if mode == "+50" else mise * 0.9}!",
+                    f"You lost €{mise * 1.5 if mode == '+50' else mise * 0.9 if mode == 'easy' else mise * 1.7 if mode == 'hard' else mise}!",
                     ROUGE_FLASH,
                 )
-            input()
+            journal = input()
+            if journal in ["j", "jour", "journal", "st", "stat", "lo", "logic"]:
+                pass
             mise = 0
             clear_lines(5)
             print("----------------------------------------------\n")
