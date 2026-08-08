@@ -51,16 +51,16 @@ Current Balance: 1210 €
 _________________________________________________________________________________________________________________________________________
 
 add :
-    finir le journal
-    a cheat code comme sold = ... or sold + et - ou augementer les chnces,
-    add affichage de fin (en vrai le journal et qq trucs de plus ùais trkl)
     add si l'input de mise == capa (parce que afficher en haut avant le style de titre) les diff trucs a entrer (lzst, c, r, r4, r5 6, ra... et les listes qui l'acceptent...)
     add time selection en parameter de super pour la duree d'axffichge
+    add un json pour save les best score : series, meillerus talles max en chaque mode
+    add a serie of wins
 
 add to tools :
 
     return a list of commun and uncommun element of two list
     add a factiorrel fonct
     add name and pssword +  un fonction qui apelle le code comme fait normaleme,t
+    add code to config avec hach de code tel pour div use
 
 """
