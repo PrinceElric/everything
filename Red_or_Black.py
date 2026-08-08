@@ -1,58 +1,28 @@
 from tools import *
-import random, time, sys
+import random, sys, time
 
 
 def Red_or_Black_game(mode="normal"):
     """mode normal, +50, easy or hard"""
-    (
-        familys,
-        values,
-        historique,
-        stats,
-        color,
-        card,
-        tour,
-        mise,
-        prediction,
-        last_mise,
-        last_prediction,
-        journal,
-        n,
-        total_won,
-        total_lost,
-    ) = (
-        ["♥", "♦", "♣", "♠"],
-        [
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "J",
-            "Q",
-            "K",
-            "A",
-        ],
-        [],
-        {},
-        "",
-        [],
-        1,
-        0,
-        "",
-        0,
-        "",
-        [],
-        3,
-        [],
-        [],
-    )
-    cards = [f"{value}{color}" for color in familys for value in values]
-    if mode == "+50" or mode == "easy":
+    families = ["♣", "♠", "♦", "♥"]
+    values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+
+    historique = []
+    stats = {}
+    color = ""
+    card = []
+    tour = 1
+    mise = 0
+    prediction = ""
+    last_mise = 0
+    last_prediction = ""
+    journal = []
+    n = 3
+    total_won = []
+    total_lost = []
+
+    cards = [f"{value}{color}" for color in families for value in values]
+    if mode in {"+50", "easy"}:
         config["sold"] *= 1.5
 
     def game(tour=1):
@@ -193,16 +163,25 @@ def Red_or_Black_game(mode="normal"):
                     if (
                         len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit()
                     ):  # Syntaxe: "r 50 200"
-                        mise = random.randrange(
-                            int(parts[0]), min(int(parts[1]), config["sold"])
-                        )
-                    elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
-                        mise = random.randrange(int(parts[0]), config["sold"])
-                    else:
-                        if config["sold"] > 20:
-                            mise = random.randrange(config["sold"])
+                        start = int(parts[0])
+                        stop = min(int(parts[1]), int(config["sold"]))
+                        if stop <= start:
+                            mise = min(max(start, 1), int(config["sold"]))
                         else:
-                            mise = random.randrange(20, config["sold"])  # Syntaxe: "r"
+                            mise = random.randrange(start, stop)
+                    elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
+                        start = int(parts[0])
+                        if start >= int(config["sold"]):
+                            mise = max(1, int(config["sold"]) - 1)
+                        else:
+                            mise = random.randrange(start, int(config["sold"]))
+                    else:
+                        if int(config["sold"]) > 20:
+                            mise = random.randrange(int(config["sold"]))
+                        else:
+                            mise = random.randrange(
+                                1, int(config["sold"]) + 1
+                            )  # Syntaxe: "r"
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
 
@@ -215,6 +194,7 @@ def Red_or_Black_game(mode="normal"):
                 if mise <= 10:
                     clear_lines()
                     continue
+
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
                 if prediction in exit:
                     clear_lines(2)
