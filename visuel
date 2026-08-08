@@ -1,4 +1,4 @@
-'''
+"""
 +----------------------------------------------------------------+
 
                          TRANSACTION HISTORY
@@ -31,10 +31,10 @@ add :
     journal de transactions
 
 
-add to tools : 
+add to tools :
 
     return a list of commun and uncommun element of two list
     add a factiorrel fonct
     add name and pssword +  un fonction qui apelle le code comme fait normaleme,t
 
-'''
+"""
