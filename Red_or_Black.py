@@ -1,5 +1,3 @@
-"""trkllllll"""
-
 from tools import *
 import random, time, sys
 
@@ -20,6 +18,8 @@ def Red_or_Black_game(mode="normal"):
         last_prediction,
         journal,
         n,
+        total_won,
+        total_lost,
     ) = (
         ["♥", "♦", "♣", "♠"],
         [
@@ -48,6 +48,8 @@ def Red_or_Black_game(mode="normal"):
         "",
         [],
         3,
+        [],
+        [],
     )
     cards = [f"{value}{color}" for color in familys for value in values]
     if mode == "+50" or mode == "easy":
@@ -274,7 +276,7 @@ def Red_or_Black_game(mode="normal"):
                 break
 
     def affichage(animation=True):
-        nonlocal stats, color, mise, journal, n
+        nonlocal stats, color, mise, journal, n, total_won
         if not cards:
             return
         clear()
@@ -332,6 +334,9 @@ def Red_or_Black_game(mode="normal"):
                     ROUGE_FLASH,
                 )
             NOIRE, VERTT_FLASH = NOIR, VERT_FLASH
+            total_won.append(float(mise) if prediction == color else 0)
+            total_lost.append(float(mise) if prediction != color else 0)
+
             journal.append(
                 {
                     "card": f'{ROUGE if "♥" in card or "♦" in card else NOIRE}{card}{RESET}',
@@ -373,18 +378,18 @@ def Red_or_Black_game(mode="normal"):
         print(f"\n+{'-' * 50}+")
 
     def journal_transactions():
-        nonlocal journal
+        nonlocal journal, total_won, total_lost
         clear()
         print(f"+{'-' * 64}+\n")
-        print(f"{' ' * 25}TRANSACTION HISTORY\n")
+        print(f"{'TRANSACTION HISTORY'.center(64)}\n")
         print(f"{'-' * 66}\n")
         print(
-            f"{'#':<4}{'Card':<8}{'Guess':<9}{'Mise':<9}{'Result':<11}{'Change':<12}{'Balance':<10}\n"
+            f"{'#':<5}{'Card':<8}{'Guess':<9}{'Mise':<9}{'Result':<11}{'Change':<12}{'Balance':<10}\n"
         )
         for i, entry in enumerate(journal, 1):
             idx_str = f"{i:02d}"
             print(
-                f"{idx_str:<4}"
+                f"{idx_str:<5}"
                 f"{entry['card']:<17}"
                 f"{entry['guess']:<18}"
                 f"{entry['mise']:<9}"
@@ -413,7 +418,17 @@ def Red_or_Black_game(mode="normal"):
         print(f"\n{'-' * 66}")
         print(f"\n{VERT_FLASH}Wins{RESET}           : {Wins}")
         print(f"{ROUGE_FLASH}Losses{RESET}         : {Losses}")
-        print(f"{WARNING}Win rate{RESET}       : {float(Win_rate)} %")
+        print(
+            f"{WARNING}Win rate{RESET}       {LOG_DISCRET}:{RESET} {ROUGE_FLASH if float(Win_rate) < 50 else VERT_FLASH}{float(Win_rate)} %{RESET}"
+        )
+        print(f"\n{VERT_FLASH}Total Won      : +{sum(total_won)} €{RESET}")
+        print(f"{ROUGE_FLASH}Total Lost     : -{sum(total_lost)} €{RESET}")
+        print(
+            f"{VERT_FLASH if sum(total_won) - sum(total_lost) >= 0 else ROUGE_FLASH}Net Profit     : {sum(total_won) - sum(total_lost)} €{RESET}"
+        )
+        print(
+            f"{VERT_FLASH if config['sold'] >= 0 else ROUGE_FLASH}Current Balance: {config['sold']} €{RESET}"
+        )
 
         input()
         affichage("fast")
