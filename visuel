@@ -48,10 +48,14 @@ Net Profit     : +210 €
 Current Balance: 1210 €
 
 ------------------------------------------------------------------
+_________________________________________________________________________________________________________________________________________
 
 add :
     finir le journal
-    a cheat code comme sold = ... or sold + et - ou augementer les chnces, 
+    a cheat code comme sold = ... or sold + et - ou augementer les chnces,
+    add affichage de fin (en vrai le journal et qq trucs de plus ùais trkl)
+    add si l'input de mise == capa (parce que afficher en haut avant le style de titre) les diff trucs a entrer (lzst, c, r, r4, r5 6, ra... et les listes qui l'acceptent...)
+    add time selection en parameter de super pour la duree d'axffichge
 
 add to tools :
 
