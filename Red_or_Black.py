@@ -50,7 +50,7 @@ def Red_or_Black_game(mode="normal"):
         3,
     )
     cards = [f"{value}{color}" for color in familys for value in values]
-    if mode == "+50":
+    if mode == "+50" or mode == "easy":
         config["sold"] *= 1.5
 
     def game(tour=1):
@@ -210,7 +210,9 @@ def Red_or_Black_game(mode="normal"):
                     clear_lines(2)
                     continue
                 mise, last_mise = int(mise), int(mise)
-
+                if mise <= 10:
+                    clear_lines()
+                    continue
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
                 if prediction in exit:
                     clear_lines(2)
@@ -349,7 +351,7 @@ def Red_or_Black_game(mode="normal"):
                 }
             )
             if not animation == "fast":
-                afficher_journal = input("enter if journal").lower().strip()
+                afficher_journal = input("").lower().strip()
                 if afficher_journal in [
                     "j",
                     "jour",
@@ -390,6 +392,29 @@ def Red_or_Black_game(mode="normal"):
                 f"{entry['change']:<21}"
                 f"{entry['balance']:<10}"
             )
+        Wins, Losses, Win_rate = 0, 0, 0
+        for i in range(len(journal)):
+            Wins += 1 if f"{VERT_FLASH}WIN{RESET}" in journal[i].values() else 0
+            Losses += 1 if f"{ROUGE_FLASH}LOSS{RESET}" in journal[i].values() else 0
+        Win_rate = 100 / (Wins + Losses) * Wins
+        p_m = formate_collections(
+            [
+                "-" if journal[i]["result"] == f"{ROUGE_FLASH}LOSS{RESET}" else "+"
+                for i in range(len(journal))
+            ]
+        )
+        for sim in p_m:
+            if sim == " ":
+                print(" ", end="")
+            elif sim == "+":
+                print(f"{VERT_FLASH}+{RESET}", end="")
+            elif sim == "-":
+                print(f"{ROUGE_FLASH}-{RESET}", end="")
+        print(f"\n{'-' * 66}")
+        print(f"\n{VERT_FLASH}Wins{RESET}           : {Wins}")
+        print(f"{ROUGE_FLASH}Losses{RESET}         : {Losses}")
+        print(f"{WARNING}Win rate{RESET}       : {float(Win_rate)} %")
+
         input()
         affichage("fast")
 
@@ -415,4 +440,5 @@ while True:
         case "5. Exit":
             sys.exit()  # return
 
+    config["sold"] = 200
     Red_or_Black_game(mode)
