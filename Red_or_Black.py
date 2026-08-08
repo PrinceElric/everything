@@ -264,7 +264,7 @@ def Red_or_Black_game(mode="normal"):
                 time.sleep(0.35)
                 break
 
-    def affichage():
+    def affichage(animation=True):
         nonlocal stats, color, mise, journal
         if not cards:
             return
@@ -276,14 +276,15 @@ def Red_or_Black_game(mode="normal"):
         hist_str = " ".join(hist_affichage)
         print(f"+{'-' * 50}+\n")
         print(f"{' ' * 13}RED OR BLACK\n")
-        for i in range(30):
-            random_card = random.choice(cards)
-            print(
-                f"\r{' ' * 15}[ {ROUGE if "♥" in random_card or "♦" in random_card else NOIR}{random_card}{RESET} ] ",
-                end="",
-                flush=True,
-            )
-            time.sleep(0.02 + (i * 0.01))
+        if animation:
+            for i in range(30):
+                random_card = random.choice(cards)
+                print(
+                    f"\r{' ' * 15}[ {ROUGE if "♥" in random_card or "♦" in random_card else NOIR}{random_card}{RESET} ] ",
+                    end="",
+                    flush=True,
+                )
+                time.sleep(0.02 + (i * 0.01))
         print(
             f"\r{' ' * 15}[ {ROUGE if '♥' in card or '♦' in card else NOIR}{card}{RESET} ]   \n"
         )
@@ -322,39 +323,57 @@ def Red_or_Black_game(mode="normal"):
                     ROUGE_FLASH,
                 )
 
-                journal.append(
-                    {
-                        "card": card,  # ok
-                        "guess": prediction,  # ok
-                        "mise": f"{mise} €",  # ok
-                        "change": (
-                            f"{VERT_FLASH}+{mise} €{RESET}"
-                            if prediction == color
-                            else f"{ROUGE_FLASH}-{mise} €{RESET}"
-                        ),  # positif ou négatif # NON
-                        "balance": f'{config["sold"]} €',  # ok
-                        "result": (
-                            f"{VERT_FLASH}WIN{RESET}"
-                            if prediction == color
-                            else f"{ROUGE_FLASH}LOSS{RESET}"
-                        ),  # NON
-                    }
-                )
-                afficher_journal = input("enter if journal").lower().strip()
-                if afficher_journal in [
-                    "j",
-                    "jour",
-                    "journal",
-                    "st",
-                    "stat",
-                    "lo",
-                    "logic",
-                ]:
-                    print(journal)
-                    for i in journal[0].values():
-                        print(i, end="   ")
-                    input()
-                    journal_transactions()
+            journal.append(
+                {
+                    "card": f'{ROUGE if "♥" in card or "♦" in card else NOIR}{card}{RESET}',
+                    "guess": prediction,
+                    "mise": f"{mise} €",
+                    "result": (
+                        f"{VERT_FLASH}WIN{RESET}"
+                        if prediction == color
+                        else f"{ROUGE_FLASH}LOSS{RESET}"
+                    ),
+                    "change": (
+                        f"{VERT_FLASH}+{mise} €{RESET}"
+                        if prediction == color
+                        else f"{ROUGE_FLASH}-{mise} €{RESET}"
+                    ),
+                    "balance": f'{config["sold"]} €',
+                }
+            )
+            afficher_journal = input("enter if journal").lower().strip()
+            if afficher_journal in [
+                "j",
+                "jour",
+                "journal",
+                "st",
+                "stat",
+                "lo",
+                "logic",
+            ]:
+                journal_transactions()
+                for i in range(len(journal)):
+                    if i < 10:
+                        print(f"0{str(i):<4}", end="")
+                    else:
+                        print(f"{str(i):<4}", end="")
+                    for j in journal[i].values():
+                        if journal[i].keys() == 'card':
+                            n = 7
+                        elif journal[i].keys() == 'guess' or journal[i].keys() == 'mise':
+                            n = 8
+                        elif journal[i].keys() == 'result':
+                            n = 11
+                        elif journal[i].keys() == 'change':
+                            n = 12
+                        elif journal[i].keys() == 'balance':
+                            n = 8
+
+                        print(f"{j:<{n}}", end="")
+                    print("")
+
+                input()
+
             mise = 0
             clear_lines(5)
             print(f"{'-' * 46}\n")
@@ -369,10 +388,11 @@ def Red_or_Black_game(mode="normal"):
         print(f"+{'-' * 64}+\n")
         print(f"{' ' * 25}TRANSACTION HISTORY\n")
         print(f"{'-' * 66}\n")
+        print("#   Card   Guess   Mise     Result     Change      Balance\n")
 
     while config["sold"] > 10 and cards:
         game(tour)
-        affichage()
+        affichage(False)
         tour += 1
 
 
