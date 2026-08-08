@@ -1,3 +1,3 @@
-from tools import *  # noqa: F403
-print(f'{ERROR}Hello word!{RESET}')  # noqa: F405
-log_info('Hello word!')  # noqa: F405
+from tools import *
+print(f'{ERROR}Hello word!{RESET}')
+log_info('Hello word!')
