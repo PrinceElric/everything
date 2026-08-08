@@ -1,5 +1,5 @@
 from tools import *
-import random, time
+import random, time, sys
 
 
 def Red_or_Black_game(mode="normal"):
@@ -376,4 +376,20 @@ def Red_or_Black_game(mode="normal"):
         tour += 1
 
 
-Red_or_Black_game()
+while True:
+    parameter = menu_options(
+        ["1. Normal", "2. +50", "3. Easy", "4. Hard", "5. Exit"], "Red or Black GAME"
+    )
+    match parameter:
+        case "1. Normal":
+            mode = "normal"
+        case "2. +50":
+            mode = "+50"
+        case "3. Easy":
+            mode = "easy"
+        case "4. Hard":
+            mode = "hard"
+        case "5. Exit":
+            sys.exit()  # return
+
+    Red_or_Black_game(mode)
