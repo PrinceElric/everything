@@ -25,8 +25,8 @@ def Red_or_Black_game(mode="normal"):
     if mode in {"+50", "easy"}:
         config["sold"] *= 1.5
 
-    def game(tour=1):
-        nonlocal stats, color, card, mise, prediction, last_mise, last_prediction
+    def game(current_tour=1):
+        nonlocal stats, color, card, mise, prediction, last_mise, last_prediction, tour
         random.shuffle(cards)
         card = cards.pop()
         historique.append(card)
@@ -57,10 +57,54 @@ def Red_or_Black_game(mode="normal"):
             if "♥" in card or "♦" in card
             else f"{NOIR}Noir{RESET}"
         )
-        if tour != 1:
+        if current_tour != 1:
             while True:
                 mise = input("Enter a mise:   ").strip().lower()
-                if "all" in mise and "-" in mise:
+                if mise in exit:
+                    return
+                if "sold" in mise and ("+" in mise or "*" in mise):
+                    operateur = "*" if "*" in mise else "+"
+                    mise = mise.replace("sold", "").replace("+", "").replace("*", "")
+                    mise = mise.strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ALERTE_CRITIQUE)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    if operateur == "+":
+                        config["sold"] += float(mise)
+                        cprint(f"sold += {float(mise)} -> {config['sold']}", WARNING)
+                    elif operateur == "*":
+                        config["sold"] *= float(mise)
+                        cprint(f"sold *= {float(mise)} -> {config['sold']}", WARNING)
+                    time.sleep(0.75)
+                    clear_lines(2)
+                    continue
+                elif "card" in mise:
+                    print(f"card -> {card},   color ->{color}")
+                    input()
+                    clear_lines(3)
+                    continue
+                elif "ch" in mise:
+                    tour += 1
+                    cards.append(card)
+                    historique.remove(card)
+                    clear_lines()
+                    game(tour)
+                elif "inf" in mise or "full" in mise:
+                    mise = mise.replace("full", "").replace("inf", "")
+                    mise = mise.strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ALERTE_CRITIQUE)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    mise = float(mise)
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+
+
+                elif "all" in mise and "-" in mise:
                     mise = mise.replace("all", "").replace("-", "")
                     mise = mise.strip()
                     if not mise.isdigit():
@@ -268,7 +312,7 @@ def Red_or_Black_game(mode="normal"):
         print(f"+{'-' * 50}+\n")
         print(f"{' ' * 13}RED OR BLACK\n")
         if animation and not animation == "fast":
-            for i in range(30):
+            for i in range(25):
                 random_card = random.choice(cards)
                 print(
                     f"\r{' ' * 15}[ {ROUGE if "♥" in random_card or "♦" in random_card else NOIR}{random_card}{RESET} ] ",
@@ -353,7 +397,7 @@ def Red_or_Black_game(mode="normal"):
             print(f"{'-' * 46}\n")
 
         print(f"mise : {mise} €")
-        print(f"solde : {config['sold']} €\n")
+        print(f"sold : {config['sold']} €\n")
         print(hist_str)
         print(f"\n+{'-' * 50}+")
 
@@ -406,6 +450,8 @@ def Red_or_Black_game(mode="normal"):
         print(
             f"{VERT_FLASH if sum(total_won) - sum(total_lost) >= 0 else ROUGE_FLASH}Net Profit     : {sum(total_won) - sum(total_lost)} €{RESET}"
         )
+        if 200 + (sum(total_won) - sum(total_lost)) != config['sold']:
+            cprint('YOU CHEATED!!', ALERTE_CRITIQUE)
         print(
             f"{VERT_FLASH if config['sold'] >= 0 else ROUGE_FLASH}Current Balance: {config['sold']} €{RESET}"
         )
@@ -413,10 +459,14 @@ def Red_or_Black_game(mode="normal"):
         input()
         affichage("fast")
 
+
     while config["sold"] > 10 and cards:
         game(tour)
-        affichage(False)
+        if mise in exit:
+            return
+        affichage()
         tour += 1
+    journal_transactions()
 
 
 while True:
