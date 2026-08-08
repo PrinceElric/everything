@@ -542,7 +542,7 @@ def loading_bar(tps, symbol="#", lenght=10, exe=False):
 
 
 def clear_lines(n=1):
-    """Efface un nombre de lignes donne dans le terminal."""
+    """Efface un nombre de lignes donné dans le terminal."""
     for _ in range(n):
         sys.stdout.write("\033[1F\033[2K")
     sys.stdout.flush()
@@ -2509,6 +2509,8 @@ def match_color(color):
             color = WARNING
         case "ERROR":
             color = ERROR
+        case _:
+            color = RESET
     return color
 
 
