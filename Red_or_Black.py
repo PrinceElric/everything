@@ -101,7 +101,7 @@ def Red_or_Black_game(mode="normal"):
                     clear_lines(2)
                     continue
                 elif "card" in mise:
-                    print(f"card -> {card},   color ->{color}")
+                    print(f"card -> {card},   color -> {color}")
                     input()
                     clear_lines(3)
                     continue
@@ -256,7 +256,14 @@ def Red_or_Black_game(mode="normal"):
                 mise, last_mise = int(mise), int(mise)
 
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
-                if prediction in exit:
+                
+                # darks code
+                if prediction == 'perfect' or prediction == 'right':
+                    prediction = color
+                elif prediction == 'not' or prediction == 'imperfect':
+                    prediction = f"{NOIR}Noir{RESET}" if color == f"{ROUGE_FLASH}Rouge{RESET}" else f"{ROUGE_FLASH}Rouge{RESET}"
+                
+                elif prediction in exit:
                     clear_lines(2)
                     continue
                 elif prediction == "last":
