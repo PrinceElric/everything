@@ -104,6 +104,10 @@ Le module propose également des listes pour sortir des input des programmes:
 
 • Others
 
+• families
+• values
+• deck_of_cards
+
 -------------------------------------------------------------------------------
 4. DONNÉES
 -------------------------------------------------------------------------------
@@ -267,6 +271,8 @@ mots_921
     Simule n lances de dés à n_faces faces.
 • Tictac_toe_game()
     Simule le jeu du morpion avec diff styles de jeux.
+• Red_or_Black_game(mode="normal", cheat=True)
+    red or black game of gambling
 • menu_game()
     Lance le menu de jeux.
 
