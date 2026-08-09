@@ -1180,7 +1180,7 @@ def menu_principal():
                     print(f"{'Exit = ':<13}{exit}")
                     print(f"\n{'Families = ':<13}{families}")
                     print(f"{'Values = ':<13}{values}")
-                    print(f"{'Cards = ':<13}{cards}")
+                    print(f"{'Cards = ':<13}{deck_of_cards}")
                     input("")
                     menu_CONSTANTES()
                 case "3. Exit":
