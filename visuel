@@ -50,9 +50,6 @@ Current Balance: 1210 €
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
 
-add :
-    add time selection en parameter de super pour la duree d'axffichge
-
 add to tools :
 
     return a list of commun and uncommun element of two list
