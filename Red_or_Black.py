@@ -1,6 +1,7 @@
 from tools import *
 import random, sys, time, json
 
+
 def save_high_score(win_serie_score, sold_score):
     if win_serie_score > config["highest_win_serie_R/B"]:
         config["highest_win_serie_R/B"] = win_serie_score
@@ -365,7 +366,10 @@ def Red_or_Black_game(mode="normal"):
             for x in historique
         ]
         hist_str = " ".join(hist_affichage)
-        cprint("enter capa as mise to see all the dispo codes, and config['code'] to see darks code", WARNING)
+        cprint(
+            "enter capa as mise to see all the dispo codes, and config['code'] to see darks code",
+            WARNING,
+        )
         print(f"+{'-' * 50}+\n")
         print(f"{' ' * 13}RED OR BLACK\n")
         if animation and not animation == "fast":
@@ -417,7 +421,7 @@ def Red_or_Black_game(mode="normal"):
                 )
                 score = 0
             highest_score = max(score, highest_score)
-            highest_sold = max(config['sold'], highest_sold)
+            highest_sold = max(config["sold"], highest_sold)
             NOIRE, VERTT_FLASH = NOIR, VERT_FLASH
             total_won.append(float(mise) if prediction == color else 0)
             total_lost.append(float(mise) if prediction != color else 0)
