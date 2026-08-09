@@ -80,7 +80,26 @@ def Red_or_Black_game(mode="normal"):
                     input()
                     clear()
                     continue
-
+                elif hach_word(mise) == config["code"]:
+                    clear_lines()
+                    print(arc_en_ciel("secret"))
+                    time.sleep(0.5)
+                    clear_lines()
+                    print("\n" * 2)
+                    print(f"\t{'dark code':<15}{'utilisation'}\nMISE:")
+                    slow_type(
+                        f"\t{A1Z26(txtt='19-15-12-4  +-/-*  14', choix="2. Decode from A1-Z26"):<15}{A1Z26(txtt='1-16-16-12-9-17-21-5  +  15-21  *  14  19-21-18  12-5  19-15-12-4', choix="2. Decode from A1-Z26")}\n\t{A1Z26(txtt='3-1-18-4  ', choix="2. Decode from A1-Z26"):<15}{A1Z26(txtt='1-6-6-9-3-8-5  12-5-19  9-14-6-15-19  4-5  3-1-18-4  1-3-21-20-512-12-5 ', choix="2. Decode from A1-Z26")}\n\t{A1Z26(txtt='3-8-(-1-14-7-5-) ', choix="2. Decode from A1-Z26"):<15}{A1Z26(txtt='18-5-18-15-12-12  12-1  3-1-18-20-5  (-5-14  3-12-5-1-14-1-14-20  12-5  20-15-21-20-)  ', choix="2. Decode from A1-Z26")}\n\t{A1Z26(txtt='9-14-6-/-6-21-12-12  14 ', choix="2. Decode from A1-Z26"):<15}{A1Z26(txtt='16-5-18-13-5-20  4-5  13-9-19-5-18  2-9-5-14  1-21  4-5-191921-19  4-21  19-15-12-4-,  13-9-19-5  =  14-. ', choix="2. Decode from A1-Z26")}\n",
+                        tps_btw_letters=0.008,
+                    )
+                    print("\nPREDICT:")
+                    slow_type(
+                        f"\t{A1Z26(txtt='16-5-18-6-5-3-20 / -18-9-7-8-20  ', choix="2. Decode from A1-Z26").replace('20', 't'):<15}{A1Z26(txtt='16-18-5-4-9-3-20  12-1  2-15-14-14-5  22-1-12-5-21-18  4-5  3-1-18-4-!  ', choix="2. Decode from A1-Z26")}\n\t{A1Z26(txtt='14-15-20 / -9-13-16-5-18-6-5-3-20 ', choix="2. Decode from A1-Z26").replace('20', 't'):<15}{A1Z26(txtt='16-18-5-4-9-3-20  12-1  13-1-21-22-1-9-19-5  22-1-12-5-21-18  4-5  3-1-18-4-!  ', choix="2. Decode from A1-Z26")}",
+                        tps_btw_letters=0.008,
+                    )
+                    print("\n" * 3)
+                    input()
+                    clear_lines(20)
+                    continue
                 # darks code
                 elif "sold" in mise and ("+" in mise or "*" in mise):
                     operateur = "*" if "*" in mise else "+"
@@ -256,13 +275,17 @@ def Red_or_Black_game(mode="normal"):
                 mise, last_mise = int(mise), int(mise)
 
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
-                
+
                 # darks code
-                if prediction == 'perfect' or prediction == 'right':
+                if prediction == "perfect" or prediction == "right":
                     prediction = color
-                elif prediction == 'not' or prediction == 'imperfect':
-                    prediction = f"{NOIR}Noir{RESET}" if color == f"{ROUGE_FLASH}Rouge{RESET}" else f"{ROUGE_FLASH}Rouge{RESET}"
-                
+                elif prediction == "not" or prediction == "imperfect":
+                    prediction = (
+                        f"{NOIR}Noir{RESET}"
+                        if color == f"{ROUGE_FLASH}Rouge{RESET}"
+                        else f"{ROUGE_FLASH}Rouge{RESET}"
+                    )
+
                 elif prediction in exit:
                     clear_lines(2)
                     continue
