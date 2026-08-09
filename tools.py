@@ -1346,8 +1346,9 @@ def fibonacci():
             return
 
 
-def A1Z26(direct: str = False):
-    """Here the mythical encodage in A1_Z26 to in and out code."""
+def A1Z26(direct: str = False, txtt="", choix=""):
+    """Here the mythical encodage in A1_Z26 to in and out code.
+    1. Encode to A1-Z26, 2. Decode from A1-Z26"""
 
     def in_A1Z26(*args):
         alphab, char = string.ascii_lowercase, ""
@@ -1390,20 +1391,36 @@ def A1Z26(direct: str = False):
         return " ".join(result_words)
 
     if direct and direct == "in_A1Z26()":
-        text = input("\nEnter the text to encode:  ").strip().split()
+        if not txtt:
+            text = input("\nEnter the text to encode:  ").strip().split()
+        else:
+            text = txtt.strip().split()
         return in_A1Z26(text)
     elif direct and direct == "out_A1Z26()":
-        text = input("\nEnter the text to decode:  ").strip().split("  ")
+        if not txtt:
+            text = input("\nEnter the text to decode:  ").strip().split("  ")
+        else:
+            text = txtt.strip().split()
         return out_A1Z26(text)
 
-    choix = menu_options(["1. Encode to A1-Z26", "2. Decode from A1-Z26", "3. Exit"])
+    if not choix:
+        choix = menu_options(
+            ["1. Encode to A1-Z26", "2. Decode from A1-Z26", "3. Exit"]
+        )
     match choix:
         case "1. Encode to A1-Z26":
-            text = input("\nEnter the text to encode:  ").strip().split()
+            if not txtt:
+                text = input("\nEnter the text to encode:  ").strip().split()
+            else:
+                text = txtt.strip().split()
             return in_A1Z26(text)
 
         case "2. Decode from A1-Z26":
-            text = input("\nEnter the text to decode:  ").strip().split("  ")
+            if not txtt:
+                text = input("\nEnter the text to decode:  ").strip().split("  ")
+            else:
+                text = txtt.strip().split("  ")
+
             return out_A1Z26(text)
 
         case "3. Exit":
