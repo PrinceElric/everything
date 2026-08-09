@@ -1176,8 +1176,11 @@ def menu_principal():
                 case "1. ANSI colors":
                     menu_ANSI()
                 case "2. Listes":
-                    print(f"\nContinue = {continuer}")
-                    print(f"Exit     = {exit}")
+                    print(f"\n{'Continue = ':13}{continuer}")
+                    print(f"{'Exit = ':<13}{exit}")
+                    print(f"\n{'Families = ':<13}{families}")
+                    print(f"{'Values = ':<13}{values}")
+                    print(f"{'Cards = ':<13}{cards}")
                     input("")
                     menu_CONSTANTES()
                 case "3. Exit":

@@ -105,6 +105,10 @@ Le module propose également des listes pour sortir des input des programmes:
 
 • Others
 
+• families
+• values
+• cards
+
 -------------------------------------------------------------------------------
 4. DONNÉES
 -------------------------------------------------------------------------------
@@ -426,7 +430,6 @@ LOG_DISCRET = GRIS + ITALIC  # Gris et penché
 ALERTE_CRITIQUE = "\033[97m" + FOND_ROUGE + GRAS  # Texte Blanc sur Fond Rouge
 
 
-# listes de sortie d'input
 
 continuer = ("continue", "c", "cont", "go", "next", "1", "y", "yes", "o", "oui")
 exit = ("exit", "ex", "quitter", "quit", "q", "0", "n", "no", "non")
@@ -473,6 +476,9 @@ colors = (
     "ERROR",
 )
 
+families = ("♣", "♠", "♦", "♥")
+values = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
+cards = [f"{value}{color}" for color in families for value in values]
 
 # -------------------------------------------------------------------------------
 # 4. DONNÉES
