@@ -62,7 +62,27 @@ def Red_or_Black_game(mode="normal"):
                 mise = input("Enter a mise:   ").strip().lower()
                 if mise in exit:
                     return
-                if "sold" in mise and ("+" in mise or "*" in mise):
+
+                if mise == "capa":
+                    clear()
+                    print("\n" * 17)
+                    print(f"\t{'code':<15}{'utilisation'}\nMISE:")
+                    slow_type(
+                        f"\t{'n':<15}{'just mise the number n'}\n\t{'all':<15}{'mise all the sold'}\n\t{'all - n':<15}{'mise the all sold - n€'}\n\t{'last':<15}{'mise the last montant mised'}\n\t{'last +/- n':<15}{'last_mise + ou - n€'}\n\t{'half':<15}{'mise half of the sold'}\n\t{'half +/- n':<15}{'half of the sold +/- n€'}\n\t{'r':<15}{'random mise btw 11 and sold'}\n\t{'r n1':<15}{'mise and random amount btw n1 and sold'}\n\t{'r n1 n2':<15}{'mise and random amount btw n1 and n2'}\n",
+                        tps_btw_letters=0.008,
+                    )
+                    print("\nPREDICT:")
+                    slow_type(
+                        f"\t{'ex, n, no, q':<15}{'revient au choix de la mise'}\n\t{'last':<15}{'re-enter the last_prediction'}\n\t{'ra, al':<15}{'choose random prediction'}\n\t{'ch, not':<15}{'enter the opposite of the last_prediction'}\n\t{'logic, best':<15}{'chose the best option by the stat, if equals -> random'}\n\t{'r, blood, red':<15}{'prediction = ROUGE'}\n\t{'any else':<15}{'prediction = NOIR'}",
+                        tps_btw_letters=0.008,
+                    )
+                    print("\n" * 2)
+                    input()
+                    clear()
+                    continue
+
+                # darks code
+                elif "sold" in mise and ("+" in mise or "*" in mise):
                     operateur = "*" if "*" in mise else "+"
                     mise = mise.replace("sold", "").replace("+", "").replace("*", "")
                     mise = mise.strip()
@@ -102,7 +122,6 @@ def Red_or_Black_game(mode="normal"):
                     mise = float(mise)
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
-
 
                 elif "all" in mise and "-" in mise:
                     mise = mise.replace("all", "").replace("-", "")
@@ -224,20 +243,17 @@ def Red_or_Black_game(mode="normal"):
                             mise = random.randrange(int(config["sold"]))
                         else:
                             mise = random.randrange(
-                                1, int(config["sold"]) + 1
+                                11, int(config["sold"]) + 1
                             )  # Syntaxe: "r"
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
 
-                elif not mise.isdigit() or int(mise) > config["sold"]:
+                elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
                     cprint("incorrect", ERROR)
                     time.sleep(0.3)
                     clear_lines(2)
                     continue
                 mise, last_mise = int(mise), int(mise)
-                if mise <= 10:
-                    clear_lines()
-                    continue
 
                 prediction = input("Enter your prediction (R/N):   ").lower().strip()
                 if prediction in exit:
@@ -309,6 +325,7 @@ def Red_or_Black_game(mode="normal"):
             for x in historique
         ]
         hist_str = " ".join(hist_affichage)
+        cprint("enter capa as mise to see all the dispo codes", WARNING)
         print(f"+{'-' * 50}+\n")
         print(f"{' ' * 13}RED OR BLACK\n")
         if animation and not animation == "fast":
@@ -450,8 +467,8 @@ def Red_or_Black_game(mode="normal"):
         print(
             f"{VERT_FLASH if sum(total_won) - sum(total_lost) >= 0 else ROUGE_FLASH}Net Profit     : {sum(total_won) - sum(total_lost)} €{RESET}"
         )
-        if 200 + (sum(total_won) - sum(total_lost)) != config['sold']:
-            cprint('YOU CHEATED!!', ALERTE_CRITIQUE)
+        if 200 + (sum(total_won) - sum(total_lost)) != config["sold"]:
+            cprint("YOU CHEATED!!", ALERTE_CRITIQUE)
         print(
             f"{VERT_FLASH if config['sold'] >= 0 else ROUGE_FLASH}Current Balance: {config['sold']} €{RESET}"
         )
@@ -459,12 +476,11 @@ def Red_or_Black_game(mode="normal"):
         input()
         affichage("fast")
 
-
     while config["sold"] > 10 and cards:
         game(tour)
         if mise in exit:
             return
-        affichage()
+        affichage(False)
         tour += 1
     journal_transactions()
 
