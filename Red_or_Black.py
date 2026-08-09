@@ -1,5 +1,13 @@
 from tools import *
-import random, sys, time
+import random, sys, time, json
+
+def save_high_score(win_serie_score, sold_score):
+    if win_serie_score > config["highest_win_serie_R/B"]:
+        config["highest_win_serie_R/B"] = win_serie_score
+        save_config(config)
+    if sold_score > config["highest_sold_R/B"]:
+        config["highest_sold_R/B"] = sold_score
+        save_config(config)
 
 
 def Red_or_Black_game(mode="normal"):
@@ -17,9 +25,11 @@ def Red_or_Black_game(mode="normal"):
     last_mise = 0
     last_prediction = ""
     journal = []
-    n = 3
     total_won = []
     total_lost = []
+    score = 0
+    highest_score = 0
+    highest_sold = 0
 
     cards = [f"{value}{color}" for color in families for value in values]
     if mode in {"+50", "easy"}:
@@ -346,7 +356,7 @@ def Red_or_Black_game(mode="normal"):
                 break
 
     def affichage(animation=True):
-        nonlocal stats, color, mise, journal, n, total_won
+        nonlocal stats, color, mise, journal, total_won, score, highest_score, highest_sold
         if not cards:
             return
         clear()
@@ -355,7 +365,7 @@ def Red_or_Black_game(mode="normal"):
             for x in historique
         ]
         hist_str = " ".join(hist_affichage)
-        cprint("enter capa as mise to see all the dispo codes", WARNING)
+        cprint("enter capa as mise to see all the dispo codes, and config['code'] to see darks code", WARNING)
         print(f"+{'-' * 50}+\n")
         print(f"{' ' * 13}RED OR BLACK\n")
         if animation and not animation == "fast":
@@ -389,6 +399,7 @@ def Red_or_Black_game(mode="normal"):
                     f"You won €{mise * 1.5 if mode == '+50' else mise * 2 if mode == 'easy' else mise * 0.7 if mode == 'hard' else mise}!",
                     VERT_FLASH,
                 )
+                score += 1
             else:
                 if mode == "+50":
                     config["sold"] -= 1.5 * mise
@@ -404,6 +415,9 @@ def Red_or_Black_game(mode="normal"):
                     f"You lost €{mise * 1.5 if mode == '+50' else mise * 0.9 if mode == 'easy' else mise * 1.7 if mode == 'hard' else mise}!",
                     ROUGE_FLASH,
                 )
+                score = 0
+            highest_score = max(score, highest_score)
+            highest_sold = max(config['sold'], highest_sold)
             NOIRE, VERTT_FLASH = NOIR, VERT_FLASH
             total_won.append(float(mise) if prediction == color else 0)
             total_lost.append(float(mise) if prediction != color else 0)
@@ -449,7 +463,7 @@ def Red_or_Black_game(mode="normal"):
         print(f"\n+{'-' * 50}+")
 
     def journal_transactions():
-        nonlocal journal, total_won, total_lost
+        nonlocal journal, total_won
         clear()
         print(f"+{'-' * 64}+\n")
         print(f"{'TRANSACTION HISTORY'.center(64)}\n")
@@ -513,6 +527,7 @@ def Red_or_Black_game(mode="normal"):
         affichage(False)
         tour += 1
     journal_transactions()
+    save_high_score(highest_score, highest_sold)
 
 
 while True:
