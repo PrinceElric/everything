@@ -16,7 +16,7 @@ def menu_ANSI():
                     "6. Barré",
                     "7. Exit",
                 ],
-                "menu_styles_txt"
+                "menu_styles_txt",
             )
             match style_txt:
                 case "1. Gras":
@@ -878,7 +878,9 @@ def info(fonction: str):
             )
             slow_type("Here how it works (16):  \n", tps_btw_letters=0.03)
             input("")
-            print(f"{ROSE_FLASH}arc_en_ciel{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET},{RESET} {JAUNE}mode{RESET}{LOG_DISCRET}={RESET}{BLEU}'normal'{RESET}{LOG_DISCRET}){RESET}\n")
+            print(
+                f"{ROSE_FLASH}arc_en_ciel{RESET}{LOG_DISCRET}({RESET}{JAUNE}txt{RESET}{LOG_DISCRET},{RESET} {JAUNE}mode{RESET}{LOG_DISCRET}={RESET}{BLEU}'normal'{RESET}{LOG_DISCRET}){RESET}\n"
+            )
             slow_type(
                 "The txt parameter is the text that will be degrade.\nThe mode parameter (normal by default) is the mode of basic degradation.\nIn more there are the modes: 'gras', 'italic', 'underline', 'surligne' and 'ansi'.\n",
                 tps_btw_letters=0.027,
@@ -886,14 +888,18 @@ def info(fonction: str):
             slow_type("\nExemple:  ", tps_btw_letters=0.03)
             input("")
             clear()
-            text, mode = input("Entrez le texte à dégrader ('Prince-Elric 33!' by default): "), input("Entrez le mode de dégradation (normal by default): ").lower().strip()
+            text, mode = (
+                input("Entrez le texte à dégrader ('Prince-Elric 33!' by default): "),
+                input("Entrez le mode de dégradation (normal by default): ")
+                .lower()
+                .strip(),
+            )
             if not mode:
                 mode = "normal"
             if not text:
                 text = "Prince-Elric 33!"
             print(f"Texte dégradé: {arc_en_ciel(text, mode=mode)}")
             input("")
-
 
         case "copier_txt()":
             clear()
@@ -1171,7 +1177,9 @@ def info(fonction: str):
 def menu_principal():
     def menu_CONSTANTES():
         while True:
-            constante = menu_options(["1. ANSI colors", "2. Listes", "3. Exit"], "CONSTANTES Menu")
+            constante = menu_options(
+                ["1. ANSI colors", "2. Listes", "3. Exit"], "CONSTANTES Menu"
+            )
             match constante:
                 case "1. ANSI colors":
                     menu_ANSI()
@@ -1340,7 +1348,7 @@ def menu_principal():
                         "4. log_error(message, type_log='ERROR', chemin)",
                         "5. Exit",
                     ],
-                    "menu_journal"
+                    "menu_journal",
                 )
                 match fonct_journal:
                     case "1. ecrire_log(message, type_log='INFO', chemin)":
@@ -1361,7 +1369,7 @@ def menu_principal():
                         "1. afk_mouse(n=0, kill=False)",
                         "2. Exit",
                     ],
-                    "menu_automat"
+                    "menu_automat",
                 )
                 match fonct_auto:
                     case "1. afk_mouse(n=0, kill=False)":
@@ -1379,7 +1387,7 @@ def menu_principal():
                         "4. fibonacci()",
                         "5. A1Z26(direct: str=False)" "6. Exit",
                     ],
-                    "menu_crypto"
+                    "menu_crypto",
                 )
                 match fonct_crypto:
                     case "1. cesar_code()":
@@ -1395,6 +1403,27 @@ def menu_principal():
                     case "6. Exit":
                         return
 
+        def menu_math():
+            while True:
+                fonct_math = menu_options(
+                    [
+                        "1. factoriel(n: int) -> int",
+                        "2. elements_communs(liste1: list, liste2: list) -> list",
+                        "3. fibonacci()",
+                        "4. Exit",
+                    ],
+                    "menu_math",
+                )
+                match fonct_math:
+                    case "1. factoriel(n: int) -> int":
+                        pass
+                    case "2. elements_communs(liste1: list, liste2: list) -> list":
+                        pass
+                    case "3. fibonacci()":
+                        pass
+                    case "4. Exit":
+                        return
+
         def menu_specifik():
             while True:
                 fonct_sys = menu_options(
@@ -1405,7 +1434,7 @@ def menu_principal():
                         "4. match_color(color)",
                         "5. Exit",
                     ],
-                    "menu_specifik"
+                    "menu_specifik",
                 )
                 match fonct_sys:
                     case "1. trouver_nom(objet)":
@@ -1428,10 +1457,10 @@ def menu_principal():
                     "4. Journalisation (Logging)",
                     "5. Automatisation",
                     "6. Crypto",
-                    "7. Jeux",
-                    "8. Outils Spécifiques au Projet",
-                    "9. Executables",
-                    "10. Exit",
+                    "7. Math" "8. Jeux",
+                    "9. Outils Spécifiques au Projet",
+                    "10. Executables",
+                    "11. Exit",
                 ],
                 "menu_fonctions",
             )
@@ -1448,13 +1477,15 @@ def menu_principal():
                     menu_automat()
                 case "6. Crypto":
                     menu_crypto()
-                case "7. Jeux":
+                case "7. Math":
+                    menu_math()
+                case "8. Jeux":
                     menu_game()
-                case "8. Outils Spécifiques au Projet":
+                case "9. Outils Spécifiques au Projet":
                     menu_specifik()
-                case "9. Executables":
+                case "10. Executables":
                     pass
-                case "10. Exit":
+                case "11. Exit":
                     return
 
     while True:
