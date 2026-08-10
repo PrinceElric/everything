@@ -249,6 +249,17 @@ mots_921
 • morse(txt='')
     Renvoi l'entrée en morse.
 
+
+-------------------------------------------------------------------------------
+
+--- Math ---
+
+• factoriel(n: int) -> int
+    Retourne le factoriel d'un nombre entier n.
+
+• elements_communs(liste1: list, liste2: list) -> list
+    Retourne la liste des éléments communs entre deux listes.
+
 • fibonacci()
     Répète la sequ de fibonacci et offre des options de séléctions de données.
 
@@ -1288,71 +1299,6 @@ def morse(txt=""):
     return morse
 
 
-def fibonacci():
-    """Remake the fibonacci sequ and few data selections options"""
-
-    def fibonacci_place(n):
-        if n <= 0:
-            return f"{ROUGE}the number must be greater than 0{RESET}"
-        fib1, fib2, count = 1, 1, 2
-        if n == 1:
-            return f"the number is at the {VERT}1st or 2nd place{RESET}"
-        while fib2 < n:
-            fib1, fib2, count = fib2, fib1 + fib2, count + 1
-        if fib2 == n:
-            return f"the number is at the {VERT}{count}th place{RESET}"
-        else:
-            return f"{ROUGE}the number isn't in the Fibonacci sequence{RESET}"
-
-    def fibonnacci_index_num(n):
-        if n <= 0:
-            return None
-        fib1, fib2 = 1, 1
-        if n == 1 or n == 2:
-            return 1
-        for _ in range(3, n + 1):
-            fib1, fib2 = fib2, fib1 + fib2
-        return fib2
-
-    while True:
-        choice = menu_options(
-            [
-                "1. Find number in place n in the Fibonacci sequence",
-                "2. Find if n is the sequence",
-                "3. Quit",
-            ]
-        )
-        if choice == "1. Find number in place n in the Fibonacci sequence":
-            try:
-                n = int(input("Enter a index of the Fibonacci sequence :\nPlace: "))
-                result = fibonnacci_index_num(n)
-                if result is None:
-                    cprint("the index must be greater than 0!", ERROR)
-                else:
-                    print(
-                        f"To the place {n} of the Fibonacci sequence there is the #"
-                        f"{VERT}{format_number(result)}{RESET}"
-                    )
-            except ValueError:
-                cprint("please enter a valid integer", ERROR)
-            input("")
-            clear()
-        elif choice == "2. Find if n is the sequence":
-            try:
-                n = int(
-                    input(
-                        "Enter a number to check if he's in the sequence and at wich place:\nNumber to check:  "
-                    )
-                )
-                print(fibonacci_place(n))
-            except ValueError:
-                cprint("please enter a valid integer", ERROR)
-            input("")
-            clear()
-        elif choice == "3. Quit":
-            return
-
-
 def A1Z26(direct: str = False, txtt="", choix=""):
     """Here the mythical encodage in A1_Z26 to in and out code.
     1. Encode to A1-Z26, 2. Decode from A1-Z26"""
@@ -1431,6 +1377,88 @@ def A1Z26(direct: str = False, txtt="", choix=""):
             return out_A1Z26(text)
 
         case "3. Exit":
+            return
+
+
+# -------------------------------------------------------------------------------
+
+# --- Math ---
+
+
+def factoriel(n: int) -> int:
+    """Retourne le factoriel d'un nombre entier n."""
+    import math
+
+    return math.factorial(n)
+
+
+def elements_communs(liste1: list, liste2: list) -> list:
+    """Retourne la liste des éléments communs entre deux listes."""
+    return list(set(liste1) & set(liste2))
+
+
+def fibonacci():
+    """Remake the fibonacci sequ and few data selections options"""
+
+    def fibonacci_place(n):
+        if n <= 0:
+            return f"{ROUGE}the number must be greater than 0{RESET}"
+        fib1, fib2, count = 1, 1, 2
+        if n == 1:
+            return f"the number is at the {VERT}1st or 2nd place{RESET}"
+        while fib2 < n:
+            fib1, fib2, count = fib2, fib1 + fib2, count + 1
+        if fib2 == n:
+            return f"the number is at the {VERT}{count}th place{RESET}"
+        else:
+            return f"{ROUGE}the number isn't in the Fibonacci sequence{RESET}"
+
+    def fibonnacci_index_num(n):
+        if n <= 0:
+            return None
+        fib1, fib2 = 1, 1
+        if n == 1 or n == 2:
+            return 1
+        for _ in range(3, n + 1):
+            fib1, fib2 = fib2, fib1 + fib2
+        return fib2
+
+    while True:
+        choice = menu_options(
+            [
+                "1. Find number in place n in the Fibonacci sequence",
+                "2. Find if n is the sequence",
+                "3. Quit",
+            ]
+        )
+        if choice == "1. Find number in place n in the Fibonacci sequence":
+            try:
+                n = int(input("Enter a index of the Fibonacci sequence :\nPlace: "))
+                result = fibonnacci_index_num(n)
+                if result is None:
+                    cprint("the index must be greater than 0!", ERROR)
+                else:
+                    print(
+                        f"To the place {n} of the Fibonacci sequence there is the #"
+                        f"{VERT}{format_number(result)}{RESET}"
+                    )
+            except ValueError:
+                cprint("please enter a valid integer", ERROR)
+            input("")
+            clear()
+        elif choice == "2. Find if n is the sequence":
+            try:
+                n = int(
+                    input(
+                        "Enter a number to check if he's in the sequence and at wich place:\nNumber to check:  "
+                    )
+                )
+                print(fibonacci_place(n))
+            except ValueError:
+                cprint("please enter a valid integer", ERROR)
+            input("")
+            clear()
+        elif choice == "3. Quit":
             return
 
 
@@ -2972,6 +3000,7 @@ def menu_game():
 
             case "5. Exit":
                 return
+
 
 # -------------------------------------------------------------------------------
 
