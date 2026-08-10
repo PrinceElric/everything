@@ -2870,7 +2870,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
         game(tour)
         if mise in exit:
             return
-        affichage(False)
+        affichage()
         tour += 1
     journal_transactions()
     save_high_score(highest_score, highest_sold)
