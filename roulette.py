@@ -43,68 +43,74 @@ def roulette_game():
         26,
     ]
     COULEURS_ROULETTE = {
-        0: "vert",
-        1: "rouge",
-        2: "noir",
-        3: "rouge",
-        4: "noir",
-        5: "rouge",
-        6: "noir",
-        7: "rouge",
-        8: "noir",
-        9: "rouge",
-        10: "noir",
-        11: "noir",
-        12: "rouge",
-        13: "noir",
-        14: "rouge",
-        15: "noir",
-        16: "rouge",
-        17: "noir",
-        18: "rouge",
-        19: "rouge",
-        20: "noir",
-        21: "rouge",
-        22: "noir",
-        23: "rouge",
-        24: "noir",
-        25: "rouge",
-        26: "noir",
-        27: "rouge",
-        28: "noir",
-        29: "noir",
-        30: "rouge",
-        31: "noir",
-        32: "rouge",
-        33: "noir",
-        34: "rouge",
-        35: "noir",
-        36: "rouge",
+        0: "VERT",
+        1: "ROUGE",
+        2: "NOIR",
+        3: "ROUGE",
+        4: "NOIR",
+        5: "ROUGE",
+        6: "NOIR",
+        7: "ROUGE",
+        8: "NOIR",
+        9: "ROUGE",
+        10: "NOIR",
+        11: "NOIR",
+        12: "ROUGE",
+        13: "NOIR",
+        14: "ROUGE",
+        15: "NOIR",
+        16: "ROUGE",
+        17: "NOIR",
+        18: "ROUGE",
+        19: "ROUGE",
+        20: "NOIR",
+        21: "ROUGE",
+        22: "NOIR",
+        23: "ROUGE",
+        24: "NOIR",
+        25: "ROUGE",
+        26: "NOIR",
+        27: "ROUGE",
+        28: "NOIR",
+        29: "NOIR",
+        30: "ROUGE",
+        31: "NOIR",
+        32: "ROUGE",
+        33: "NOIR",
+        34: "ROUGE",
+        35: "NOIR",
+        36: "ROUGE",
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
+    compte = 0
 
     def roulette_animation(resultat):
-        nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur
-        print(f'{' ' * 18}↓')
+        nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
+        for num in ROULETTE_EUROPEENNE:
+            compte += 1
+            print(f'[ {match_color(COULEURS_ROULETTE[num])}{num}{RESET}]', end=' ')
+            if compte == 12 or compte == 24:
+                print('\n')
+        print(f'\n{' ' * 32}↓')
         for i in range(30):
             numero = random.choice(ROULETTE_EUROPEENNE)
 
             couleur = COULEURS_ROULETTE[numero]
 
-            if couleur == "rouge":
+            if couleur == "ROUGE":
                 affichage = f"{ROUGE_FLASH}{numero}{RESET}"
-            elif couleur == "noir":
+            elif couleur == "NOIR":
                 affichage = f"{NOIR}{numero}{RESET}"
             else:
                 affichage = f"{VERT_FLASH}{numero}{RESET}"
 
-            print(f"\r{' ' * 16}[ {affichage:^5} ] ", end="", flush=True)
+            print(f"\r{' ' * 30}[ {affichage:^5} ] ", end="", flush=True)
 
             time.sleep(0.02 + i * 0.008)
 
         print(
-            f"\r{' ' * 16}[ {ROUGE_FLASH if COULEURS_ROULETTE[numero] == 'rouge' else NOIR if COULEURS_ROULETTE[numero] == 'noir' else VERT}{resultat}{RESET} ] ",
+            f"\r{' ' * 30}[ {ROUGE_FLASH if COULEURS_ROULETTE[numero] == 'ROUGE' else NOIR if COULEURS_ROULETTE[numero] == 'NOIR' else VERT}{resultat}{RESET} ] ",
             flush=True,
         )
 
