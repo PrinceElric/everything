@@ -83,7 +83,7 @@ def roulette_game():
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte = 0
+    compte, mise, prediction = 0, '', ''
 
     def roulette_animation(resultat):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
@@ -115,6 +115,160 @@ def roulette_game():
         )
 
     roulette_animation(numero)
+    time.sleep(0.5)
+    while True:
+        mise = input('enter a mise:  ').strip().lower()
+        if "all" in mise and "-" in mise:
+            mise = mise.replace("all", "").replace("-", "")
+            mise = mise.strip()
+            if not mise.isdigit():
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            if int(mise) >= config["sold"]:
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            mise = config["sold"] - int(mise)
+            clear_lines()
+            print(f"Enter a mise:   {mise}")
+        elif mise == "all":
+            mise = config["sold"]
+            clear_lines()
+            print(f"Enter a mise:   {mise}")
+        elif "last" in mise and ("-" in mise or "+" in mise):
+            operateur = "+" if "+" in mise else "-"
+            mise = mise.replace("last", "").replace("-", "").replace("+", "")
+            mise = mise.strip()
+            if not mise.isdigit():
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            if operateur == "+":
+                if last_mise + int(mise) >= config["sold"]:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                mise = last_mise + int(mise)
+                clear_lines()
+                print(f"Enter a mise:   {mise}")
+            else:
+                if last_mise - int(mise) <= 0:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                mise = last_mise - int(mise)
+                clear_lines()
+                print(f"Enter a mise:   {mise}")
+
+        elif mise == "last":
+            if last_mise > config["sold"]:
+                clear_lines()
+                continue
+            mise = last_mise
+            clear_lines()
+            print(f"Enter a mise:   {mise}")
+
+        elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
+            operateur = "+" if "+" in mise else "-"
+            mise = (
+                mise.replace("half", "")
+                .replace("-", "")
+                .replace("+", "")
+                .replace("h", "")
+            )
+            mise = mise.strip()
+            if not mise.isdigit():
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            if operateur == "+":
+                if config["sold"] // 2 + int(mise) >= config["sold"]:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                mise = config["sold"] // 2 + int(mise)
+            else:
+                if config["sold"] // 2 - int(mise) <= 0:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                mise = config["sold"] // 2 - int(mise)
+            clear_lines()
+            print(f"Enter a mise:   {mise}")
+
+        elif mise == "half" or mise == "h":
+            mise = config["sold"] // 2
+            clear_lines()
+            print(f"Enter a mise:   {mise}")
+        elif any(
+            x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
+        ):
+            val = mise
+            for x in ["rand", "random", "aleatoire", "aléatoire", "r"]:
+                val = val.replace(x, "")
+            val = val.strip()
+            parts = val.split()
+
+            if (
+                len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit()
+            ):  # Syntaxe: "r 50 200"
+                start = int(parts[0])
+                stop = min(int(parts[1]), int(config["sold"]))
+                if stop <= start:
+                    mise = min(max(start, 1), int(config["sold"]))
+                else:
+                    mise = random.randrange(start, stop)
+            elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
+                start = int(parts[0])
+                if start >= int(config["sold"]):
+                    mise = max(1, int(config["sold"]) - 1)
+                else:
+                    mise = random.randrange(start, int(config["sold"]))
+            else:
+                if int(config["sold"]) > 20:
+                    mise = random.randrange(int(config["sold"]))
+                else:
+                    mise = random.randrange(
+                        11, int(config["sold"]) + 1
+                    )  # Syntaxe: "r"
+            clear_lines()
+            print(f"Enter a mise:   {mise}")
+
+        elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
+            cprint("incorrect", ERROR)
+            time.sleep(0.3)
+            clear_lines(2)
+            continue
+        mise, last_mise = int(mise), int(mise)
+
+        while True:
+            prediction = input('enter your prediction (n):   ').strip()
+            if not prediction.isdigit():
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            elif not 0 <= int(prediction) <= 36:
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            break
+        break
+
+    def affichage():
+        nonlocal mise, prediction
+        
+
 
 
 roulette_game()
