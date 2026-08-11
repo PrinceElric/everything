@@ -50,9 +50,18 @@ Current Balance: 1210 €
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
 
-add to tools :
 
-    return a list of commun and uncommun element of two list
-    add a factiorrel fonct
+| Mise                         | Numéros couverts | Paiement |
+| ---------------------------- | ---------------: | -------: |
+| Plein                        |                1 |     35:1 |
+| Cheval / Split               |                2 |     17:1 |
+| Transversale pleine / Street |                3 |     11:1 |
+| Carré / Corner               |                4 |      8:1 |
+| Sixain                       |                6 |      5:1 |
+| Douzaine                     |               12 |      2:1 |
+| Colonne                      |               12 |      2:1 |
+| Rouge/Noir                   |               18 |      1:1 |
+| Pair/Impair                  |               18 |      1:1 |
+| Manque/Passe                 |               18 |      1:1 |
 
 """
