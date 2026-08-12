@@ -1,4 +1,3 @@
-"""
 +--------------------------------------------------+
 
              RED OR BLACK
@@ -47,7 +46,10 @@ Total Lost     : -170 €
 Net Profit     : +210 €
 Current Balance: 1210 €
 
-add invincible mise, and une a plus ahaut risque, change le choix de base de l'argo avec le perfect pour ce que on dit
+add invincible mise, and une a plus ahaut risque, change le choix de base de l'algo avec le perfect pour ce que on dit
+cheat qui enleve n au nb de cheat used
+banque qui cfait monter argnt place dedans au fil des tour (cartes tirées) ??
+
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
 
@@ -65,28 +67,6 @@ ________________________________________________________________________________
 | Pair/Impair                  |               18 |      1:1 |
 | Manque/Passe                 |               18 |      1:1 |
 
-
-# net user Auriane /time:L-D,01:00-02:00
-
-ÉTAPE 1
-0-36 + couleurs
-
-↓
-
-ÉTAPE 2
-tirage aléatoire
-
-↓
-
-ÉTAPE 3
-animation
-
-↓
-
-ÉTAPE 4
-mise sur numéro
-
-↓
 
 ÉTAPE 5
 rouge/noir
@@ -117,7 +97,3 @@ plusieurs mises simultanées
 journal + statistiques
 
 ↓
-
-ÉTAPE 11
-roulette américaine / variantes
-"""
