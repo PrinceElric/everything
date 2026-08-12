@@ -47,7 +47,7 @@ Total Lost     : -170 €
 Net Profit     : +210 €
 Current Balance: 1210 €
 
-add invincible mise, and une a plus ahaut risque
+add invincible mise, and une a plus ahaut risque, change le choix de base de l'argo avec le perfect pour ce que on dit
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
 
@@ -55,11 +55,11 @@ ________________________________________________________________________________
 | Mise                         | Numéros couverts | Paiement |
 | ---------------------------- | ---------------: | -------: |
 | Plein                        |                1 |     35:1 |
-| Cheval / Split               |                2 |     17:1 |
-| Transversale pleine / Street |                3 |     11:1 |
-| Carré / Corner               |                4 |      8:1 |
-| Sixain                       |                6 |      5:1 |
-| Douzaine                     |               12 |      2:1 |
+| Cheval / Split               |                2 |     17:1 |    adjacents
+| Transversale pleine / Street |                3 |     11:1 |    consecutifs
+| Carré / Corner               |                4 |      8:1 |    just 4 random
+| Sixain                       |                6 |      5:1 |    just 6 random
+| Douzaine                     |               12 |      2:1 |    3 possibles
 | Colonne                      |               12 |      2:1 |
 | Rouge/Noir                   |               18 |      1:1 |
 | Pair/Impair                  |               18 |      1:1 |
