@@ -138,7 +138,7 @@ def roulette_game():
                     iswon, montant_gain = True, mise * 35
                 else:
                     config["sold"] -= mise
-                prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'ROUGE' else NOIR }{prediction}"
+                prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'ROUGE' else NOIR }{prediction}{RESET}"
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
             cprint(f"You won €{montant_gain} !", VERT_FLASH)
