@@ -83,7 +83,7 @@ def roulette_game():
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte, mise, prediction = 0, "", ""
+    compte, mise, prediction, pari = 0, "", "", None
 
     def roulette_animation(resultat):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
@@ -118,7 +118,8 @@ def roulette_game():
 
     def num_simple():
         while True:
-            numero = random.choice(ROULETTE_EUROPEENNE)
+            nonlocal numero, prediction, pari
+            numero, pari = random.choice(ROULETTE_EUROPEENNE), "num_simple"
             prediction = input("enter your prediction (n):   ").strip().lower()
             if not prediction.isdigit():
                 cprint("incorrect", ERROR)
@@ -131,8 +132,6 @@ def roulette_game():
                 clear_lines(2)
                 continue
             break
-
-
 
     roulette_animation(numero)
     input()
@@ -154,7 +153,7 @@ def roulette_game():
     )
     match pari_options:
         case "1. Numéro simple   (35:1)":
-            pass
+            num_simple()
         case "2. Cheval / Split  (17:1)":
             pass
         case "3. Street          (11:1)":
