@@ -83,16 +83,18 @@ def roulette_game():
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte, mise, prediction = 0, '', ''
+    compte, mise, prediction = 0, "", ""
 
     def roulette_animation(resultat):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
         for num in ROULETTE_EUROPEENNE:
             compte += 1
-            print(f'[ {match_color(COULEURS_ROULETTE[num])}{num}{RESET}]', end=' ')
-            if compte == 12 or compte == 24:
-                print('\n')
-        print(f'\n{' ' * 32}↓')
+            if num == 0:
+                continue
+            print(f"[ {match_color(COULEURS_ROULETTE[num])}{num}{RESET} ]", end=" ")
+            if compte == 13 or compte == 25:
+                print("\n")
+        print(f"\n{' ' * 40}↓")
         for i in range(30):
             numero = random.choice(ROULETTE_EUROPEENNE)
 
@@ -105,19 +107,77 @@ def roulette_game():
             else:
                 affichage = f"{VERT_FLASH}{numero}{RESET}"
 
-            print(f"\r{' ' * 30}[ {affichage:^5} ] ", end="", flush=True)
+            print(f"\r{' ' * 38}[ {affichage:^5} ] ", end="", flush=True)
 
             time.sleep(0.02 + i * 0.008)
 
         print(
-            f"\r{' ' * 30}[ {ROUGE_FLASH if COULEURS_ROULETTE[numero] == 'ROUGE' else NOIR if COULEURS_ROULETTE[numero] == 'NOIR' else VERT}{resultat}{RESET} ] ",
+            f"\r{' ' * 38}[ {ROUGE_FLASH if COULEURS_ROULETTE[numero] == 'ROUGE' else NOIR if COULEURS_ROULETTE[numero] == 'NOIR' else VERT}{resultat}{RESET} ] ",
             flush=True,
         )
 
+    def num_simple():
+        while True:
+            numero = random.choice(ROULETTE_EUROPEENNE)
+            prediction = input("enter your prediction (n):   ").strip().lower()
+            if not prediction.isdigit():
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            elif not 1 <= int(prediction) <= 36:
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            break
+
+
+
     roulette_animation(numero)
-    time.sleep(0.5)
+    input()
+    pari_options = menu_options(
+        [
+            "1. Numéro simple   (35:1)",
+            "2. Cheval / Split  (17:1)",
+            "3. Street          (11:1)",
+            "4. Carré / Corner  (8:1)",
+            "5. Sixain          (5:1)",
+            "6. Douzaine        (2:1)",
+            "7. Colonne         (2:1)",
+            "8. Rouge/Noir      (1:1)",
+            "9. Pair/Impair     (1:1)",
+            "10. Manque/Passe   (1:1)",
+            "11. Exit",
+        ],
+        "Options de pari",
+    )
+    match pari_options:
+        case "1. Numéro simple   (35:1)":
+            pass
+        case "2. Cheval / Split  (17:1)":
+            pass
+        case "3. Street          (11:1)":
+            pass
+        case "4. Carré / Corner  (8:1)":
+            pass
+        case "5. Sixain          (5:1)":
+            pass
+        case "6. Douzaine        (2:1)":
+            pass
+        case "7. Colonne         (2:1)":
+            pass
+        case "8. Rouge/Noir      (1:1)":
+            pass
+        case "9. Pair/Impair     (1:1)":
+            pass
+        case "10. Manque/Passe   (1:1)":
+            pass
+        case "11. Exit":
+            pass
+
     while True:
-        mise = input('enter a mise:  ').strip().lower()
+        mise = input("enter a mise:  ").strip().lower()
         if "all" in mise and "-" in mise:
             mise = mise.replace("all", "").replace("-", "")
             mise = mise.strip()
@@ -209,9 +269,7 @@ def roulette_game():
             mise = config["sold"] // 2
             clear_lines()
             print(f"Enter a mise:   {mise}")
-        elif any(
-            x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
-        ):
+        elif any(x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]):
             val = mise
             for x in ["rand", "random", "aleatoire", "aléatoire", "r"]:
                 val = val.replace(x, "")
@@ -237,9 +295,7 @@ def roulette_game():
                 if int(config["sold"]) > 20:
                     mise = random.randrange(int(config["sold"]))
                 else:
-                    mise = random.randrange(
-                        11, int(config["sold"]) + 1
-                    )  # Syntaxe: "r"
+                    mise = random.randrange(11, int(config["sold"]) + 1)  # Syntaxe: "r"
             clear_lines()
             print(f"Enter a mise:   {mise}")
 
@@ -250,25 +306,10 @@ def roulette_game():
             continue
         mise, last_mise = int(mise), int(mise)
 
-        while True:
-            prediction = input('enter your prediction (n):   ').strip()
-            if not prediction.isdigit():
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            elif not 0 <= int(prediction) <= 36:
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            break
         break
 
     def affichage():
         nonlocal mise, prediction
-        
-
 
 
 roulette_game()
