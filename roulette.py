@@ -95,6 +95,7 @@ def roulette_game():
 
     def roulette_animation(resultat):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
+        compte = 0
         for num in ROULETTE_EUROPEENNE:
             compte += 1
             if num == 0:
@@ -126,8 +127,9 @@ def roulette_game():
 
     def affichage():
         nonlocal mise, prediction, pari_type, numero, iswon, montant_gain
-        print(f"+{'-' * 50}+\n")
-        print(f"{' ' * 11}ROULETTE GAME\n")
+        clear()
+        print(f"+{'-' * 80}+\n")
+        print(f"{' ' * 33}ROULETTE GAME\n")
         roulette_animation(numero)
         print("\n")
         match pari_type:
@@ -137,20 +139,26 @@ def roulette_game():
                     iswon, montant_gain = True, mise * 35
                 else:
                     config["sold"] -= mise
+                prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'rouge' else NOIR }{prediction}"
         if iswon:
-            cprint(f"You predicted {prediction} and §you Won!!", SUCCESS)
-            cprint(f"You won €{montant_gain}!", VERT_FLASH)
+            cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
+            cprint(f"You won €{montant_gain} !", VERT_FLASH)
         else:
-            cprint(f"You predicted {prediction}  §(wrong...)!", ERROR)
-            cprint(f"You lost €{mise}!",ROUGE_FLASH)
-
+            cprint(f"You predicted [ {prediction} ]  §(wrong...)!", ERROR)
+            cprint(f"You lost €{mise} !", ROUGE_FLASH)
+        input()
 
     def num_simple():
         while True:
             nonlocal numero, prediction, pari_type
             numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_simple"
-            prediction = input("enter your prediction (n):   ").strip().lower()
-            if not prediction.isdigit():
+            faire_titre_section("Numéro simple", color="FOND_ROUGE")
+            prediction = input("\nenter your prediction (n):   ").strip().lower()
+            if prediction == "right":
+                prediction = numero
+                clear_lines()
+                print(f"enter your prediction (n):  {prediction}")
+            elif not prediction.isdigit():
                 cprint("incorrect", ERROR)
                 time.sleep(0.3)
                 clear_lines(2)
@@ -164,178 +172,185 @@ def roulette_game():
 
     roulette_animation(numero)
     input()
-    pari_options = menu_options(
-        [
-            "1. Numéro simple    (35:1)",
-            "2. Cheval / Split   (17:1)",
-            "3. Street           (11:1)",
-            "4. Carré / Corner   (8:1)",
-            "5. Sixain           (5:1)",
-            "6. Douzaine         (2:1)",
-            "7. Colonne          (2:1)",
-            "8. Rouge / Noir     (1:1)",
-            "9. Pair / Impair    (1:1)",
-            "10. Manque / Passe  (1:1)",
-            "11. Exit",
-        ],
-        "Options de pari",
-    )
-    clear()
-    match pari_options:
-        case "1. Numéro simple    (35:1)":
-            num_simple()
-        case "2. Cheval / Split   (17:1)":
-            pass
-        case "3. Street           (11:1)":
-            pass
-        case "4. Carré / Corner   (8:1)":
-            pass
-        case "5. Sixain           (5:1)":
-            pass
-        case "6. Douzaine         (2:1)":
-            pass
-        case "7. Colonne          (2:1)":
-            pass
-        case "8. Rouge/Noir       (1:1)":
-            pass
-        case "9. Pair / Impair    (1:1)":
-            pass
-        case "10. Manque / Passe  (1:1)":
-            pass
-        case "11. Exit":
-            pass
+    while config["sold"] >= 10:
+        pari_options = menu_options(
+            [
+                "1. Numéro simple    (35:1)",
+                "2. Cheval / Split   (17:1)",
+                "3. Street           (11:1)",
+                "4. Carré / Corner   (8:1)",
+                "5. Sixain           (5:1)",
+                "6. Douzaine         (2:1)",
+                "7. Colonne          (2:1)",
+                "8. Rouge / Noir     (1:1)",
+                "9. Pair / Impair    (1:1)",
+                "10. Manque / Passe  (1:1)",
+                "11. Exit",
+            ],
+            "Options de pari",
+        )
+        clear()
+        match pari_options:
+            case "1. Numéro simple    (35:1)":
+                num_simple()
+            case "2. Cheval / Split   (17:1)":
+                pass
+            case "3. Street           (11:1)":
+                pass
+            case "4. Carré / Corner   (8:1)":
+                pass
+            case "5. Sixain           (5:1)":
+                pass
+            case "6. Douzaine         (2:1)":
+                pass
+            case "7. Colonne          (2:1)":
+                pass
+            case "8. Rouge/Noir       (1:1)":
+                pass
+            case "9. Pair / Impair    (1:1)":
+                pass
+            case "10. Manque / Passe  (1:1)":
+                pass
+            case "11. Exit":
+                pass
 
-    while True:
-        mise = input(f"enter a mise (sold = {config['sold']}):  ").strip().lower()
-        if "all" in mise and "-" in mise:
-            mise = mise.replace("all", "").replace("-", "")
-            mise = mise.strip()
-            if not mise.isdigit():
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            if int(mise) >= config["sold"]:
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            mise = config["sold"] - int(mise)
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
-        elif mise == "all":
-            mise = config["sold"]
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
-        elif "last" in mise and ("-" in mise or "+" in mise):
-            operateur = "+" if "+" in mise else "-"
-            mise = mise.replace("last", "").replace("-", "").replace("+", "")
-            mise = mise.strip()
-            if not mise.isdigit():
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            if operateur == "+":
-                if last_mise + int(mise) >= config["sold"]:
+        while True:
+            mise = input(f"enter a mise (sold = {config['sold']}):  ").strip().lower()
+            if "all" in mise and "-" in mise:
+                mise = mise.replace("all", "").replace("-", "")
+                mise = mise.strip()
+                if not mise.isdigit():
                     cprint("incorrect", ERROR)
                     time.sleep(0.3)
                     clear_lines(2)
                     continue
-                mise = last_mise + int(mise)
+                if int(mise) >= config["sold"]:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                mise = config["sold"] - int(mise)
                 clear_lines()
                 print(f"Enter a mise:   {mise}")
-            else:
-                if last_mise - int(mise) <= 0:
+            elif mise == "all":
+                mise = config["sold"]
+                clear_lines()
+                print(f"Enter a mise:   {mise}")
+            elif "last" in mise and ("-" in mise or "+" in mise):
+                operateur = "+" if "+" in mise else "-"
+                mise = mise.replace("last", "").replace("-", "").replace("+", "")
+                mise = mise.strip()
+                if not mise.isdigit():
                     cprint("incorrect", ERROR)
                     time.sleep(0.3)
                     clear_lines(2)
                     continue
-                mise = last_mise - int(mise)
+                if operateur == "+":
+                    if last_mise + int(mise) >= config["sold"]:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    mise = last_mise + int(mise)
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+                else:
+                    if last_mise - int(mise) <= 0:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    mise = last_mise - int(mise)
+                    clear_lines()
+                    print(f"Enter a mise:   {mise}")
+
+            elif mise == "last":
+                if last_mise > config["sold"]:
+                    clear_lines()
+                    continue
+                mise = last_mise
                 clear_lines()
                 print(f"Enter a mise:   {mise}")
 
-        elif mise == "last":
-            if last_mise > config["sold"]:
+            elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
+                operateur = "+" if "+" in mise else "-"
+                mise = (
+                    mise.replace("half", "")
+                    .replace("-", "")
+                    .replace("+", "")
+                    .replace("h", "")
+                )
+                mise = mise.strip()
+                if not mise.isdigit():
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                if operateur == "+":
+                    if config["sold"] // 2 + int(mise) >= config["sold"]:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    mise = config["sold"] // 2 + int(mise)
+                else:
+                    if config["sold"] // 2 - int(mise) <= 0:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    mise = config["sold"] // 2 - int(mise)
                 clear_lines()
-                continue
-            mise = last_mise
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {mise}")
 
-        elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
-            operateur = "+" if "+" in mise else "-"
-            mise = (
-                mise.replace("half", "")
-                .replace("-", "")
-                .replace("+", "")
-                .replace("h", "")
-            )
-            mise = mise.strip()
-            if not mise.isdigit():
+            elif mise == "half" or mise == "h":
+                mise = config["sold"] // 2
+                clear_lines()
+                print(f"Enter a mise:   {mise}")
+            elif any(
+                x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
+            ):
+                val = mise
+                for x in ["rand", "random", "aleatoire", "aléatoire", "r"]:
+                    val = val.replace(x, "")
+                val = val.strip()
+                parts = val.split()
+
+                if (
+                    len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit()
+                ):  # Syntaxe: "r 50 200"
+                    start = int(parts[0])
+                    stop = min(int(parts[1]), int(config["sold"]))
+                    if stop <= start:
+                        mise = min(max(start, 1), int(config["sold"]))
+                    else:
+                        mise = random.randrange(start, stop)
+                elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
+                    start = int(parts[0])
+                    if start >= int(config["sold"]):
+                        mise = max(1, int(config["sold"]) - 1)
+                    else:
+                        mise = random.randrange(start, int(config["sold"]))
+                else:
+                    if int(config["sold"]) > 20:
+                        mise = random.randrange(int(config["sold"]))
+                    else:
+                        mise = random.randrange(
+                            11, int(config["sold"]) + 1
+                        )  # Syntaxe: "r"
+                clear_lines()
+                print(f"Enter a mise:   {mise}")
+
+            elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
                 cprint("incorrect", ERROR)
                 time.sleep(0.3)
                 clear_lines(2)
                 continue
-            if operateur == "+":
-                if config["sold"] // 2 + int(mise) >= config["sold"]:
-                    cprint("incorrect", ERROR)
-                    time.sleep(0.3)
-                    clear_lines(2)
-                    continue
-                mise = config["sold"] // 2 + int(mise)
-            else:
-                if config["sold"] // 2 - int(mise) <= 0:
-                    cprint("incorrect", ERROR)
-                    time.sleep(0.3)
-                    clear_lines(2)
-                    continue
-                mise = config["sold"] // 2 - int(mise)
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
+            mise, last_mise = int(mise), int(mise)
 
-        elif mise == "half" or mise == "h":
-            mise = config["sold"] // 2
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
-        elif any(x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]):
-            val = mise
-            for x in ["rand", "random", "aleatoire", "aléatoire", "r"]:
-                val = val.replace(x, "")
-            val = val.strip()
-            parts = val.split()
-
-            if (
-                len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit()
-            ):  # Syntaxe: "r 50 200"
-                start = int(parts[0])
-                stop = min(int(parts[1]), int(config["sold"]))
-                if stop <= start:
-                    mise = min(max(start, 1), int(config["sold"]))
-                else:
-                    mise = random.randrange(start, stop)
-            elif len(parts) == 1 and parts[0].isdigit():  # Syntaxe: "r 50"
-                start = int(parts[0])
-                if start >= int(config["sold"]):
-                    mise = max(1, int(config["sold"]) - 1)
-                else:
-                    mise = random.randrange(start, int(config["sold"]))
-            else:
-                if int(config["sold"]) > 20:
-                    mise = random.randrange(int(config["sold"]))
-                else:
-                    mise = random.randrange(11, int(config["sold"]) + 1)  # Syntaxe: "r"
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
-
-        elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
-            cprint("incorrect", ERROR)
-            time.sleep(0.3)
-            clear_lines(2)
-            continue
-        mise, last_mise = int(mise), int(mise)
-
-        break
+            break
+        time.sleep(0.5)
+        affichage()
 
 
 roulette_game()
