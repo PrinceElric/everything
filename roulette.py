@@ -83,7 +83,7 @@ def roulette_game():
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte, mise, prediction, pari_type, iswon, islost, montant_gain = (
+    compte, mise, prediction, pari_type, iswon, montant_gain = (
         0,
         "",
         "",
