@@ -152,7 +152,7 @@ def roulette_game():
             nonlocal numero, prediction, pari_type
             numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_simple"
             faire_titre_section("Numéro simple", color="FOND_ROUGE")
-            prediction = input("\nenter your prediction (1-36):   ").strip().lower()
+            prediction = input("\nEnter your prediction (1-36):   ").strip().lower()
             if prediction == "right":
                 prediction = numero
                 clear_lines()
@@ -169,6 +169,29 @@ def roulette_game():
                 continue
             break
 
+    def num_split_n2():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_split_n2"
+            faire_titre_section("Numéros doubles", color="FOND_ROUGE")
+            prediction = input("\nEnter your prediction (1-36):   ").strip().lower()
+            if prediction == "right":
+                prediction = numero
+                clear_lines()
+                print(f"enter your prediction (n):  {prediction}")
+            elif not prediction.isdigit():
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            elif not 1 <= int(prediction) <= 36:
+                cprint("incorrect", ERROR)
+                time.sleep(0.3)
+                clear_lines(2)
+                continue
+            break
+
+    
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
@@ -193,7 +216,7 @@ def roulette_game():
             case "1. Numéro simple    (35:1)":
                 num_simple()
             case "2. Cheval / Split   (17:1)":
-                pass
+                num_split_n2()
             case "3. Street           (11:1)":
                 pass
             case "4. Carré / Corner   (8:1)":
