@@ -137,40 +137,41 @@ def roulette_game():
     input()
     pari_options = menu_options(
         [
-            "1. Numéro simple   (35:1)",
-            "2. Cheval / Split  (17:1)",
-            "3. Street          (11:1)",
-            "4. Carré / Corner  (8:1)",
-            "5. Sixain          (5:1)",
-            "6. Douzaine        (2:1)",
-            "7. Colonne         (2:1)",
-            "8. Rouge/Noir      (1:1)",
-            "9. Pair/Impair     (1:1)",
-            "10. Manque/Passe   (1:1)",
+            "1. Numéro simple    (35:1)",
+            "2. Cheval / Split   (17:1)",
+            "3. Street           (11:1)",
+            "4. Carré / Corner   (8:1)",
+            "5. Sixain           (5:1)",
+            "6. Douzaine         (2:1)",
+            "7. Colonne          (2:1)",
+            "8. Rouge / Noir     (1:1)",
+            "9. Pair / Impair    (1:1)",
+            "10. Manque / Passe  (1:1)",
             "11. Exit",
         ],
         "Options de pari",
     )
+    clear()
     match pari_options:
-        case "1. Numéro simple   (35:1)":
+        case "1. Numéro simple    (35:1)":
             num_simple()
-        case "2. Cheval / Split  (17:1)":
+        case "2. Cheval / Split   (17:1)":
             pass
-        case "3. Street          (11:1)":
+        case "3. Street           (11:1)":
             pass
-        case "4. Carré / Corner  (8:1)":
+        case "4. Carré / Corner   (8:1)":
             pass
-        case "5. Sixain          (5:1)":
+        case "5. Sixain           (5:1)":
             pass
-        case "6. Douzaine        (2:1)":
+        case "6. Douzaine         (2:1)":
             pass
-        case "7. Colonne         (2:1)":
+        case "7. Colonne          (2:1)":
             pass
-        case "8. Rouge/Noir      (1:1)":
+        case "8. Rouge/Noir       (1:1)":
             pass
-        case "9. Pair/Impair     (1:1)":
+        case "9. Pair / Impair    (1:1)":
             pass
-        case "10. Manque/Passe   (1:1)":
+        case "10. Manque / Passe  (1:1)":
             pass
         case "11. Exit":
             pass
