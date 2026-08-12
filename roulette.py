@@ -89,7 +89,6 @@ def roulette_game():
         "",
         None,
         False,
-        False,
         0,
     )
 
@@ -139,7 +138,7 @@ def roulette_game():
                     iswon, montant_gain = True, mise * 35
                 else:
                     config["sold"] -= mise
-                prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'rouge' else NOIR }{prediction}"
+                prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'ROUGE' else NOIR }{prediction}"
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
             cprint(f"You won €{montant_gain} !", VERT_FLASH)
@@ -153,7 +152,7 @@ def roulette_game():
             nonlocal numero, prediction, pari_type
             numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_simple"
             faire_titre_section("Numéro simple", color="FOND_ROUGE")
-            prediction = input("\nenter your prediction (n):   ").strip().lower()
+            prediction = input("\nenter your prediction (1-36):   ").strip().lower()
             if prediction == "right":
                 prediction = numero
                 clear_lines()
