@@ -83,7 +83,15 @@ def roulette_game():
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte, mise, prediction, pari = 0, "", "", None
+    compte, mise, prediction, pari_type, iswon, islost, montant_gain = (
+        0,
+        "",
+        "",
+        None,
+        False,
+        False,
+        0,
+    )
 
     def roulette_animation(resultat):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
@@ -112,14 +120,35 @@ def roulette_game():
             time.sleep(0.02 + i * 0.008)
 
         print(
-            f"\r{' ' * 38}[ {ROUGE_FLASH if COULEURS_ROULETTE[numero] == 'ROUGE' else NOIR if COULEURS_ROULETTE[numero] == 'NOIR' else VERT}{resultat}{RESET} ] ",
+            f"\r{' ' * 38}[ {ROUGE_FLASH if COULEURS_ROULETTE[resultat] == 'ROUGE' else NOIR if COULEURS_ROULETTE[resultat] == 'NOIR' else VERT}{resultat}{RESET} ] ",
             flush=True,
         )
 
+    def affichage():
+        nonlocal mise, prediction, pari_type, numero, iswon, montant_gain
+        print(f"+{'-' * 50}+\n")
+        print(f"{' ' * 11}ROULETTE GAME\n")
+        roulette_animation(numero)
+        print("\n")
+        match pari_type:
+            case "num_simple":
+                if numero == prediction:
+                    config["sold"] += mise * 35
+                    iswon, montant_gain = True, mise * 35
+                else:
+                    config["sold"] -= mise
+        if iswon:
+            cprint(f"You predicted {prediction} and §you Won!!", SUCCESS)
+            cprint(f"You won €{montant_gain}!", VERT_FLASH)
+        else:
+            cprint(f"You predicted {prediction}  §(wrong...)!", ERROR)
+            cprint(f"You lost €{mise}!",ROUGE_FLASH)
+
+
     def num_simple():
         while True:
-            nonlocal numero, prediction, pari
-            numero, pari = random.choice(ROULETTE_EUROPEENNE), "num_simple"
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_simple"
             prediction = input("enter your prediction (n):   ").strip().lower()
             if not prediction.isdigit():
                 cprint("incorrect", ERROR)
@@ -177,7 +206,7 @@ def roulette_game():
             pass
 
     while True:
-        mise = input("enter a mise:  ").strip().lower()
+        mise = input(f"enter a mise (sold = {config['sold']}):  ").strip().lower()
         if "all" in mise and "-" in mise:
             mise = mise.replace("all", "").replace("-", "")
             mise = mise.strip()
@@ -307,9 +336,6 @@ def roulette_game():
         mise, last_mise = int(mise), int(mise)
 
         break
-
-    def affichage():
-        nonlocal mise, prediction
 
 
 roulette_game()
