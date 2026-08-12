@@ -566,12 +566,12 @@ def clear_lines(n=1):
     sys.stdout.flush()
 
 
-def faire_titre_section(texte, symbole="-", largeur=60):
+def faire_titre_section(texte, symbole="-", largeur=60, color='STYLE_TITRE'):
     """mettre texte et symbole, funct centre et fait une ligne de symbole de size largeur"""
     texte_grand = texte.upper()
     clear()
     print(symbole * largeur)
-    print(f"{STYLE_TITRE}{texte_grand.center(largeur)}{RESET}")
+    print(f"{match_color(color)}{texte_grand.center(largeur)}{RESET}")
     print(symbole * largeur)
 
 
