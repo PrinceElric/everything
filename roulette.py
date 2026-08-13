@@ -2,7 +2,7 @@ from tools import *
 import random, time, sys
 
 
-def roulette_game():
+def roulette_game(animationn=True):
     ROULETTE_EUROPEENNE = [
         0,
         32,
@@ -93,7 +93,7 @@ def roulette_game():
         0,
     )
 
-    def roulette_animation(resultat):
+    def roulette_animation(resultat, animation=True):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
         compte = 0
         for num in ROULETTE_EUROPEENNE:
@@ -104,17 +104,18 @@ def roulette_game():
             if compte == 13 or compte == 25:
                 print("\n")
         print(f"\n{' ' * 40}↓")
-        for i in range(30):
-            numero = random.choice(ROULETTE_EUROPEENNE)
+        if animation:
+            for i in range(30):
+                numero = random.choice(ROULETTE_EUROPEENNE)
 
-            couleur = COULEURS_ROULETTE[numero]
+                couleur = COULEURS_ROULETTE[numero]
 
-            if couleur == "ROUGE":
-                affichage = f"{ROUGE_FLASH}{numero}{RESET}"
-            elif couleur == "NOIR":
-                affichage = f"{NOIR}{numero}{RESET}"
-            else:
-                affichage = f"{VERT_FLASH}{numero}{RESET}"
+                if couleur == "ROUGE":
+                    affichage = f"{ROUGE_FLASH}{numero}{RESET}"
+                elif couleur == "NOIR":
+                    affichage = f"{NOIR}{numero}{RESET}"
+                else:
+                    affichage = f"{VERT_FLASH}{numero}{RESET}"
 
             print(f"\r{' ' * 38}[ {affichage:^5} ] ", end="", flush=True)
 
@@ -125,13 +126,13 @@ def roulette_game():
             flush=True,
         )
 
-    def affichage():
+    def affichage(animation=True):
         nonlocal mise, prediction, pari_type, numero, iswon, montant_gain
         iswon = False
         clear()
         print(f"+{'-' * 80}+\n")
         print(f"{' ' * 33}ROULETTE GAME\n")
-        roulette_animation(numero)
+        roulette_animation(numero, animation)
         print("\n")
         match pari_type:
             case "num_simple":
@@ -159,6 +160,13 @@ def roulette_game():
                 if numero in prediction:
                     config["sold"] += mise * 8
                     iswon, montant_gain = True, mise * 8
+                else:
+                    config["sold"] -= mise
+                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
+            case "num_sixain":
+                if numero in prediction:
+                    config["sold"] += mise * 5
+                    iswon, montant_gain = True, mise * 5
                 else:
                     config["sold"] -= mise
                 prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
@@ -327,10 +335,9 @@ def roulette_game():
     def num_corner():
         while True:
             nonlocal numero, prediction, pari_type
-            numero, pari_type, leave = (
+            numero, pari_type = (
                 random.choice(ROULETTE_EUROPEENNE),
                 "num_corner",
-                False,
             )
             faire_titre_section("Numéros Corner", color="FOND_ROUGE", largeur=80)
 
@@ -354,6 +361,48 @@ def roulette_game():
             else:
                 prediction = prediction.split()
                 if len(prediction) != 4 or len(set(prediction)) != 4:
+                    continue
+                if not all(x.isdigit() for x in prediction):
+                    continue
+                prediction = [int(x) for x in prediction]
+                if any(x <= 0 or x > 36 for x in prediction):
+                    continue
+            prediction = [int(x) for x in prediction]
+            random.shuffle(prediction)
+            clear_lines()
+            print(f"Enter your prediction :   {formate_collections(prediction)}")
+
+            break
+
+    def num_sixain():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "num_sixain",
+            )
+            faire_titre_section("Sixains", color="FOND_ROUGE", largeur=80)
+
+            prediction = (
+                input(
+                    f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 n3 n4 n5 n6){RESET}:   "
+                )
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                nums = list(set(ROULETTE_EUROPEENNE))
+                random.shuffle(nums)
+                if numero in nums:
+                    nums.remove(numero)
+                prediction = nums[:5] + [numero]
+            elif prediction == "random":
+                nums = list(set(ROULETTE_EUROPEENNE))
+                random.shuffle(nums)
+                prediction = nums[:6]
+            else:
+                prediction = prediction.split()
+                if len(prediction) != 6 or len(set(prediction)) != 6:
                     continue
                 if not all(x.isdigit() for x in prediction):
                     continue
@@ -397,7 +446,7 @@ def roulette_game():
             case "4. Carré / Corner   (8:1)":
                 num_corner()
             case "5. Sixain           (5:1)":
-                pass
+                num_sixain()
             case "6. Douzaine         (2:1)":
                 pass
             case "7. Colonne          (2:1)":
@@ -409,7 +458,7 @@ def roulette_game():
             case "10. Manque / Passe  (1:1)":
                 pass
             case "11. Exit":
-                pass
+                return
 
         while True:
             mise = input(f"enter a mise (sold = {config['sold']}):  ").strip().lower()
@@ -547,7 +596,7 @@ def roulette_game():
 
             break
         time.sleep(0.5)
-        affichage()
+        affichage(animationn)
 
 
-roulette_game()
+roulette_game(False)
