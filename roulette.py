@@ -154,6 +154,13 @@ def roulette_game():
                 else:
                     config["sold"] -= mise
                 prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
+            case "num_corner":
+                if numero in prediction:
+                    config["sold"] += mise * 8
+                    iswon, montant_gain = True, mise * 8
+                else:
+                    config["sold"] -= mise
+                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
 
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
@@ -253,7 +260,7 @@ def roulette_game():
                 "num_street",
                 False,
             )
-            faire_titre_section("Numéros doubles", color="FOND_ROUGE", largeur=80)
+            faire_titre_section("Numéros Sreet", color="FOND_ROUGE", largeur=80)
 
             prediction = (
                 input(
@@ -289,6 +296,59 @@ def roulette_game():
 
             break
 
+    def num_corner():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type, leave = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "num_corner",
+                False,
+            )
+            faire_titre_section("Numéros Corner", color="FOND_ROUGE", largeur=80)
+
+            prediction = (
+                input(
+                    f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 n3 n4){RESET}:   "
+                )
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                prediction = random.choices(ROULETTE_EUROPEENNE, k=100)
+                prediction = [int(x) for x in prediction]
+                prediction = set(prediction)
+                prediction = list(prediction)
+                random.shuffle(prediction)
+                if numero in prediction:
+                    prediction.remove(numero)
+                while True:
+                    if len(prediction) != 3:
+                        prediction.pop()
+                    else:
+                        break
+                prediction.append(numero)
+
+            else:
+                prediction = prediction.split()
+                if len(set(prediction)) != 4:
+                    continue
+                for i in prediction:
+                    if leave:
+                        break
+                    elif not i.isdigit():
+                        leave = True
+                    elif 0 >= int(i) or int(i) > 36:
+                        leave = True
+                if leave:
+                    continue
+
+            prediction = [int(x) for x in prediction]
+            random.shuffle(prediction)
+            clear_lines()
+            print(f"Enter your prediction :   {formate_collections(prediction)}")
+
+            break
+
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
@@ -317,7 +377,7 @@ def roulette_game():
             case "3. Street           (11:1)":
                 num_street()
             case "4. Carré / Corner   (8:1)":
-                pass
+                num_corner()
             case "5. Sixain           (5:1)":
                 pass
             case "6. Douzaine         (2:1)":
