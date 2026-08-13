@@ -126,6 +126,7 @@ def roulette_game():
 
     def affichage():
         nonlocal mise, prediction, pari_type, numero, iswon, montant_gain
+        iswon = False
         clear()
         print(f"+{'-' * 80}+\n")
         print(f"{' ' * 33}ROULETTE GAME\n")
@@ -139,6 +140,13 @@ def roulette_game():
                 else:
                     config["sold"] -= mise
                 prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'ROUGE' else NOIR }{prediction}{RESET}"
+            case "num_split_n2":
+                if numero in prediction:
+                    config["sold"] += mise * 17
+                    iswon, montant_gain = True, mise * 17
+                else:
+                    config["sold"] -= mise
+                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
             cprint(f"You won €{montant_gain} !", VERT_FLASH)
@@ -172,23 +180,41 @@ def roulette_game():
     def num_split_n2():
         while True:
             nonlocal numero, prediction, pari_type
-            numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_split_n2"
-            faire_titre_section("Numéros doubles", color="FOND_ROUGE")
-            prediction = input("\nEnter your prediction (1-36):   ").strip().lower()
+            numero, pari_type, leave = random.choice(ROULETTE_EUROPEENNE), "num_split_n2", False
+            faire_titre_section("Numéros doubles", color="FOND_ROUGE", largeur=80)
+            compte = 0
+            print('\n')
+            for num in ROULETTE_EUROPEENNE:
+                compte += 1
+                if num == 0:
+                    continue
+                print(f"[ {match_color(COULEURS_ROULETTE[num])}{num}{RESET} ]", end=" ")
+                if compte == 13 or compte == 25:
+                    print("\n")
+
+            prediction = input(f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 (ajd)){RESET}:   ").strip().lower()
             if prediction == "right":
-                prediction = numero
-                clear_lines()
-                print(f"enter your prediction (n):  {prediction}")
-            elif not prediction.isdigit():
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            elif not 1 <= int(prediction) <= 36:
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
+                prediction = []
+                prediction.append(numero)
+                prediction.append(int(ROULETTE_EUROPEENNE[(ROULETTE_EUROPEENNE.index(int(numero)) + 1)]))
+            else:
+                prediction = prediction.split()
+                for i in prediction:
+                    if leave:
+                        break
+                    elif len(prediction) != 2:
+                        leave = True
+                    elif not i.isdigit():
+                        leave = True
+                    elif 0 >= int(i) or int(i) > 36:
+                        leave = True
+                if leave:
+                    continue
+                if ROULETTE_EUROPEENNE[(ROULETTE_EUROPEENNE.index(int(prediction[0])) + 1)] != int(prediction[1]):
+                    continue
+            clear_lines()
+            print(f"Enter your prediction :   {formate_collections(prediction)}")
+            
             break
 
     
