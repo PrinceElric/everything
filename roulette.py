@@ -139,7 +139,7 @@ def roulette_game():
                     iswon, montant_gain = True, mise * 35
                 else:
                     config["sold"] -= mise
-                prediction = f"{ROUGE if COULEURS_ROULETTE[int(prediction)] == 'ROUGE' else NOIR }{prediction}{RESET}"
+                prediction = f"{ROUGE if COULEURS_ROULETTE[prediction] == 'ROUGE' else NOIR }{prediction}{RESET}"
             case "num_split_n2":
                 if numero in prediction:
                     config["sold"] += mise * 17
@@ -175,15 +175,20 @@ def roulette_game():
                 time.sleep(0.3)
                 clear_lines(2)
                 continue
+            prediction = int(prediction)
             break
 
     def num_split_n2():
         while True:
             nonlocal numero, prediction, pari_type
-            numero, pari_type, leave = random.choice(ROULETTE_EUROPEENNE), "num_split_n2", False
+            numero, pari_type, leave = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "num_split_n2",
+                False,
+            )
             faire_titre_section("Numéros doubles", color="FOND_ROUGE", largeur=80)
             compte = 0
-            print('\n')
+            print("\n")
             for num in ROULETTE_EUROPEENNE:
                 compte += 1
                 if num == 0:
@@ -192,11 +197,23 @@ def roulette_game():
                 if compte == 13 or compte == 25:
                     print("\n")
 
-            prediction = input(f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 (ajd)){RESET}:   ").strip().lower()
+            prediction = (
+                input(
+                    f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 (ajd)){RESET}:   "
+                )
+                .strip()
+                .lower()
+            )
             if prediction == "right":
                 prediction = []
                 prediction.append(numero)
-                prediction.append(int(ROULETTE_EUROPEENNE[(ROULETTE_EUROPEENNE.index(int(numero)) + 1)]))
+                prediction.append(
+                    int(
+                        ROULETTE_EUROPEENNE[
+                            (ROULETTE_EUROPEENNE.index(int(numero)) + 1)
+                        ]
+                    )
+                )
             else:
                 prediction = prediction.split()
                 for i in prediction:
@@ -210,14 +227,16 @@ def roulette_game():
                         leave = True
                 if leave:
                     continue
-                if ROULETTE_EUROPEENNE[(ROULETTE_EUROPEENNE.index(int(prediction[0])) + 1)] != int(prediction[1]):
+                if ROULETTE_EUROPEENNE[
+                    (ROULETTE_EUROPEENNE.index(int(prediction[0])) + 1)
+                ] != int(prediction[1]):
                     continue
+            prediction = [int(x) for x in prediction]
             clear_lines()
             print(f"Enter your prediction :   {formate_collections(prediction)}")
-            
+
             break
 
-    
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
