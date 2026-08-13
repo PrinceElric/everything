@@ -170,6 +170,13 @@ def roulette_game(animationn=True):
                 else:
                     config["sold"] -= mise
                 prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
+            case "num_douzaine":
+                if numero in prediction:
+                    config["sold"] += mise * 2
+                    iswon, montant_gain = True, mise * 2
+                else:
+                    config["sold"] -= mise
+                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
 
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
@@ -296,7 +303,7 @@ def roulette_game(animationn=True):
 
             prediction = (
                 input(
-                    f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 +1 +2 (conséc)){RESET}:   "
+                    f"\nEnter your predictions (1-36) {SOULIGN2}(n1 +1 +2 (conséc)){RESET}:   "
                 )
                 .strip()
                 .lower()
@@ -343,7 +350,7 @@ def roulette_game(animationn=True):
 
             prediction = (
                 input(
-                    f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 n3 n4){RESET}:   "
+                    f"\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 n3 n4){RESET}:   "
                 )
                 .strip()
                 .lower()
@@ -385,7 +392,7 @@ def roulette_game(animationn=True):
 
             prediction = (
                 input(
-                    f"\n\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 n3 n4 n5 n6){RESET}:   "
+                    f"\nEnter your predictions (1-36) {SOULIGN2}(n1 n2 n3 n4 n5 n6){RESET}:   "
                 )
                 .strip()
                 .lower()
@@ -412,6 +419,51 @@ def roulette_game(animationn=True):
             prediction = [int(x) for x in prediction]
             random.shuffle(prediction)
             clear_lines()
+            print(f"Enter your prediction :   {formate_collections(prediction)}")
+
+            break
+
+    def num_douzaine():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "num_douzaine",
+            )
+            faire_titre_section("Douzaines", color="FOND_ROUGE", largeur=80)
+
+            print(f"1.  1-12\n2.  13-24\n3.  25-36")
+            prediction = str(
+                input(f"\nEnter your predictions (1-36) {SOULIGN2}(1, 2, 3){RESET}:   ")
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                prediction = (
+                    list(range(1, 13))
+                    if numero <= 12
+                    else list(range(13, 25)) if numero <= 24 else list(range(25, 37))
+                )
+            elif prediction == "random":
+                prediction = random.choice([1, 2, 3])
+                prediction = (
+                    list(range(1, 13))
+                    if prediction == 1
+                    else list(range(13, 25)) if prediction == 2 else list(range(25, 37))
+                )
+            else:
+                if not str(prediction) in ["1", "2", "3"]:
+                    continue
+                else:
+                    if str(prediction) == str(1):
+                        prediction = list(range(1, 13))
+                    if str(prediction) == str(2):
+                        prediction = list(range(13, 25))
+                    if str(prediction) == str(3):
+                        prediction = list(range(25, 37))
+
+            clear_lines()
+            prediction = [int(x) for x in prediction]
             print(f"Enter your prediction :   {formate_collections(prediction)}")
 
             break
@@ -448,7 +500,7 @@ def roulette_game(animationn=True):
             case "5. Sixain           (5:1)":
                 num_sixain()
             case "6. Douzaine         (2:1)":
-                pass
+                num_douzaine()
             case "7. Colonne          (2:1)":
                 pass
             case "8. Rouge/Noir       (1:1)":
