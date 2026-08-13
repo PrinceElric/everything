@@ -180,6 +180,10 @@ def roulette_game():
                 prediction = numero
                 clear_lines()
                 print(f"enter your prediction (n):  {prediction}")
+            elif prediction == "random":
+                prediction = random.choice(ROULETTE_EUROPEENNE)
+                clear_lines()
+                print(f"enter your prediction (n):  {prediction}")
             elif not prediction.isdigit():
                 cprint("incorrect", ERROR)
                 time.sleep(0.3)
@@ -222,13 +226,29 @@ def roulette_game():
             if prediction == "right":
                 prediction = []
                 prediction.append(numero)
-                prediction.append(
-                    int(
-                        ROULETTE_EUROPEENNE[
-                            (ROULETTE_EUROPEENNE.index(int(numero)) + 1)
-                        ]
+                if numero == ROULETTE_EUROPEENNE[len(ROULETTE_EUROPEENNE) - 1]:
+                    prediction.append(ROULETTE_EUROPEENNE[0])
+                else:
+                    prediction.append(
+                        int(
+                            ROULETTE_EUROPEENNE[
+                                (ROULETTE_EUROPEENNE.index(int(numero)) + 1)
+                            ]
+                        )
                     )
-                )
+            elif prediction == "random":
+                prediction = []
+                prediction.append(random.choice(ROULETTE_EUROPEENNE))
+                if prediction[0] == ROULETTE_EUROPEENNE[len(ROULETTE_EUROPEENNE) - 1]:
+                    prediction.append(ROULETTE_EUROPEENNE[0])
+                else:
+                    prediction.append(
+                        int(
+                            ROULETTE_EUROPEENNE[
+                                (ROULETTE_EUROPEENNE.index(int(prediction[0])) + 1)
+                            ]
+                        )
+                    )
             else:
                 prediction = prediction.split()
                 for i in prediction:
@@ -272,6 +292,15 @@ def roulette_game():
             if prediction == "right":
                 prediction = []
                 prediction.append(numero, numero + 1, numero + 2)
+            elif prediction == "random":
+                prediction = []
+                prediction.append(random.choice(ROULETTE_EUROPEENNE))
+                if int(prediction[0]) == 36:
+                    prediction.append(1, 2)
+                elif int(prediction[0]) == 35:
+                    prediction.append(36, 1)
+                else:
+                    prediction.append(int(prediction[0]) + 1, int(prediction[0]) + 2)
             else:
                 prediction = prediction.split()
                 for i in prediction:
@@ -316,9 +345,7 @@ def roulette_game():
             if prediction == "right":
                 prediction = random.choices(ROULETTE_EUROPEENNE, k=100)
                 prediction = [int(x) for x in prediction]
-                prediction = set(prediction)
-                prediction = list(prediction)
-                random.shuffle(prediction)
+                prediction = random.shuffle(list(set(prediction)))
                 if numero in prediction:
                     prediction.remove(numero)
                 while True:
@@ -327,7 +354,15 @@ def roulette_game():
                     else:
                         break
                 prediction.append(numero)
-
+            elif prediction == "random":
+                prediction = random.choices(ROULETTE_EUROPEENNE, k=100)
+                prediction = [int(x) for x in prediction]
+                prediction = random.shuffle(list(set(prediction)))
+                while True:
+                    if len(prediction) != 4:
+                        prediction.pop()
+                    else:
+                        break
             else:
                 prediction = prediction.split()
                 if len(set(prediction)) != 4:
