@@ -83,12 +83,13 @@ def roulette_game():
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte, mise, prediction, pari_type, iswon, montant_gain = (
+    compte, mise, prediction, pari_type, iswon, montant_gain, last_mise = (
         0,
         "",
         "",
         None,
         False,
+        0,
         0,
     )
 
@@ -232,7 +233,10 @@ def roulette_game():
                     prediction.append(
                         int(
                             ROULETTE_EUROPEENNE[
-                                (ROULETTE_EUROPEENNE.index(int(numero)) + 1)
+                                (
+                                    (ROULETTE_EUROPEENNE.index(int(numero)) + 1)
+                                    % len(ROULETTE_EUROPEENNE)
+                                )
                             ]
                         )
                     )
@@ -291,16 +295,11 @@ def roulette_game():
             )
             if prediction == "right":
                 prediction = []
-                prediction.append(numero, numero + 1, numero + 2)
+                prediction.extend([numero, (numero % 36) + 1, (numero + 1) % 36 + 1])
             elif prediction == "random":
                 prediction = []
-                prediction.append(random.choice(ROULETTE_EUROPEENNE))
-                if int(prediction[0]) == 36:
-                    prediction.append(1, 2)
-                elif int(prediction[0]) == 35:
-                    prediction.append(36, 1)
-                else:
-                    prediction.append(int(prediction[0]) + 1, int(prediction[0]) + 2)
+                r = random.choice(ROULETTE_EUROPEENNE)
+                prediction.extend([r, (r % 36) + 1, (r + 1) % 36 + 1])
             else:
                 prediction = prediction.split()
                 for i in prediction:
@@ -315,8 +314,8 @@ def roulette_game():
                 if leave:
                     continue
                 if (
-                    int(prediction[0]) != int(prediction[1]) - 1
-                    and int(prediction[0]) != int(prediction[2]) - 2
+                    prediction[1] != prediction[0] + 1
+                    or prediction[2] != prediction[0] + 2
                 ):
                     continue
             prediction = [int(x) for x in prediction]
@@ -343,40 +342,24 @@ def roulette_game():
                 .lower()
             )
             if prediction == "right":
-                prediction = random.choices(ROULETTE_EUROPEENNE, k=100)
-                prediction = [int(x) for x in prediction]
-                prediction = random.shuffle(list(set(prediction)))
-                if numero in prediction:
-                    prediction.remove(numero)
-                while True:
-                    if len(prediction) != 3:
-                        prediction.pop()
-                    else:
-                        break
-                prediction.append(numero)
+                nums = list(set(ROULETTE_EUROPEENNE))
+                random.shuffle(nums)
+                if numero in nums:
+                    nums.remove(numero)
+                prediction = nums[:3] + [numero]
             elif prediction == "random":
-                prediction = random.choices(ROULETTE_EUROPEENNE, k=100)
-                prediction = [int(x) for x in prediction]
-                prediction = random.shuffle(list(set(prediction)))
-                while True:
-                    if len(prediction) != 4:
-                        prediction.pop()
-                    else:
-                        break
+                nums = list(set(ROULETTE_EUROPEENNE))
+                random.shuffle(nums)
+                prediction = nums[:4]
             else:
                 prediction = prediction.split()
-                if len(set(prediction)) != 4:
+                if len(prediction) != 4 or len(set(prediction)) != 4:
                     continue
-                for i in prediction:
-                    if leave:
-                        break
-                    elif not i.isdigit():
-                        leave = True
-                    elif 0 >= int(i) or int(i) > 36:
-                        leave = True
-                if leave:
+                if not all(x.isdigit() for x in prediction):
                     continue
-
+                prediction = [int(x) for x in prediction]
+                if any(x <= 0 or x > 36 for x in prediction):
+                    continue
             prediction = [int(x) for x in prediction]
             random.shuffle(prediction)
             clear_lines()
