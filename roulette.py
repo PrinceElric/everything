@@ -165,7 +165,7 @@ def roulette_game():
 
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
-            cprint(f"You won €{montant_gain} !", VERT_FLASH)
+            cprint(f"You won €{format_number(montant_gain)} !", VERT_FLASH)
         else:
             cprint(f"You predicted [ {prediction} ]  §(wrong...)!", ERROR)
             cprint(f"You lost €{mise} !", ROUGE_FLASH)
@@ -314,8 +314,8 @@ def roulette_game():
                 if leave:
                     continue
                 if (
-                    prediction[1] != prediction[0] + 1
-                    or prediction[2] != prediction[0] + 2
+                    int(prediction[1]) != int(prediction[0]) + 1
+                    or int(prediction[2]) != int(prediction[0]) + 2
                 ):
                     continue
             prediction = [int(x) for x in prediction]
