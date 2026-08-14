@@ -328,7 +328,7 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if 're' | 'right' in prediction and not cheat:
+            if "re" | "right" in prediction and not cheat:
                 continue
             elif prediction == "right" and cheat:
                 prediction = []
@@ -384,7 +384,7 @@ def roulette_game(animationn=True, cheat=True):
                 random.choice(ROULETTE_EUROPEENNE),
                 "num_corner",
             )
-            faire_titre_section("Numéros Corner", color="FOND_ROUGE", largeur=80)
+            faire_titre_section("Numéros Corner", color="FOND_ROUGE")
 
             prediction = (
                 input(
@@ -393,12 +393,14 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 nums = list(set(ROULETTE_EUROPEENNE))
                 random.shuffle(nums)
                 if numero in nums:
                     nums.remove(numero)
                 prediction = nums[:3] + [numero]
+            if prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 nums = list(set(ROULETTE_EUROPEENNE))
                 random.shuffle(nums)
@@ -426,7 +428,7 @@ def roulette_game(animationn=True, cheat=True):
                 random.choice(ROULETTE_EUROPEENNE),
                 "num_sixain",
             )
-            faire_titre_section("Sixains", color="FOND_ROUGE", largeur=80)
+            faire_titre_section("Sixains", color="FOND_ROUGE")
 
             prediction = (
                 input(
@@ -435,12 +437,14 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 nums = list(set(ROULETTE_EUROPEENNE))
                 random.shuffle(nums)
                 if numero in nums:
                     nums.remove(numero)
                 prediction = nums[:5] + [numero]
+            elif prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 nums = list(set(ROULETTE_EUROPEENNE))
                 random.shuffle(nums)
@@ -468,7 +472,7 @@ def roulette_game(animationn=True, cheat=True):
                 random.choice(ROULETTE_EUROPEENNE),
                 "num_douzaine",
             )
-            faire_titre_section("Douzaines", color="FOND_ROUGE", largeur=80)
+            faire_titre_section("Douzaines", color="FOND_ROUGE")
 
             print(f"1.  1-12\n2.  13-24\n3.  25-36")
             prediction = str(
@@ -476,12 +480,14 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 prediction = (
                     list(range(1, 13))
                     if numero <= 12
                     else list(range(13, 25)) if numero <= 24 else list(range(25, 37))
                 )
+            elif prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 prediction = random.choice([1, 2, 3])
                 prediction = (
@@ -490,14 +496,14 @@ def roulette_game(animationn=True, cheat=True):
                     else list(range(13, 25)) if prediction == 2 else list(range(25, 37))
                 )
             else:
-                if not str(prediction) in ["1", "2", "3"]:
+                if not prediction in ["1", "2", "3"]:
                     continue
                 else:
-                    if str(prediction) == str(1):
+                    if prediction == str(1):
                         prediction = list(range(1, 13))
-                    if str(prediction) == str(2):
+                    if prediction == str(2):
                         prediction = list(range(13, 25))
-                    if str(prediction) == str(3):
+                    if prediction == str(3):
                         prediction = list(range(25, 37))
 
             clear_lines()
@@ -509,16 +515,15 @@ def roulette_game(animationn=True, cheat=True):
     def num_colonne():
         while True:
             nonlocal numero, prediction, pari_type
-            numero, pari_type = (
+            numero, pari_type, col1, col2, col3 = (
                 random.choice(ROULETTE_EUROPEENNE),
                 "num_colonne",
-            )
-            col1, col2, col3 = (
                 [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13],
                 [36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20],
                 [14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26],
             )
-            faire_titre_section("Colonnes", color="FOND_ROUGE", largeur=80)
+
+            faire_titre_section("Colonnes", color="FOND_ROUGE", largeur=84)
             compte = 0
             print("\n")
             for num in ROULETTE_EUROPEENNE:
@@ -537,24 +542,26 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 prediction = (
                     col1 if numero in col1 else col2 if numero in col2 else col3
                 )
+            elif prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 prediction = random.choice([1, 2, 3])
                 prediction = (
                     col1 if prediction == 1 else col2 if prediction == 2 else col3
                 )
             else:
-                if not str(prediction) in ["1", "2", "3"]:
+                if not prediction in ["1", "2", "3"]:
                     continue
                 else:
-                    if str(prediction) == str(1):
+                    if prediction == str(1):
                         prediction = col1
-                    if str(prediction) == str(2):
+                    if prediction == str(2):
                         prediction = col2
-                    if str(prediction) == str(3):
+                    if prediction == str(3):
                         prediction = col3
 
             clear_lines()
@@ -589,8 +596,10 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 prediction = COULEURS_ROULETTE[numero]
+            elif prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 prediction = random.choice(["NOIR", "ROUGE"])
             else:
@@ -600,12 +609,6 @@ def roulette_game(animationn=True, cheat=True):
                     if prediction.lower() in [
                         "r",
                         "red",
-                        "rouge",
-                        "1",
-                        "sang",
-                        "s",
-                        "b",
-                        "blood",
                     ]:
                         prediction = "ROUGE"
                     else:
@@ -632,8 +635,10 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 prediction = "PAIR" if numero % 2 == 0 else "IMPAIR"
+            elif prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 prediction = random.choice(["IMPAIR", "PAIR"])
             else:
@@ -663,8 +668,10 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if prediction == "right" and cheat:
                 prediction = "SUP A 18" if numero >= 18 else "INF A 18"
+            elif prediction == "right" and not cheat:
+                continue
             elif prediction == "random":
                 prediction = random.choice(["SUP A 18", "INF A 18"])
             else:
@@ -894,6 +901,9 @@ def roulette_game(animationn=True, cheat=True):
             break
         time.sleep(0.5)
         affichage(animationn)
+    print(
+        f"{ROUGE if config['sold'] <= 200 else VERT}You had €200 to the start and finished with {config['sold']}!{RESET}"
+    )
 
 
 roulette_game(True)
