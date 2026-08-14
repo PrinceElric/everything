@@ -566,7 +566,7 @@ def clear_lines(n=1):
     sys.stdout.flush()
 
 
-def faire_titre_section(texte, symbole="-", largeur=60, color='STYLE_TITRE'):
+def faire_titre_section(texte, symbole="-", largeur=60, color="STYLE_TITRE"):
     """mettre texte et symbole, funct centre et fait une ligne de symbole de size largeur"""
     texte_grand = texte.upper()
     clear()
@@ -2404,7 +2404,6 @@ def Red_or_Black_game(mode="normal", cheat=True):
             while True:
                 mise = input("Enter a mise:   ").strip().lower()
                 if mise in exit:
-                    print(f"DEBUG après journal : mise = {mise!r}")
                     input()
                     return
 
