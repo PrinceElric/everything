@@ -3811,7 +3811,6 @@ def menu_game():
                         code_names_game()
                     case "3. Word guessing Game":
                         word_guess_game()
-
             case "2. Classiques & Stratégie":
                 choix = menu_options(
                     [
@@ -3826,7 +3825,6 @@ def menu_game():
                         paper_scissor_game()
                     case "2. Tic Tac Toe Game":
                         tictactoe_game()
-
             case "3. Hasard & Nombres":
                 choix = menu_options(
                     [
@@ -3852,7 +3850,7 @@ def menu_game():
                         dice(face, dices)
             case "4. Casino & Argent":
                 choix = menu_options(
-                    ["1. Red or Black game", "2. Retour"], "Casino & Argent"
+                    ["1. Red or Black game", "2. Roulette_game", "3. Retour"], "Casino & Argent"
                 )
                 match choix:
                     case "1. Red or Black game":
@@ -3880,7 +3878,8 @@ def menu_game():
                                     break
 
                             Red_or_Black_game(mode)
-
+                    case "2. Roulette_game":
+                        roulette_game()
             case "5. Exit":
                 return
 
@@ -4031,7 +4030,7 @@ def match_color(color):
 # --- Executables ---
 
 clear()
-loading_bar(0.4, symbol="*", lenght=10, exe=True)
+loading_bar(0.33, symbol="*", lenght=10, exe=True)
 start_timer()
 
 
