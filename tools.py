@@ -285,6 +285,8 @@ mots_921
     Simule le jeu du morpion avec diff styles de jeux.
 • Red_or_Black_game(mode="normal", cheat=True)
     red or black game of gambling
+• Roulette_game(animationn=True, cheat=True)
+    roulette game of gambling
 • menu_game()
     Lance le menu de jeux.
 
@@ -384,7 +386,7 @@ def save_config(data, chemin="config.json"):
 PATH_TEMP = r"C:\Users\elric\Desktop\vs code\all that\tempo diary.md"
 try:
     with open(PATH_TEMP, "w", encoding="utf-8") as f:
-        f.write("")  # On écrase avec du vide UNE SEULE FOIS au début !
+        f.write("")  # On écrase avec du vide
 except:  # Si le dossier existe pas encore, pas de crash  # noqa: E722
     pass
 
@@ -759,6 +761,12 @@ def arc_en_ciel(txt, mode="normal"):
 
     return "".join(textee)
 
+
+def first(var):
+    return var[0]
+
+def last(var):
+    return var[len(var) - 1]
 
 # -------------------------------------------------------------------------------
 
