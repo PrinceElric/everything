@@ -46,14 +46,25 @@ Total Lost     : -170 €
 Net Profit     : +210 €
 Current Balance: 1210 €
 
-add and une a plus ahaut risque, change le choix de base de l'algo avec le perfect pour ce que on dit 're destin'
+inv mise, une par game, avec bool de start True et si used = False
+add and une a plus ahaut risque, 
+change le choix de base de l'algo avec le perfect pour ce que on dit 're destin'
 cheat qui enleve n au nb de cheat used
+
 banque qui cfait monter argnt place dedans au fil des tour (cartes tirées) ??
+
 
 clean le menu ANSI  de menu_tools : trop de titre secion de m*rde
 
 add to tools:
       first and last de iterable. funct
+
+      Jeux:
+            bataille (cards)
+            
+            banque, genre investissement, genre quand savoir se retracter avant que le mouvement devienne defavorbale
+            genre parier sur div actions qui ont diff profils de comportments:
+                  genre plus intense sur les mouv, ou plus reguliers, plus de mouv par tour, ou juste une banque en interet composés
       
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
@@ -71,19 +82,3 @@ ________________________________________________________________________________
 | Rouge/Noir                   |               18 |      1:1 |
 | Pair/Impair                  |               18 |      1:1 |
 | Manque/Passe                 |               18 |      1:1 |
-
-
-ÉTAPE 6
-pair/impair + manque/passe
-
-↓
-
-ÉTAPE 9
-plusieurs mises simultanées
-
-↓
-
-ÉTAPE 10
-journal + statistiques
-
-↓
