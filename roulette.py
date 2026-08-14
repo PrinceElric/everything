@@ -170,7 +170,7 @@ def roulette_game(animationn=True):
                 else:
                     config["sold"] -= mise
                 prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "num_douzaine":
+            case "num_douzaine" | "num_colonne":
                 if numero in prediction:
                     config["sold"] += mise * 2
                     iswon, montant_gain = True, mise * 2
@@ -434,7 +434,7 @@ def roulette_game(animationn=True):
 
             print(f"1.  1-12\n2.  13-24\n3.  25-36")
             prediction = str(
-                input(f"\nEnter your predictions (1-36) {SOULIGN2}(1, 2, 3){RESET}:   ")
+                input(f"\nEnter your predictions {SOULIGN2}(1, 2, 3){RESET}:   ")
                 .strip()
                 .lower()
             )
@@ -461,6 +461,63 @@ def roulette_game(animationn=True):
                         prediction = list(range(13, 25))
                     if str(prediction) == str(3):
                         prediction = list(range(25, 37))
+
+            clear_lines()
+            prediction = [int(x) for x in prediction]
+            print(f"Enter your prediction :   {formate_collections(prediction)}")
+
+            break
+
+    def num_colonne():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "num_colonne",
+            )
+            col1, col2, col3 = (
+                [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13],
+                [36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20],
+                [14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26],
+            )
+            faire_titre_section("Colonnes", color="FOND_ROUGE", largeur=80)
+            compte = 0
+            print("\n")
+            for num in ROULETTE_EUROPEENNE:
+                compte += 1
+                if num == 0:
+                    continue
+                print(
+                    f"{f'{'1.' if compte == 2 else '2.' if compte == 14 else '3.'}   ' if compte in [2, 14, 26] else ''}[ {match_color(COULEURS_ROULETTE[num])}{num}{RESET} ]",
+                    end=" ",
+                )
+                if compte == 13 or compte == 25:
+                    print("\n\n")
+
+            prediction = str(
+                input(f"\n\nEnter your prediction {SOULIGN2}(1, 2, 3){RESET}:   ")
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                prediction = (
+                    col1 if numero in col1 else col2 if numero in col2 else col3
+                )
+            elif prediction == "random":
+                prediction = random.choice([1, 2, 3])
+                prediction = (
+                    col1 if prediction == 1 else col2 if prediction == 2 else col3
+                )
+            else:
+                if not str(prediction) in ["1", "2", "3"]:
+                    continue
+                else:
+                    if str(prediction) == str(1):
+                        prediction = col1
+                    if str(prediction) == str(2):
+                        prediction = col1
+                    if str(prediction) == str(3):
+                        prediction = col3
 
             clear_lines()
             prediction = [int(x) for x in prediction]
@@ -502,7 +559,7 @@ def roulette_game(animationn=True):
             case "6. Douzaine         (2:1)":
                 num_douzaine()
             case "7. Colonne          (2:1)":
-                pass
+                num_colonne()
             case "8. Rouge/Noir       (1:1)":
                 pass
             case "9. Pair / Impair    (1:1)":
