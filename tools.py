@@ -3540,6 +3540,7 @@ def roulette_game(animationn=True, cheat=True):
 
             break
 
+    clear()
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
