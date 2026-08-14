@@ -81,6 +81,17 @@ def roulette_game(animationn=True):
         35: "NOIR",
         36: "ROUGE",
     }
+    BET_PAYOUTS = {
+        "num_simple": 35,
+        "num_split_n2": 17,
+        "num_street": 11,
+        "num_corner": 8,
+        "num_sixain": 5,
+        "num_douzaine": 2,
+        "num_colonne": 2,
+        "red_black": 1,
+        "pair_impair": 1,
+    }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
     compte, mise, prediction, pari_type, iswon, montant_gain, last_mise = (
@@ -134,60 +145,22 @@ def roulette_game(animationn=True):
         print(f"{' ' * 33}ROULETTE GAME\n")
         roulette_animation(numero, animation)
         print("\n")
-        match pari_type:
-            case "num_simple":
-                if numero == prediction:
-                    config["sold"] += mise * 35
-                    iswon, montant_gain = True, mise * 35
-                else:
-                    config["sold"] -= mise
-                prediction = f"{ROUGE if COULEURS_ROULETTE[prediction] == 'ROUGE' else NOIR }{prediction}{RESET}"
-            case "num_split_n2":
-                if numero in prediction:
-                    config["sold"] += mise * 17
-                    iswon, montant_gain = True, mise * 17
-                else:
-                    config["sold"] -= mise
-                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "num_street":
-                if numero in prediction:
-                    config["sold"] += mise * 11
-                    iswon, montant_gain = True, mise * 11
-                else:
-                    config["sold"] -= mise
-                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "num_corner":
-                if numero in prediction:
-                    config["sold"] += mise * 8
-                    iswon, montant_gain = True, mise * 8
-                else:
-                    config["sold"] -= mise
-                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "num_sixain":
-                if numero in prediction:
-                    config["sold"] += mise * 5
-                    iswon, montant_gain = True, mise * 5
-                else:
-                    config["sold"] -= mise
-                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "num_douzaine" | "num_colonne":
-                if numero in prediction:
-                    config["sold"] += mise * 2
-                    iswon, montant_gain = True, mise * 2
-                else:
-                    config["sold"] -= mise
-                prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "red_black" | "pair_impair":
-                if (
-                    COULEURS_ROULETTE[numero]
-                    or ("PAIR" if numero % 2 == 0 else "IMPAIR") == prediction
-                ):
-                    config["sold"] += mise
-                    iswon, montant_gain = True, mise
-                else:
-                    config["sold"] -= mise
-                prediction = f"{ROUGE if prediction == 'ROUGE' else NOIR if prediction == 'NOIR' else LOG_DISCRET}{prediction}{RESET}"
+        payout = BET_PAYOUTS.get(pari_type, 1)
 
+        if pari_type in ["red_black", "pair_impair"]:
+            iswon = (COULEURS_ROULETTE[numero] == prediction) or (
+                ("PAIR" if numero % 2 == 0 else "IMPAIR") == prediction
+            )
+        elif isinstance(prediction, list):
+            iswon = numero in prediction
+        else:
+            iswon = numero == prediction
+
+        if iswon:
+            montant_gain = mise * payout
+            config["sold"] += montant_gain
+        else:
+            config["sold"] -= mise
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
             cprint(f"You won €{format_number(montant_gain)} !", VERT_FLASH)
