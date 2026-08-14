@@ -2,7 +2,7 @@ from tools import *
 import random, time, sys
 
 
-def roulette_game(animationn=True):
+def roulette_game(animationn=True, cheat=True):
     ROULETTE_EUROPEENNE = [
         0,
         32,
@@ -147,9 +147,11 @@ def roulette_game(animationn=True):
         print("\n")
         payout = BET_PAYOUTS.get(pari_type, 1)
 
-        if pari_type in ["red_black", "pair_impair"]:
-            iswon = (COULEURS_ROULETTE[numero] == prediction) or (
-                ("PAIR" if numero % 2 == 0 else "IMPAIR") == prediction
+        if pari_type in ["red_black", "pair_impair", "manque_passe"]:
+            iswon = (
+                (COULEURS_ROULETTE[numero] == prediction)
+                or (("PAIR" if numero % 2 == 0 else "IMPAIR") == prediction)
+                or (("SUP A 18" if numero >= 18 else "INF A 18") == prediction)
             )
         elif isinstance(prediction, list):
             iswon = numero in prediction
@@ -162,10 +164,16 @@ def roulette_game(animationn=True):
         else:
             config["sold"] -= mise
         if iswon:
-            cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
+            cprint(
+                f"You predicted [ {LOG_DISCRET}{prediction}{RESET} ] and §you Won!!",
+                SUCCESS,
+            )
             cprint(f"You won €{format_number(montant_gain)} !", VERT_FLASH)
         else:
-            cprint(f"You predicted [ {prediction} ]  §(wrong...)!", ERROR)
+            cprint(
+                f"You predicted [ {LOG_DISCRET}{prediction}{RESET} ]  §(wrong...)!",
+                ERROR,
+            )
             cprint(f"You lost €{mise} !", ROUGE_FLASH)
         input()
 
@@ -175,10 +183,36 @@ def roulette_game(animationn=True):
             numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_simple"
             faire_titre_section("Numéro simple", color="FOND_ROUGE")
             prediction = input("\nEnter your prediction (1-36):   ").strip().lower()
-            if prediction == "right":
+            if ("right" | "re" | "not" in prediction) and not cheat:
+                continue
+            elif prediction == "right" and cheat:
+                if numero == 0:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
                 prediction = numero
                 clear_lines()
                 print(f"enter your prediction (n):  {prediction}")
+            elif ("re" in prediction) and cheat:
+                prediction = prediction.replace("re", "").strip()
+                if not prediction.isdigit():
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                if (int(prediction) not in ROULETTE_EUROPEENNE) or int(prediction) == 0:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                numero, prediction = int(prediction), int(prediction)
+            elif "not" in prediction:
+                while True:
+                    prediction = random.choice(ROULETTE_EUROPEENNE)
+                    if prediction == numero:
+                        continue
+                    break
             elif prediction == "random":
                 prediction = random.choice(ROULETTE_EUROPEENNE)
                 clear_lines()
@@ -222,7 +256,10 @@ def roulette_game(animationn=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+
+            if prediction == "right" and not cheat:
+                continue
+            elif prediction == "right" and cheat:
                 prediction = []
                 prediction.append(numero)
                 if numero == ROULETTE_EUROPEENNE[len(ROULETTE_EUROPEENNE) - 1]:
@@ -282,7 +319,7 @@ def roulette_game(animationn=True):
                 "num_street",
                 False,
             )
-            faire_titre_section("Numéros Sreet", color="FOND_ROUGE", largeur=80)
+            faire_titre_section("Numéros Sreet", color="FOND_ROUGE")
 
             prediction = (
                 input(
@@ -291,9 +328,27 @@ def roulette_game(animationn=True):
                 .strip()
                 .lower()
             )
-            if prediction == "right":
+            if 're' | 'right' in prediction and not cheat:
+                continue
+            elif prediction == "right" and cheat:
                 prediction = []
                 prediction.extend([numero, (numero % 36) + 1, (numero + 1) % 36 + 1])
+            elif ("re" in prediction) and cheat:
+                prediction = prediction.replace("re", "").strip()
+                if not prediction.isdigit():
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                if (int(prediction) not in ROULETTE_EUROPEENNE) or int(prediction) == 0:
+                    cprint("incorrect", ERROR)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                numero = int(prediction)
+                prediction = []
+                prediction.extend([numero, (numero % 36) + 1, (numero + 1) % 36 + 1])
+
             elif prediction == "random":
                 prediction = []
                 r = random.choice(ROULETTE_EUROPEENNE)
@@ -594,6 +649,37 @@ def roulette_game(animationn=True):
 
             break
 
+    def manque_passe():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "manque_passe",
+            )
+            faire_titre_section("Manque et Passe", color="FOND_ROUGE")
+
+            prediction = str(
+                input(f"\nEnter your prediction {SOULIGN2}(+/-) de 18{RESET}:   ")
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                prediction = "SUP A 18" if numero >= 18 else "INF A 18"
+            elif prediction == "random":
+                prediction = random.choice(["SUP A 18", "INF A 18"])
+            else:
+                if not prediction in ["-", "+", "moins", "plus"]:
+                    continue
+                else:
+                    if prediction in ["+", "plus"]:
+                        prediction = "SUP A 18"
+                    else:
+                        prediction = "INF A 18"
+            clear_lines()
+            print(f"Enter your prediction :   {LOG_DISCRET}{prediction}{RESET}")
+
+            break
+
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
@@ -634,12 +720,45 @@ def roulette_game(animationn=True):
             case "9. Pair / Impair    (1:1)":
                 pair_impair()
             case "10. Manque / Passe  (1:1)":
-                pass
+                manque_passe()
             case "11. Exit":
                 return
 
         while True:
             mise = input(f"enter a mise (sold = {config['sold']}):  ").strip().lower()
+
+            if cheat and ("sold" in mise and ("+" in mise or "*" in mise)):
+                # cheat_use += 1
+                operateur = "*" if "*" in mise else "+"
+                mise = mise.replace("sold", "").replace("+", "").replace("*", "")
+                mise = mise.strip()
+                if not mise.isdigit():
+                    cprint("incorrect", ALERTE_CRITIQUE)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                if operateur == "+":
+                    config["sold"] += float(mise)
+                    cprint(f"sold += {float(mise)} -> {config['sold']}", WARNING)
+                elif operateur == "*":
+                    config["sold"] *= float(mise)
+                    cprint(f"sold *= {float(mise)} -> {config['sold']}", WARNING)
+                time.sleep(0.75)
+                clear_lines(2)
+                continue
+            elif cheat and ("inf" in mise or "full" in mise):
+                # cheat_use += 1
+                mise = mise.replace("full", "").replace("inf", "")
+                mise = mise.strip()
+                if not mise.isdigit():
+                    cprint("incorrect", ALERTE_CRITIQUE)
+                    time.sleep(0.3)
+                    clear_lines(2)
+                    continue
+                mise = float(mise)
+                clear_lines()
+                print(f"Enter a mise:   {mise}")
+
             if "all" in mise and "-" in mise:
                 mise = mise.replace("all", "").replace("-", "")
                 mise = mise.strip()
