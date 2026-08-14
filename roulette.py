@@ -117,9 +117,9 @@ def roulette_game(animationn=True):
                 else:
                     affichage = f"{VERT_FLASH}{numero}{RESET}"
 
-            print(f"\r{' ' * 38}[ {affichage:^5} ] ", end="", flush=True)
+                print(f"\r{' ' * 38}[ {affichage:^5} ] ", end="", flush=True)
 
-            time.sleep(0.02 + i * 0.008)
+                time.sleep(0.02 + i * 0.008)
 
         print(
             f"\r{' ' * 38}[ {ROUGE_FLASH if COULEURS_ROULETTE[resultat] == 'ROUGE' else NOIR if COULEURS_ROULETTE[resultat] == 'NOIR' else VERT}{resultat}{RESET} ] ",
@@ -177,15 +177,16 @@ def roulette_game(animationn=True):
                 else:
                     config["sold"] -= mise
                 prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
-            case "red_black":
-                if COULEURS_ROULETTE[numero] == prediction:
+            case "red_black" | "pair_impair":
+                if (
+                    COULEURS_ROULETTE[numero]
+                    or ("PAIR" if numero % 2 == 0 else "IMPAIR") == prediction
+                ):
                     config["sold"] += mise
                     iswon, montant_gain = True, mise
                 else:
                     config["sold"] -= mise
-                prediction = (
-                    f"{ROUGE if prediction == 'ROUGE' else NOIR}{prediction}{RESET}"
-                )
+                prediction = f"{ROUGE if prediction == 'ROUGE' else NOIR if prediction == 'NOIR' else LOG_DISCRET}{prediction}{RESET}"
 
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
@@ -524,7 +525,7 @@ def roulette_game(animationn=True):
                     if str(prediction) == str(1):
                         prediction = col1
                     if str(prediction) == str(2):
-                        prediction = col1
+                        prediction = col2
                     if str(prediction) == str(3):
                         prediction = col3
 
@@ -589,6 +590,37 @@ def roulette_game(animationn=True):
 
             break
 
+    def pair_impair():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "pair_impair",
+            )
+            faire_titre_section("Pair et Impair", color="FOND_ROUGE")
+
+            prediction = str(
+                input(f"\nEnter your prediction {SOULIGN2}(P/I){RESET}:   ")
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                prediction = "PAIR" if numero % 2 == 0 else "IMPAIR"
+            elif prediction == "random":
+                prediction = random.choice(["IMPAIR", "PAIR"])
+            else:
+                if not prediction in ["pair", "impair", "p", "i"]:
+                    continue
+                else:
+                    if prediction in ["pair", "p"]:
+                        prediction = "PAIR"
+                    else:
+                        prediction = "IMPAIR"
+            clear_lines()
+            print(f"Enter your prediction :   {LOG_DISCRET}{prediction}{RESET}")
+
+            break
+
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
@@ -627,7 +659,7 @@ def roulette_game(animationn=True):
             case "8. Rouge / Noir     (1:1)":
                 red_black()
             case "9. Pair / Impair    (1:1)":
-                pass
+                pair_impair()
             case "10. Manque / Passe  (1:1)":
                 pass
             case "11. Exit":
@@ -772,4 +804,4 @@ def roulette_game(animationn=True):
         affichage(animationn)
 
 
-roulette_game(False)
+roulette_game(True)
