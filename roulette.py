@@ -177,6 +177,15 @@ def roulette_game(animationn=True):
                 else:
                     config["sold"] -= mise
                 prediction = f"{LOG_DISCRET}{formate_collections(prediction)}{RESET}"
+            case "red_black":
+                if COULEURS_ROULETTE[numero] == prediction:
+                    config["sold"] += mise
+                    iswon, montant_gain = True, mise
+                else:
+                    config["sold"] -= mise
+                prediction = (
+                    f"{ROUGE if prediction == 'ROUGE' else NOIR}{prediction}{RESET}"
+                )
 
         if iswon:
             cprint(f"You predicted [ {prediction} ] and §you Won!!", SUCCESS)
@@ -525,6 +534,61 @@ def roulette_game(animationn=True):
 
             break
 
+    def red_black():
+        while True:
+            nonlocal numero, prediction, pari_type
+            numero, pari_type = (
+                random.choice(ROULETTE_EUROPEENNE),
+                "red_black",
+            )
+            faire_titre_section("Rouge et Noir", color="FOND_ROUGE", largeur=80)
+            compte = 0
+            print("\n")
+            for num in ROULETTE_EUROPEENNE:
+                compte += 1
+                if num == 0:
+                    continue
+                print(
+                    f"[ {match_color(COULEURS_ROULETTE[num])}{num}{RESET} ]",
+                    end=" ",
+                )
+                if compte == 13 or compte == 25:
+                    print("\n")
+
+            prediction = str(
+                input(f"\n\nEnter your prediction {SOULIGN2}(R/N){RESET}:   ")
+                .strip()
+                .lower()
+            )
+            if prediction == "right":
+                prediction = COULEURS_ROULETTE[numero]
+            elif prediction == "random":
+                prediction = random.choice(["NOIR", "ROUGE"])
+            else:
+                if not str(prediction).lower() in ["r", "b", "red", "black"]:
+                    continue
+                else:
+                    if prediction.lower() in [
+                        "r",
+                        "red",
+                        "rouge",
+                        "1",
+                        "sang",
+                        "s",
+                        "b",
+                        "blood",
+                    ]:
+                        prediction = "ROUGE"
+                    else:
+                        prediction = "NOIR"
+
+            clear_lines()
+            print(
+                f"Enter your prediction :   {ROUGE if prediction == 'ROUGE' else NOIR}{prediction}{RESET}"
+            )
+
+            break
+
     roulette_animation(numero)
     input()
     while config["sold"] >= 10:
@@ -560,8 +624,8 @@ def roulette_game(animationn=True):
                 num_douzaine()
             case "7. Colonne          (2:1)":
                 num_colonne()
-            case "8. Rouge/Noir       (1:1)":
-                pass
+            case "8. Rouge / Noir     (1:1)":
+                red_black()
             case "9. Pair / Impair    (1:1)":
                 pass
             case "10. Manque / Passe  (1:1)":
