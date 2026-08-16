@@ -740,7 +740,7 @@ def seq(txt=""):
 
 
 def arc_en_ciel(txt, mode="normal"):
-    """print txt with random color for each letter, mode can be normal, gras, italic, underline, surligne or ANSI"""
+    """print txt with random color for each letter, mode can be normal, gras, italic, underline, surligne or ansi"""
     textee = []
     for i in txt:
         if i == " ":
@@ -854,6 +854,7 @@ def shutdown(temps=40, kill=False):
     shutdown_A()
     clear()
     if kill:
+        copier_txt('shutdown -a')
         force_shutdown(mode_normal=False)
         return
 
