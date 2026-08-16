@@ -46,10 +46,9 @@ Total Lost     : -170 €
 Net Profit     : +210 €
 Current Balance: 1210 €
 
-inv mise, une par game, avec bool de start True et si used = False
 add and une a plus ahaut risque, 
 change le choix de base de l'algo avec le perfect pour ce que on dit 're destin'
-cheat qui enleve n au nb de cheat used
+add que si nb cheat negatif dire que gros debil et sys.Exit() apres shutdown kill
 
 banque qui cfait monter argnt place dedans au fil des tour (cartes tirées) ??
 
@@ -63,7 +62,7 @@ add to tools:
             banque, genre investissement, genre quand savoir se retracter avant que le mouvement devienne defavorbale
             genre parier sur div actions qui ont diff profils de comportments:
                   genre plus intense sur les mouv, ou plus reguliers, plus de mouv par tour, ou juste une banque en interet composés
-      
+
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
 
