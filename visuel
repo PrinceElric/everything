@@ -46,14 +46,13 @@ Total Lost     : -170 €
 Net Profit     : +210 €
 Current Balance: 1210 €
 
-add que si nb cheat negatif dire que gros debil et sys.Exit() apres shutdown kill
 
 banque qui cfait monter argnt place dedans au fil des tour (by carteq tiréeq) ??
 
 
-clean le menu ANSI  de menu_tools : trop de titre secion de m*rde
-
 add to tools:
+      add a funct qui fait comme fibonacci mais avec 1+2+3+4 1+i en gros en mode liste
+            avec les mmemes capa que lz fibonacci
       Jeux:
             bataille (cards)
             

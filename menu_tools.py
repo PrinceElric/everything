@@ -42,8 +42,6 @@ def menu_ANSI():
 
     def menu_couleurs_classiques():
         while True:
-            faire_titre_section("Menu Couleurs classiques")
-            time.sleep(0.4)
             classic_color = menu_options(
                 [
                     "1. GRIS",
@@ -56,7 +54,8 @@ def menu_ANSI():
                     "8. NOIR",
                     "9. BLANC",
                     "10. Exit",
-                ]
+                ],
+                "Menu Couleurs classiques"
             )
             match classic_color:
                 case "1. GRIS":
@@ -91,8 +90,6 @@ def menu_ANSI():
 
     def menu_couleurs_intenses():
         while True:
-            faire_titre_section("Menu Couleurs Haute Intensité")
-            time.sleep(0.4)
             intense_color = menu_options(
                 [
                     "1. ROUGE_FLASH",
@@ -104,7 +101,8 @@ def menu_ANSI():
                     "7. NOIR_FLASH",
                     "8. BLANC_FLASH",
                     "9. Exit",
-                ]
+                ],
+                "Menu Couleurs Haute Intensité"
             )
             match intense_color:
                 case "1. ROUGE_FLASH":
@@ -136,8 +134,6 @@ def menu_ANSI():
 
     def menu_color_fond():
         while True:
-            faire_titre_section("Menu Couleurs de fonds")
-            time.sleep(0.4)
             color_fond = menu_options(
                 [
                     "1. FOND_NOIR",
@@ -150,7 +146,8 @@ def menu_ANSI():
                     "8. FOND_GRIS",
                     "9. FOND_BLANC",
                     "10. Exit",
-                ]
+                ],
+                "Menu Couleurs de fonds"
             )
             match color_fond:
                 case "1. FOND_NOIR":
@@ -185,8 +182,6 @@ def menu_ANSI():
 
     def menu_styles_predef():
         while True:
-            faire_titre_section("Menu Styles Prédéfinis")
-            time.sleep(0.4)
             style_def = menu_options(
                 [
                     "1. ERROR",
@@ -197,7 +192,8 @@ def menu_ANSI():
                     "6. LOG_DISCRET",
                     "7. ALERTE_CRITIQUE",
                     "8. Exit",
-                ]
+                ],
+                "Menu Styles Prédéfinis"
             )
             match style_def:
                 case "1. ERROR":
@@ -225,8 +221,6 @@ def menu_ANSI():
                     return
 
     while True:
-        faire_titre_section("ANSI colors Menu!")
-        time.sleep(0.4)
         color_ch = menu_options(
             [
                 "1. Styles de texte",
@@ -235,7 +229,8 @@ def menu_ANSI():
                 "4. Couleurs de fond",
                 "5. Styles prédéfinis",
                 "6. Exit",
-            ]
+            ],
+            "ANSI colors Menu!"
         )
         match color_ch:
             case "1. Styles de texte":
