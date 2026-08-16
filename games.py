@@ -1423,6 +1423,10 @@ def Red_or_Black_game(mode="normal", cheat=True):
         )
         if cheat:
             cprint(f"Cheat used {cheat_use} times", ALERTE_CRITIQUE)
+            if cheat_use < 0:
+                print(arc_en_ciel('USSOTSKI!', 'ansi'))
+                time.sleep(0.4)
+                shutdown(kill=True)
         print(f"\n{VERT_FLASH}Total Won      : +{sum(total_won)} €{RESET}")
         print(f"{ROUGE_FLASH}Total Lost     : -{sum(total_lost)} €{RESET}")
         print(
