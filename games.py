@@ -264,7 +264,6 @@ def number_guess_game(minimum=0, maximum=100):
         (1, 3),
     )
 
-    # print(f'Num is {number_rand}')
     def enter_num():
         nonlocal my_number, guesses
         while True:
@@ -1004,7 +1003,6 @@ def Red_or_Black_game(mode="normal", cheat=True):
                     time.sleep(0.75)
                     clear_lines(2)
                     continue
-
                 elif cheat and "card" in mise:
                     cheat_use += 1
                     print(f"card -> {card},   color -> {color}")
@@ -1030,6 +1028,41 @@ def Red_or_Black_game(mode="normal", cheat=True):
                     mise = float(mise)
                     clear_lines()
                     print(f"Enter a mise:   {mise}")
+                elif cheat and ("cheat -" in mise):
+                    mise = mise.replace('cheat -', '').strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    if int(mise) <= 0:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    cheat_use -= int(mise)
+                    cprint(f'cheat_use = {cheat_use} now!', WARNING)
+                    time.sleep(0.67)
+                    clear_lines(2)
+                    continue
+                elif cheat and ("cheat =" in mise):
+                    mise = mise.replace('cheat =', '').strip()
+                    if not mise.isdigit():
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    if int(mise) <= 0:
+                        cprint("incorrect", ERROR)
+                        time.sleep(0.3)
+                        clear_lines(2)
+                        continue
+                    cheat_use = int(mise)
+                    cprint(f'cheat_use = {cheat_use} now!', WARNING)
+                    time.sleep(0.67)
+                    clear_lines(2)
+                    continue
+
 
                 elif "all" in mise and "-" in mise:
                     mise = mise.replace("all", "").replace("-", "").strip()
@@ -2297,3 +2330,131 @@ def roulette_game(animationn=True, cheat=True):
     print(
         f"{ROUGE if config['sold'] <= 200 else VERT}You had €200 to the start and finished with {config['sold']}!{RESET}"
     )
+
+
+def menu_game():
+    """Le menu des jeux organisé par catégories."""
+    while True:
+        categorie = menu_options(
+            [
+                "1. Jeux de Mots",
+                "2. Classiques & Stratégie",
+                "3. Hasard & Nombres",
+                "4. Casino & Argent",
+                "5. Exit",
+            ],
+            "Games Menu",
+        )
+
+        match categorie:
+            case "1. Jeux de Mots":
+                choix = menu_options(
+                    [
+                        "1. Pendu Game",
+                        "2. Code Names Game",
+                        "3. Word guessing Game",
+                        "4. Retour",
+                    ],
+                    "Jeux de Mots Menu",
+                )
+                match choix:
+                    case "1. Pendu Game":
+                        mode = menu_options(
+                            [
+                                "1. Normal",
+                                "2. Facile",
+                                "3. Très Facile",
+                                "4. Difficile",
+                                "5. Debug",
+                                "6. Exit",
+                            ]
+                        )
+                        match mode:
+                            case "1. Normal":
+                                pendu_game("normal")
+                            case "2. Facile":
+                                pendu_game("facile")
+                            case "3. Très Facile":
+                                pendu_game("tr_facile")
+                            case "4. Difficile":
+                                pendu_game("difficile")
+                            case "5. Debug":
+                                pendu_game("debug")
+                    case "2. Code Names Game":
+                        code_names_game()
+                    case "3. Word guessing Game":
+                        word_guess_game()
+            case "2. Classiques & Stratégie":
+                choix = menu_options(
+                    [
+                        "1. Rock, Paper, Scissor Game",
+                        "2. Tic Tac Toe Game",
+                        "3. Retour",
+                    ],
+                    "Classiques & Stratégie Menu",
+                )
+                match choix:
+                    case "1. Rock, Paper, Scissor Game":
+                        paper_scissor_game()
+                    case "2. Tic Tac Toe Game":
+                        tictactoe_game()
+            case "3. Hasard & Nombres":
+                choix = menu_options(
+                    [
+                        "1. Number Guessing Game",
+                        "2. Pile ou Face Game",
+                        "3. Dice simulator Game",
+                        "4. Retour",
+                    ],
+                    "Hasard & Nombres Menu",
+                )
+                match choix:
+                    case "1. Number Guessing Game":
+                        number_guess_game()
+                    case "2. Pile ou Face Game":
+                        pile_face_game()
+                    case "3. Dice simulator Game":
+                        face, dices = input("How many face (6 by def):    "), input(
+                            "How many dice? (1 by def):    "
+                        )
+                        face, dices = int(face) if face else 6, (
+                            int(dices) if dices else 1
+                        )
+                        dice(face, dices)
+            case "4. Casino & Argent":
+                choix = menu_options(
+                    ["1. Red or Black game", "2. Roulette_game", "3. Retour"], "Casino & Argent"
+                )
+                match choix:
+                    case "1. Red or Black game":
+                        while True:
+                            parameter = menu_options(
+                                [
+                                    "1. Normal",
+                                    "2. +50",
+                                    "3. Easy",
+                                    "4. Hard",
+                                    "5. Exit",
+                                ],
+                                "Red or Black GAME",
+                            )
+                            match parameter:
+                                case "1. Normal":
+                                    mode = "normal"
+                                case "2. +50":
+                                    mode = "+50"
+                                case "3. Easy":
+                                    mode = "easy"
+                                case "4. Hard":
+                                    mode = "hard"
+                                case "5. Exit":
+                                    break
+
+                            Red_or_Black_game(mode)
+                    case "2. Roulette_game":
+                        roulette_game()
+            case "5. Exit":
+                return
+
+if __name__ == "__main__":
+    menu_game()
