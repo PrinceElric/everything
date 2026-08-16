@@ -1009,7 +1009,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                     input()
                     clear_lines(3)
                     continue
-                elif cheat and "ch" in mise:
+                elif cheat and ("change" in mise):
                     cheat_use += 1
                     tour += 1
                     deck_of_cards.append(card)
@@ -1046,7 +1046,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                     clear_lines(2)
                     continue
                 elif cheat and ("cheat =" in mise):
-                    mise = mise.replace('cheat =', '').strip()
+                    mise = mise.replace('cheat =', '').replace('ch', '').strip()
                     if not mise.isdigit():
                         cprint("incorrect", ERROR)
                         time.sleep(0.3)
