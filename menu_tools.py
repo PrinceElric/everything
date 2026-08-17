@@ -55,7 +55,7 @@ def menu_ANSI():
                     "9. BLANC",
                     "10. Exit",
                 ],
-                "Menu Couleurs classiques"
+                "Menu Couleurs classiques",
             )
             match classic_color:
                 case "1. GRIS":
@@ -102,7 +102,7 @@ def menu_ANSI():
                     "8. BLANC_FLASH",
                     "9. Exit",
                 ],
-                "Menu Couleurs Haute Intensité"
+                "Menu Couleurs Haute Intensité",
             )
             match intense_color:
                 case "1. ROUGE_FLASH":
@@ -147,7 +147,7 @@ def menu_ANSI():
                     "9. FOND_BLANC",
                     "10. Exit",
                 ],
-                "Menu Couleurs de fonds"
+                "Menu Couleurs de fonds",
             )
             match color_fond:
                 case "1. FOND_NOIR":
@@ -193,7 +193,7 @@ def menu_ANSI():
                     "7. ALERTE_CRITIQUE",
                     "8. Exit",
                 ],
-                "Menu Styles Prédéfinis"
+                "Menu Styles Prédéfinis",
             )
             match style_def:
                 case "1. ERROR":
@@ -230,7 +230,7 @@ def menu_ANSI():
                 "5. Styles prédéfinis",
                 "6. Exit",
             ],
-            "ANSI colors Menu!"
+            "ANSI colors Menu!",
         )
         match color_ch:
             case "1. Styles de texte":
@@ -377,7 +377,6 @@ def info(fonction: str):
 
             slow_type(
                 "Show a loading_bar of n caract with the actual step on the coast and the pourcentage of chargement, le tout dans un temps donné.\n",
-                tps_btw_letters=0.035,
             )
             slow_type("Here how it works (14):   \n", tps_btw_letters=0.035)
             input("")
@@ -1117,7 +1116,24 @@ def info(fonction: str):
             input("")
 
         case "valid_input()":
-            pass
+            clear()
+            cprint("Nécessite RIEN", LOG_DISCRET)
+            time.sleep(0.5)
+            clear()
+
+            slow_type(
+                'La fonction valid_input(type="int", phrase="", info=False) is used to force a special input asked to the user.\n'
+            )
+            slow_type("\nHere how it works (28):  ")
+            input("")
+            print(
+                f'\n{ROSE_FLASH}valid_input{RESET}{LOG_DISCRET}({RESET}{JAUNE}type{RESET}{LOG_DISCRET}={RESET}{VERT}"int"{RESET}{LOG_DISCRET}, {RESET}{JAUNE}phrase{RESET}{LOG_DISCRET}={RESET}{VERT}""{RESET}{LOG_DISCRET} ,{RESET}{JAUNE}info{RESET}{LOG_DISCRET}={RESET}{BLEU}False{RESET}{LOG_DISCRET}){RESET}\n'
+            )
+            slow_type(
+                "the type parameter is the represenation of what type of data the prog asks.\nThe phrase désigne ce qui est affiché avec la demande d'entrée.\nLe parameter d'info n'est utilisé que dans le cas d'utilisation de la funct 'info' pour formater les demandes de saisie de parameter."
+            )
+
+            input("")
 
         case "ecrire_log()":
             pass
