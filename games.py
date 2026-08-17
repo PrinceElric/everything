@@ -1842,7 +1842,7 @@ def roulette_game(animationn=True, cheat=True):
                 if numero in nums:
                     nums.remove(numero)
                 prediction = nums[:3] + [numero]
-            if prediction == "right" and not cheat:
+            elif prediction == "right" and not cheat:
                 continue
             elif prediction == "random":
                 nums = list(set(ROULETTE_EUROPEENNE))
