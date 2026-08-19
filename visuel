@@ -53,12 +53,16 @@ banque qui cfait monter argnt place dedans au fil des tour (by carteq tiréeq) ?
 add to tools:
       add a funct qui fait comme fibonacci mais avec 1+2+3+4 1+i en gros en mode liste
             avec les mmemes capa que lz fibonacci
+      
       Jeux:
             bataille (cards)
             
             banque, genre investissement, genre quand savoir se retracter avant que le mouvement devienne defavorbale
             genre parier sur div actions qui ont diff profils de comportments:
                   genre plus intense sur les mouv, ou plus reguliers, plus de mouv par tour, ou juste une banque en interet composés
+
+            faire un typing speed qui calc la vitesse de mots/minutes, piocher des mots de 921. get len and replace spaces
+                  make the best score de w/m dans la config, pas de cheat!            
 
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
