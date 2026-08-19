@@ -628,6 +628,8 @@ def formate_collections(*args):
         return str(*args).replace("(", "").replace(")", "").replace("'", "")
     elif isinstance(*args, set):
         return str(*args).replace("{", "").replace("}", "").replace("'", "")
+    else:
+        return str(*args).replace('"', '').replace("'", "")
 
 
 def fullmaj(txt):
