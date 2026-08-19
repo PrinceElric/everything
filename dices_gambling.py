@@ -27,6 +27,7 @@ while config['sold'] > 0:
             continue
         break
     mise = mise()
+    
     if pari_type == 'nombres':
         if des in pari:
             iswon = True
