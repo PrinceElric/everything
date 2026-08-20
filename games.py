@@ -27,41 +27,6 @@ def mise():
             mise = config["sold"]
             clear_lines()
             print(f"Enter a mise:   {mise}")
-        elif "last" in mise and ("-" in mise or "+" in mise):
-            operateur = "+" if "+" in mise else "-"
-            mise = mise.replace("last", "").replace("-", "").replace("+", "")
-            mise = mise.strip()
-            if not mise.isdigit():
-                cprint("incorrect", ERROR)
-                time.sleep(0.3)
-                clear_lines(2)
-                continue
-            if operateur == "+":
-                if last_mise + int(mise) >= config["sold"]:
-                    cprint("incorrect", ERROR)
-                    time.sleep(0.3)
-                    clear_lines(2)
-                    continue
-                mise = last_mise + int(mise)
-                clear_lines()
-                print(f"Enter a mise:   {mise}")
-            else:
-                if last_mise - int(mise) <= 0:
-                    cprint("incorrect", ERROR)
-                    time.sleep(0.3)
-                    clear_lines(2)
-                    continue
-                mise = last_mise - int(mise)
-                clear_lines()
-                print(f"Enter a mise:   {mise}")
-
-        elif mise == "last":
-            if last_mise > config["sold"]:
-                clear_lines()
-                continue
-            mise = last_mise
-            clear_lines()
-            print(f"Enter a mise:   {mise}")
 
         elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
             operateur = "+" if "+" in mise else "-"
