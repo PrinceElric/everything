@@ -35,6 +35,11 @@ while config["sold"] > 10:
         break
     mise = mise()
 
+    for _ in range(37):
+        print(f"\r{' ' * len('Enter a mise:  ')}[ {random.randint(1, 6) + random.randint(1, 6)} ] ", end="", flush=True)
+        time.sleep(0.02 + i * 0.008)
+    print(f"\r{' ' * len('Enter a mise:  ')}[ {des} ] ", flush=True)
+
     if pari_type == "nombres" and (des in pari):
         iswon = True
     if iswon:
