@@ -21,36 +21,57 @@ while config["sold"] > 10:
                 clear_lines(2)
                 continue
             pourc = (sum([proba[x] for x in pari]) * 100) / 36
-            cote = 100 / (pourc + ((5 * pourc) / 100))
-            print(f"Probabilités : {pourc:.2f} %\nCote : {cote:.2f}")
+        elif "sup" in pari or "inf" in pari:
+            operateur = "sup" if "sup" in pari else "inf"
+            pari, pari_type = pari.replace("sup", '').replace("inf", '').strip(), "inf_sup"
+            if not pari.isdigit():
+                clear_lines(2)
+                continue
+            elif not (2 <= int(pari) <= 12):
+                clear_lines(2)
+                continue
+            if operateur == 'sup':
+                pourc = (sum([proba[x] for x in (filter(lambda x: True if x > int(pari) else False, list(range(2, 13))))]) * 100) / 36
+                pari = list(filter(lambda x: True if x > int(pari) else False, list(range(2, 13))))
+            elif operateur == 'inf':
+                pourc = (sum([proba[x] for x in (filter(lambda x: True if x < int(pari) else False, list(range(2, 13))))]) * 100) / 36
+                pari = list(filter(lambda x: True if x < int(pari) else False, list(range(2, 13))))
+            
         elif pari in exit:
             sys.exit()
         else:
             clear_lines(2)
             continue
+        
+        cote = 100 / (pourc + ((5 * pourc) / 100))
+        print(f"Probabilités : {pourc:.2f} %\nCote : {cote:.2f}")
         remake = input().lower().strip()
         if remake in exit:
             clear_lines(5)
             continue
         break
-    mise = mise()
+    Mise = mise()
+    jump()
+    clear_lines()
 
-    for _ in range(37):
+    for i in range(37): # animation
         print(f"\r{' ' * len('Enter a mise:  ')}[ {random.randint(1, 6) + random.randint(1, 6)} ] ", end="", flush=True)
         time.sleep(0.02 + i * 0.008)
     print(f"\r{' ' * len('Enter a mise:  ')}[ {des} ] ", flush=True)
+    jump()
+    clear_lines()
 
-    if pari_type == "nombres" and (des in pari):
+    if (pari_type == "nombres" and (des in pari)) or (pari_type == "inf_sup" and (des in pari)):
         iswon = True
     if iswon:
         cprint(
-            f"You predicted {LOG_DISCRET}[ {formate_collections(sorted(pari))} ]{RESET} and §you Won!!",
+            f" You predicted {LOG_DISCRET}[ {formate_collections(sorted(pari))} ]{RESET} and §you Won!!",
             SUCCESS,
         )
-        cprint(f"You won {mise * cote:.2f}€ !", SUCCESS)
+        cprint(f" You won {Mise * cote:.2f}€ !", SUCCESS)
     else:
-        cprint(f"You predicted {LOG_DISCRET}{pari}{RESET} and §you Lost!!", ERROR)
-        cprint(f"You lost {mise:.2f}€ !", ERROR)
+        cprint(f" You predicted {LOG_DISCRET}[ {formate_collections(sorted(pari))} ]{RESET} and §you Lost!!", ERROR)
+        cprint(f" You lost {Mise:.2f}€ !", ERROR)
     input('')
     clear()
 input("")
