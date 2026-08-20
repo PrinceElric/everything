@@ -607,6 +607,10 @@ def menu_options(options, titre="=== MENU INTERACTIF ==="):
             return options[index]
 
 
+def jump(n=1):
+    print('\n' * n)
+
+
 # -------------------------------------------------------------------------------
 
 
