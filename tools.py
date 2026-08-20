@@ -618,6 +618,7 @@ def menu_options(options, titre="=== MENU INTERACTIF ==="):
 
 def jump(n=1):
     print('\n' * n)
+    clear_lines()
 
 
 # -------------------------------------------------------------------------------
