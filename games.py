@@ -1909,7 +1909,7 @@ def roulette_game(animationn=True, cheat=True):
                 .strip()
                 .lower()
             )
-            if "re" | "right" in prediction and not cheat:
+            if ("re" in prediction or "right" in prediction )and not cheat:
                 continue
             elif prediction == "right" and cheat:
                 prediction = []
