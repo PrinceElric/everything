@@ -54,6 +54,9 @@ add to tools:
       add a funct qui fait comme fibonacci mais avec 1+2+3+4 1+i en gros en mode liste
             avec les mmemes capa que lz fibonacci
       
+      add a loading bar qui fait des avnces de connard, genre en randomisant les delais et la len d'avancement
+      add un remplacement de comptage de la lodaidng bar si le symbol et une barre (code barre type) en la faisiant sur des len plus longques
+      
       Jeux:
             bataille (cards)
             
@@ -62,7 +65,10 @@ add to tools:
                   genre plus intense sur les mouv, ou plus reguliers, plus de mouv par tour, ou juste une banque en interet composés
 
             faire un typing speed qui calc la vitesse de mots/minutes, piocher des mots de 921. get len and replace spaces
-                  make the best score de w/m dans la config, pas de cheat!            
+                  make the best score de w/m dans la config, pas de cheat!
+
+            faire que le saveconfig se fasse a chzque mise, egrne avec la verif de nouvelle best value. genre pas que quand le jeu s'arrete
+            faire var en plus de save de sold de base pour la vue du temps. prendre en compte sur le cheat is True ou si used, complex.
 
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
