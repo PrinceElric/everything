@@ -36,7 +36,10 @@ while config["sold"] > 10:
             elif operateur == 'inf':
                 pourc = (sum([proba[x] for x in (filter(lambda x: True if x < int(pari) else False, list(range(2, 13))))]) * 100) / 36
                 pari = list(filter(lambda x: True if x < int(pari) else False, list(range(2, 13))))
-            
+        elif 'pair' in pari or 'impair' in pari:
+            pari_type = 'pair_imp'
+            pari = list(filter(lambda x: True if x % 2 == 0 else False, list(range(2, 13)))) if 'pair' in pari else list(filter(lambda x: True if x % 2 == 1 else False, list(range(2, 13))))
+            pourc = (sum([proba[x] for x in pari]) * 100) / 36
         elif pari in exit:
             sys.exit()
         else:
@@ -61,7 +64,7 @@ while config["sold"] > 10:
     jump()
     clear_lines()
 
-    if (pari_type == "nombres" and (des in pari)) or (pari_type == "inf_sup" and (des in pari)):
+    if (pari_type == "nombres" and (des in pari)) or (pari_type == "inf_sup" and (des in pari)) or (pari_type == 'pair_imp' and (des in pari)):
         iswon = True
     if iswon:
         cprint(
