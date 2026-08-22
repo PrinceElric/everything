@@ -57,6 +57,10 @@ add to tools:
       add a loading bar qui fait des avnces de connard, genre en randomisant les delais et la len d'avancement
       add un remplacement de comptage de la lodaidng bar si le symbol et une barre (code barre type) en la faisiant sur des len plus longques
       
+
+      add funct qui retturn une list [int(x) for x in args] and float -> make_float(*args)
+
+      delete the functionnality de RESET du sold de config au debut de lancement (red_black) afin que e sold en global soit commun
       Jeux:
             bataille (cards)
             
