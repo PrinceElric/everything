@@ -60,7 +60,7 @@ add to tools:
 
       add funct qui retturn une list [int(x) for x in args] and float -> make_float(*args)
 
-      delete the functionnality de RESET du sold de config au debut de lancement (red_black) afin que e sold en global soit commun
+
       Jeux:
             bataille (cards)
             
@@ -68,11 +68,6 @@ add to tools:
             genre parier sur div actions qui ont diff profils de comportments:
                   genre plus intense sur les mouv, ou plus reguliers, plus de mouv par tour, ou juste une banque en interet composés
 
-            faire un typing speed qui calc la vitesse de mots/minutes, piocher des mots de 921. get len and replace spaces
-                  make the best score de w/m dans la config, pas de cheat!
-
-            faire que le saveconfig se fasse a chzque mise, egrne avec la verif de nouvelle best value. genre pas que quand le jeu s'arrete
-            faire var en plus de save de sold de base pour la vue du temps. prendre en compte sur le cheat is True ou si used, complex.
 
 ------------------------------------------------------------------
 _________________________________________________________________________________________________________________________________________
