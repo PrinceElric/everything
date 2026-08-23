@@ -357,11 +357,13 @@ def number_guess_game(minimum=0, maximum=100):
         guesses,
         my_number,
         choix,
+        end,
     ) = (
         int(random.randint(minimum, maximum)),
         0,
         None,
         (1, 3),
+        False
     )
 
     def enter_num():
@@ -391,7 +393,7 @@ def number_guess_game(minimum=0, maximum=100):
                 break
 
     def high_low(cheat=False):
-        nonlocal number_rand, my_number, guesses
+        nonlocal number_rand, my_number, guesses, end
         if cheat:
             for _ in range(2):
                 a = random.choice(choix)
@@ -402,22 +404,28 @@ def number_guess_game(minimum=0, maximum=100):
                 else:
                     print(f"{my_number} is too HIGH! Try again!")
                     enter_num()
-            end()
+            end = True
+            return
         if int(my_number) > number_rand:
             print(f"{my_number} is too High! Try again!")
         else:
             print(f"{my_number} is too Low! Try again!")
 
-    def end():
-        cprint("Congratulations! You guessed the number!", SUCCESS)
-        cprint(f"You guessed {guesses} times!", WARNING)
-        input("")
-        sys.exit()
-
     while True:
+        if end:
+            return
         enter_num()
         if my_number == number_rand:
-            end()
+            cprint("Congratulations! You guessed the number!", SUCCESS)
+            cprint(f"You guessed {guesses} times!", WARNING)
+            if guesses < config["min_nb_guesses_Num/Guess/Game"]:
+                config["min_nb_guesses_Num/Guess/Game"] = guesses
+                if save_config(config):
+                    cprint(f'Best sold score was upadted', SUCCESS)
+
+
+            input("")
+            return
         high_low()
 
 
@@ -996,11 +1004,11 @@ def Red_or_Black_game(mode="normal", cheat=True):
         if win_serie_score > config["highest_win_serie_R/B"] and cheat_use <= 1:
             config["highest_win_serie_R/B"] = win_serie_score
             if save_config(config):
-                print(f'Best sold socre was upadted', SUCCESS)
+                print(f'Best sold score was upadted', SUCCESS)
         if sold_score > config["highest_sold_R/B"] and cheat_use <= 1:
             config["highest_sold_R/B"] = sold_score
             if save_config(config):
-                print(f'Best sold socre was upadted', SUCCESS)
+                print(f'Best sold score was upadted', SUCCESS)
 
     def game(current_tour=1):
         nonlocal stats, color, card, mise, prediction, last_mise, last_prediction, tour, cheat_use
@@ -1661,7 +1669,7 @@ def roulette_game(animationn=True, cheat=True):
         if best_sold > config["highest_sold_Roulette"]:
             config["highest_sold_Roulette"] = round(best_sold, 2)
             if save_config(config):
-                cprint(f'Best sold socre was upadted', SUCCESS)
+                cprint(f'Best sold score was upadted', SUCCESS)
 
     def roulette_animation(resultat, animation=True):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
@@ -2456,7 +2464,7 @@ def dice_gambling_game(animationn=True):
         if best_sold > config["highest_sold_Dice_Gamgling"]:
             config["highest_sold_Dice_Gamgling"] = round(best_sold, 2)
             if save_config(config):
-                cprint(f'Best sold socre was upadted', SUCCESS)
+                cprint(f'Best sold score was upadted', SUCCESS)
 
 
     while config["sold"] > 10:
