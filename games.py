@@ -22,11 +22,11 @@ def mise():
                 continue
             mise = config["sold"] - int(mise)
             clear_lines()
-            print(f"Enter a mise:   {mise}")
+            print(f"Enter a mise:   {round(mise, 2)}")
         elif mise == "all":
             mise = config["sold"]
             clear_lines()
-            print(f"Enter a mise:   {mise}")
+            print(f"Enter a mise:   {round(mise, 2)}")
 
         elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
             operateur = "+" if "+" in mise else "-"
@@ -57,12 +57,12 @@ def mise():
                     continue
                 mise = config["sold"] // 2 - int(mise)
             clear_lines()
-            print(f"Enter a mise:   {mise}")
+            print(f"Enter a mise:   {round(mise, 2)}")
 
         elif mise == "half" or mise == "h":
             mise = config["sold"] // 2
             clear_lines()
-            print(f"Enter a mise:   {mise}")
+            print(f"Enter a mise:   {round(mise, 2)}")
         elif any(
             x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
         ):
@@ -95,7 +95,7 @@ def mise():
                         11, int(config["sold"]) + 1
                     )  # Syntaxe: "r"
             clear_lines()
-            print(f"Enter a mise:   {mise}")
+            print(f"Enter a mise:   {round(mise, 2)}")
 
         elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
             cprint("incorrect", ERROR)
@@ -993,12 +993,14 @@ def Red_or_Black_game(mode="normal", cheat=True):
 
     def save_high_score(win_serie_score, sold_score):
         config["sold"] = 200
-        if win_serie_score > config["highest_win_serie_R/B"]:
+        if win_serie_score > config["highest_win_serie_R/B"] and cheat_use <= 1:
             config["highest_win_serie_R/B"] = win_serie_score
-            save_config(config)
-        if sold_score > config["highest_sold_R/B"]:
+            if save_config(config):
+                print(f'Best sold socre was upadted', SUCCESS)
+        if sold_score > config["highest_sold_R/B"] and cheat_use <= 1:
             config["highest_sold_R/B"] = sold_score
-            save_config(config)
+            if save_config(config):
+                print(f'Best sold socre was upadted', SUCCESS)
 
     def game(current_tour=1):
         nonlocal stats, color, card, mise, prediction, last_mise, last_prediction, tour, cheat_use
@@ -1127,7 +1129,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                         continue
                     mise = float(mise)
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
                 elif cheat and ("cheat -" in mise):
                     mise = mise.replace('cheat -', '').strip()
                     if not mise.isdigit():
@@ -1178,11 +1180,11 @@ def Red_or_Black_game(mode="normal", cheat=True):
                         continue
                     mise = config["sold"] - int(mise)
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
                 elif mise == "all":
                     mise = config["sold"]
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
                 elif "last" in mise and ("-" in mise or "+" in mise):
                     operateur = "+" if "+" in mise else "-"
                     mise = mise.replace("last", "").replace("-", "").replace("+", "")
@@ -1200,7 +1202,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                             continue
                         mise = last_mise + int(mise)
                         clear_lines()
-                        print(f"Enter a mise:   {mise}")
+                        print(f"Enter a mise:   {round(mise, 2)}")
                     else:
                         if last_mise - int(mise) <= 0:
                             cprint("incorrect", ERROR)
@@ -1209,7 +1211,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                             continue
                         mise = last_mise - int(mise)
                         clear_lines()
-                        print(f"Enter a mise:   {mise}")
+                        print(f"Enter a mise:   {round(mise, 2)}")
 
                 elif mise == "last":
                     if last_mise > config["sold"]:
@@ -1217,7 +1219,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                         continue
                     mise = last_mise
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
 
                 elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
                     operateur = "+" if "+" in mise else "-"
@@ -1248,12 +1250,12 @@ def Red_or_Black_game(mode="normal", cheat=True):
                             continue
                         mise = config["sold"] // 2 - int(mise)
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
 
                 elif mise == "half" or mise == "h":
                     mise = config["sold"] // 2
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
                 elif any(
                     x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
                 ):
@@ -1286,7 +1288,7 @@ def Red_or_Black_game(mode="normal", cheat=True):
                                 11, int(config["sold"]) + 1
                             )  # Syntaxe: "r"
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
 
                 elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
                     cprint("incorrect", ERROR)
@@ -1643,7 +1645,7 @@ def roulette_game(animationn=True, cheat=True):
     }
     numero = random.choice(ROULETTE_EUROPEENNE)
     couleur = COULEURS_ROULETTE[numero]
-    compte, mise, prediction, pari_type, iswon, montant_gain, last_mise = (
+    compte, mise, prediction, pari_type, iswon, montant_gain, last_mise, best_score = (
         0,
         "",
         "",
@@ -1651,7 +1653,15 @@ def roulette_game(animationn=True, cheat=True):
         False,
         0,
         0,
+        0,
     )
+
+    def save_high_score(best_sold):
+        config["sold"] = base_sold_value
+        if best_sold > config["highest_sold_Roulette"]:
+            config["highest_sold_Roulette"] = round(best_sold, 2)
+            if save_config(config):
+                cprint(f'Best sold socre was upadted', SUCCESS)
 
     def roulette_animation(resultat, animation=True):
         nonlocal ROULETTE_EUROPEENNE, COULEURS_ROULETTE, couleur, compte
@@ -1732,7 +1742,7 @@ def roulette_game(animationn=True, cheat=True):
             numero, pari_type = random.choice(ROULETTE_EUROPEENNE), "num_simple"
             faire_titre_section("Numéro simple", color="FOND_ROUGE")
             prediction = input("\nEnter your prediction (1-36):   ").strip().lower()
-            if ("right" | "re" | "not" in prediction) and not cheat:
+            if ("not" in prediction or "right" in prediction or "re" in prediction) and not cheat:
                 continue
             elif prediction == "right" and cheat:
                 if numero == 0:
@@ -2294,7 +2304,7 @@ def roulette_game(animationn=True, cheat=True):
                     continue
                 mise = float(mise)
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
 
             if "all" in mise and "-" in mise:
                 mise = mise.replace("all", "").replace("-", "")
@@ -2311,11 +2321,11 @@ def roulette_game(animationn=True, cheat=True):
                     continue
                 mise = config["sold"] - int(mise)
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
             elif mise == "all":
                 mise = config["sold"]
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
             elif "last" in mise and ("-" in mise or "+" in mise):
                 operateur = "+" if "+" in mise else "-"
                 mise = mise.replace("last", "").replace("-", "").replace("+", "")
@@ -2333,7 +2343,7 @@ def roulette_game(animationn=True, cheat=True):
                         continue
                     mise = last_mise + int(mise)
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
                 else:
                     if last_mise - int(mise) <= 0:
                         cprint("incorrect", ERROR)
@@ -2342,7 +2352,7 @@ def roulette_game(animationn=True, cheat=True):
                         continue
                     mise = last_mise - int(mise)
                     clear_lines()
-                    print(f"Enter a mise:   {mise}")
+                    print(f"Enter a mise:   {round(mise, 2)}")
 
             elif mise == "last":
                 if last_mise > config["sold"]:
@@ -2350,7 +2360,7 @@ def roulette_game(animationn=True, cheat=True):
                     continue
                 mise = last_mise
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
 
             elif ("half" in mise or mise == "h") and ("-" in mise or "+" in mise):
                 operateur = "+" if "+" in mise else "-"
@@ -2381,12 +2391,12 @@ def roulette_game(animationn=True, cheat=True):
                         continue
                     mise = config["sold"] // 2 - int(mise)
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
 
             elif mise == "half" or mise == "h":
                 mise = config["sold"] // 2
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
             elif any(
                 x in mise for x in ["r", "rand", "random", "aleatoire", "aléatoire"]
             ):
@@ -2419,7 +2429,7 @@ def roulette_game(animationn=True, cheat=True):
                             11, int(config["sold"]) + 1
                         )  # Syntaxe: "r"
                 clear_lines()
-                print(f"Enter a mise:   {mise}")
+                print(f"Enter a mise:   {round(mise, 2)}")
 
             elif not mise.isdigit() or int(mise) > config["sold"] or 10 > int(mise):
                 cprint("incorrect", ERROR)
@@ -2431,14 +2441,24 @@ def roulette_game(animationn=True, cheat=True):
             break
         time.sleep(0.5)
         affichage(animationn)
-    print(
-        f"{ROUGE if config['sold'] <= 200 else VERT}You had €200 to the start and finished with {config['sold']}!{RESET}"
-    )
+        best_score = config["sold"] if config["sold"] > best_score else best_score
+    print(f"{ROUGE if config['sold'] <= 200 else VERT}You had €200 to the start and finished with {config['sold']}!{RESET}")
+    save_high_score(best_score)
+    input('')
 
 
 def dice_gambling_game(animationn=True):
     global config
     proba = {2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6, 8: 5, 9: 4, 10: 3, 11: 2, 12: 1}
+    best_score = 0
+    def save_high_score(best_sold):
+        config["sold"] = base_sold_value
+        if best_sold > config["highest_sold_Dice_Gamgling"]:
+            config["highest_sold_Dice_Gamgling"] = round(best_sold, 2)
+            if save_config(config):
+                cprint(f'Best sold socre was upadted', SUCCESS)
+
+
     while config["sold"] > 10:
         clear()
         des = random.randint(1, 6) + random.randint(1, 6)
@@ -2474,7 +2494,7 @@ def dice_gambling_game(animationn=True):
                     pari = list(filter(lambda x: True if x < int(pari) else False, list(range(2, 13))))
             elif 'pair' in pari or 'impair' in pari:
                 pari_type = 'pair_imp'
-                pari = list(filter(lambda x: True if x % 2 == 0 else False, list(range(2, 13)))) if 'pair' in pari else list(filter(lambda x: True if x % 2 == 1 else False, list(range(2, 13))))
+                pari = list(filter(lambda x: True if x % 2 == 0 else False, list(range(2, 13)))) if 'impair' not in pari else list(filter(lambda x: True if x % 2 == 1 else False, list(range(2, 13))))
                 pourc = (sum([proba[x] for x in pari]) * 100) / 36
             elif pari in exit:
                 return
@@ -2509,11 +2529,14 @@ def dice_gambling_game(animationn=True):
                 SUCCESS,
             )
             cprint(f" You won {Mise * cote:.2f}€ !", SUCCESS)
+            config['sold'] += Mise * cote
         else:
             cprint(f" You predicted {LOG_DISCRET}[ {formate_collections(sorted(pari))} ]{RESET} and §you Lost!!", ERROR)
             cprint(f" You lost {Mise:.2f}€ !", ERROR)
+            config['sold'] -= Mise
         input('')
-        clear()
+        best_score = config['sold'] if config['sold'] > best_score else best_score
+    save_high_score(best_score)
     input("")
 
 
