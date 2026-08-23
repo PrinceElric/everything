@@ -503,6 +503,9 @@ families = ("♣", "♠", "♦", "♥")
 values = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
 deck_of_cards = [f"{value}{color}" for color in families for value in values]
 
+base_sold_value = config['sold']
+
+
 # -------------------------------------------------------------------------------
 # 4. DONNÉES
 # -------------------------------------------------------------------------------
@@ -783,6 +786,20 @@ def first(var):
 
 def last(var):
     return var[len(var) - 1]
+
+
+def make_int(*listt):
+    try:
+        return [int(x) for x in listt]
+    except:
+        return None
+
+def make_int(*listt):
+    try:
+        return [float(x) for x in listt]
+    except:
+        return None
+
 
 # -------------------------------------------------------------------------------
 
