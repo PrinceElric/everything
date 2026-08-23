@@ -944,7 +944,7 @@ def start_timer(nom="default", entrees=False):
     _timers[nom] = start
 
 
-def stop_timer(nom="default", entrees=False):
+def stop_timer(nom="default", entrees=False, printt=False):
     """Arrête chrono et affiche/renvoie le temps écoulé."""
     global _timers
     if nom not in _timers:
@@ -953,7 +953,8 @@ def stop_timer(nom="default", entrees=False):
 
     fin = time.process_time() if not entrees else time.perf_counter()
     duree = fin - _timers[nom]
-    # print(f"[{nom}] {duree:.6f} s")
+    if printt:
+        print(f"[{nom}] {duree:.6f} s")
     return duree
 
 
