@@ -1791,7 +1791,7 @@ start_timer()
 
 name, just_namee, a, b, password = "", "", 0, 0, ""
 
-def name():
+def namee():
     global name, just_namee, a, b
     a, b, name = 0, 0, input("Enter your name: ")
     just_namee = name
@@ -1868,7 +1868,7 @@ def fonction_password():
 
 def first_one():
     global name, just_namee, a, b, password
-    name()
+    namee()
     time.sleep(0.7)
     start_password, password = "", ""
     print(f"{just_namee}, you have to define a password")
