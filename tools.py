@@ -792,13 +792,21 @@ def make_int(*listt):
     try:
         return [int(x) for x in listt]
     except:
-        return None
+        return []
 
-def make_int(*listt):
+def make_float(*listt):
     try:
         return [float(x) for x in listt]
     except:
-        return None
+        return []
+
+
+def extract_num(stringg:str):
+    num = formate_collections([x for x in stringg.split() if x.isdigit()])
+    try:
+        return int(num)
+    except:
+        return float(num)
 
 
 # -------------------------------------------------------------------------------
