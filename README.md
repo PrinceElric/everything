@@ -9,305 +9,317 @@ caractères, la journalisation, l'automatisation ainsi que diverses opérations
 sur le système.
 
 -------------------------------------------------------------------------------
+
 1. DÉPENDANCES ET PRÉREQUIS
--------------------------------------------------------------------------------
 
-Bibliothèques standards utilisées :
-    - os
-    - time
-    - sys
-    - subprocess
-    - random
-    - string
-    - msvcrt
-    - json
-    - hashlib
-    - unicodedata
-    - itertools
-    - datetime
-    - mots_francais
+    -------------------------------------------------------------------------------
 
-Bibliothèque externe (optionnelle) :
-    - pyautogui
-      Utilisée uniquement pour les fonctions d'automatisation de la souris.
+    Bibliothèques standards utilisées :
+        - os
+        - time
+        - sys
+        - subprocess
+        - random
+        - string
+        - msvcrt
+        - json
+        - hashlib
+        - unicodedata
+        - itertools
+        - datetime
+        - mots_francais
+        - zipfile
 
-      Installation :
-          pip install pyautogui
+    Bibliothèque externe (optionnelle) :
+        - pyautogui
+        Utilisée uniquement pour les fonctions d'automatisation de la souris.
 
--------------------------------------------------------------------------------
+        Installation :
+            pip install pyautogui
+
+    -------------------------------------------------------------------------------
+
 2. INITIALISATION
--------------------------------------------------------------------------------
 
-Au chargement du module :
+    -------------------------------------------------------------------------------
 
-    • Le fichier temporaire "tempo diary.md" est automatiquement réinitialisé.
+    Au chargement du module :
 
-Variables globales :
+        • Le fichier temporaire "tempo diary.md" est automatiquement réinitialisé.
 
-    • PATH_TEMP
-        Chemin du fichier temporaire.
+    Variables globales :
 
-    • _timers
-        Dictionnaire utilisé par les fonctions de chronométrage.
+        • PATH_TEMP
+            Chemin du fichier temporaire.
 
--------------------------------------------------------------------------------
+        • _timers
+            Dictionnaire utilisé par les fonctions de chronométrage.
+
+    -------------------------------------------------------------------------------
 3. CONSTANTES
--------------------------------------------------------------------------------
 
-Le module fournit de nombreuses constantes ANSI permettant de personnaliser
-l'affichage dans le terminal :
+    -------------------------------------------------------------------------------
 
-    • Styles de texte
-        GRAS
-        ITALIC
-        SOULIGN2
-        ...
+    Le module fournit de nombreuses constantes ANSI permettant de personnaliser
+    l'affichage dans le terminal :
 
-    • Couleurs classiques
-        ROUGE
-        VERT
-        JAUNE
-        BLEU
-        NOIR
-        BLANC
-        ...
+        • Styles de texte
+            GRAS
+            ITALIC
+            SOULIGN2
+            ...
 
-    • Couleurs haute intensité
-        ROUGE_FLASH
-        VERT_FLASH
-        JAUNE_FLASH
-        BLEU_FLASH
-        NOIR_FLASH
-        BLANC_FLASH
-        ...
+        • Couleurs classiques
+            ROUGE
+            VERT
+            JAUNE
+            BLEU
+            NOIR
+            BLANC
+            ...
 
-    • Couleurs de fond
-        FOND_ROUGE
-        FOND_BLEU
-        FOND_BLANC
-        ...
+        • Couleurs haute intensité
+            ROUGE_FLASH
+            VERT_FLASH
+            JAUNE_FLASH
+            BLEU_FLASH
+            NOIR_FLASH
+            BLANC_FLASH
+            ...
 
-    • Styles prédéfinis
-        ERROR
-        WARNING
-        SUCCESS
-        STYLE_TITRE
-        MENU_ACTIF
-        ALERTE_CRITIQUE
+        • Couleurs de fond
+            FOND_ROUGE
+            FOND_BLEU
+            FOND_BLANC
+            ...
 
+        • Styles prédéfinis
+            ERROR
+            WARNING
+            SUCCESS
+            STYLE_TITRE
+            MENU_ACTIF
+            ALERTE_CRITIQUE
 
-Le module propose également des listes pour sortir des input des programmes:
+    Le module propose également des listes pour sortir des input des programmes:
 
-• Continuer
+    • Continuer
 
-• Exit
+    • Exit
 
-• Others
+    • Others
 
-• families
-• values
-• deck_of_cards
+    • families
+    • values
+    • deck_of_cards
 
--------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------
 4. DONNÉES
--------------------------------------------------------------------------------
 
-mots_921
+    -------------------------------------------------------------------------------
 
-    Liste contenant aux alentours de 19000 mots français utilisée par certaines fonctions du
-    module.
+    mots_921
 
--------------------------------------------------------------------------------
+        Liste contenant aux alentours de 19000 mots français utilisée par certaines fonctions du
+        module.
+
+    -------------------------------------------------------------------------------
 5. FONCTIONS DISPONIBLES
--------------------------------------------------------------------------------
 
---- Terminal ---
+    -------------------------------------------------------------------------------
 
-• clear()
-    Efface le terminal Windows.
+    --- Terminal ---
 
-• cprint(texte, color)
-    Affiche un texte avec une couleur ANSI.
+    • clear()
+        Efface le terminal Windows.
 
-• slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET)
-    Simule un effet de frappe caractère par caractère.
+    • cprint(texte, color)
+        Affiche un texte avec une couleur ANSI.
 
-• loading_bar(tps, symbol="#", lenght=10)
-    Affiche une barre de progression animée.
+    • slow_type(texte, tps_total=0, tps_btw_letters=0, color=LOG_DISCRET)
+        Simule un effet de frappe caractère par caractère.
 
-• clear_lines(n=1)
-    Efface les dernières lignes du terminal.
+    • loading_bar(tps, symbol="#", lenght=10)
+        Affiche une barre de progression animée.
 
-• faire_titre_section(texte, symbole='-', largeur=60)
-    Affiche un titre centré et décoré.
+    • clear_lines(n=1)
+        Efface les dernières lignes du terminal.
 
-• menu_options(options)
-    Affiche un menu interactif navigable au clavier.
+    • faire_titre_section(texte, symbole='-', largeur=60)
+        Affiche un titre centré et décoré.
 
+    • menu_options(options)
+        Affiche un menu interactif navigable au clavier.
 
--------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------
 
---- Text ---
+    --- Text ---
 
-• enlever_accents(texte: str)
-    Supprime les accents d'une chaîne.
+    • enlever_accents(texte: str)
+        Supprime les accents d'une chaîne.
 
-• formate_collections(*args)
-    Améliore l'affichage des listes, tuples et ensembles.
+    • formate_collections(*args)
+        Améliore l'affichage des listes, tuples et ensembles.
 
-• fullmaj(txt)
-    Convertit un texte selon une table de correspondance personnalisée.
+    • fullmaj(txt)
+        Convertit un texte selon une table de correspondance personnalisée.
 
-• format_number(n)
-    Formate un nombre avec un séparateur de milliers.
+    • format_number(n)
+        Formate un nombre avec un séparateur de milliers.
 
-• random_password(n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False)
-    Génère un mot de passe aléatoire.
+    • random_password(n=10, Maj=True, digits=True, punctuation=True, space=True, tiret_bas=False)
+        Génère un mot de passe aléatoire.
 
-• random_username(n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True)
-    Génère un nom d'utilisateur aléatoire.
+    • random_username(n=7, Maj=True, digits=True, punctuation=False, space=False, tiret_bas=True)
+        Génère un nom d'utilisateur aléatoire.
 
-• random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)
-    Génère une chaîne aléatoire personnalisable.
+    • random_string(n=7, Maj=True, digits=True, punctuation=False, space=True, tiret_bas=False)
+        Génère une chaîne aléatoire personnalisable.
 
-• abreviation(word="")
-    return word abrevated, first letter + len + last letter
+    • abreviation(word="")
+        return word abrevated, first letter + len + last letter
 
-• seq(txt="")
-    return the max continue chaine of a carac in txt
+    • seq(txt="")
+        return the max continue chaine of a carac in txt
 
-• arc_en_ciel(txt, mode="normal")
-    Affiche un texte avec des couleurs aléatoires pour chaque caractère.
+    • arc_en_ciel(txt, mode="normal")
+        Affiche un texte avec des couleurs aléatoires pour chaque caractère.
 
+    -------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------
+    --- System ---
 
---- System ---
+    • copier_txt(texte)
+        Copie un texte dans le presse-papiers Windows.
 
-• copier_txt(texte)
-    Copie un texte dans le presse-papiers Windows.
+    • detect_shutdown()
+        Annule plusieurs fois une extinction programmée.
 
-• detect_shutdown()
-    Annule plusieurs fois une extinction programmée.
+    • shutdown_A()
+        Exécute "shutdown -a".
 
-• shutdown_A()
-    Exécute "shutdown -a".
+    • hach_word(word)
+        Retourne le hash SHA-256 d'une chaîne.
 
-• hach_word(word)
-    Retourne le hash SHA-256 d'une chaîne.
+    • shutdown(temps=40, kill=False)
+        shutdown le PC avec multiples parfeux et eggs, pwrd, escape and just death
 
-• shutdown(temps=40, kill=False)
-    shutdown le PC avec multiples parfeux et eggs, pwrd, escape and just death
+    • start_timer(nom="default", entrées=False)
+        Démarre un chronomètre.
 
-• start_timer(nom="default", entrées=False)
-    Démarre un chronomètre.
+    • stop_timer(nom="default", entrées=False)
+        Arrête un chronomètre et affiche le temps écoulé.
 
-• stop_timer(nom="default", entrées=False)
-    Arrête un chronomètre et affiche le temps écoulé.
+    • human_time(n)
+        Convertit des secondes en HHh:MMmin:SSs.
 
-• human_time(n)
-    Convertit des secondes en HHh:MMmin:SSs.
+    • valid_input(type="int", phrase="")
+        Force une saisie valide du type demandé.
 
-• valid_input(type="int", phrase="")
-    Force une saisie valide du type demandé.
+    -------------------------------------------------------------------------------
 
+    --- Journalisation (Logging) ---
 
--------------------------------------------------------------------------------
+    • ecrire_log(message, type_log, chemin_fichier)
+        Écrit un message horodaté dans un fichier Markdown.
 
---- Journalisation (Logging) ---
+    • log_info(...)
+        Écrit un message de niveau INFO.
 
-• ecrire_log(message, type_log, chemin_fichier)
-    Écrit un message horodaté dans un fichier Markdown.
+    • log_warning(...)
+        Écrit un message de niveau WARNING.
 
-• log_info(...)
-    Écrit un message de niveau INFO.
+    • log_error(...)
+        Écrit un message de niveau ERROR.
 
-• log_warning(...)
-    Écrit un message de niveau WARNING.
+    -------------------------------------------------------------------------------
 
-• log_error(...)
-    Écrit un message de niveau ERROR.
+    --- Automatisation ---
 
--------------------------------------------------------------------------------
+    • afk_mouse(n, kill)
+        Déplace automatiquement la souris et effectue des clics.
 
---- Automatisation ---
+    -------------------------------------------------------------------------------
 
-• afk_mouse(n, kill)
-    Déplace automatiquement la souris et effectue des clics.
+    --- Crypto ---
 
--------------------------------------------------------------------------------
+    • cesar()
+        Lance un menu interactif pour chiffrer et déchiffrer du texte avec le chiffre de César.
 
---- Crypto ---
+    • brute_force(password='')
+        Force un mot de passe en testant les longueurs au fur et à mesure.
 
-• cesar()
-    Lance un menu interactif pour chiffrer et déchiffrer du texte avec le chiffre de César.
+    • morse(txt='')
+        Renvoi l'entrée en morse.
 
-• brute_force(password='')
-    Force un mot de passe en testant les longueurs au fur et à mesure.
+    -------------------------------------------------------------------------------
 
-• morse(txt='')
-    Renvoi l'entrée en morse.
+    --- Math ---
 
-• fibonacci()
-    Répète la sequ de fibonacci et offre des options de séléctions de données.
+    • factoriel(n: int) -> int
+        Retourne le factoriel d'un nombre entier n.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    • elements_communs(liste1: list, liste2: list) -> list
+        Retourne la liste des éléments communs entre deux listes.
 
---- Jeux ---
+    • fibonacci()
+        Répète la sequ de fibonacci et offre des options de séléctions de données.
 
-• pendu_game(mode="normal")
-    Lance le jeu du pendu.
-• paper_scissor_game()
-    Lance le jeu du papier-ciseaux avec capacité de triche.
-• number_guess_game(minimum=0, maximum=100)
-    Lance le jeu du nombre à deviner avec capa de triche.
-• code_names_game()
-    Lance le jeu du code names.
-• pile_face_game(load=True)
-    Just pile/face game! great animation and cheat capa->J
-• word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10)
-    The word_guess_game were you input word and make color on letter -> /help
-• dice(face=6, n=1)
-    Simule n lances de dés à n_faces faces.
-• Tictac_toe_game()
-    Simule le jeu du morpion avec diff styles de jeux.
-• Red_or_Black_game(mode="normal", cheat=True)
-    red or black game of gambling
-• menu_game()
-    Lance le menu de jeux.
+    -------------------------------------------------------------------------------
 
+    --- Jeux ---
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    • pendu_game(mode="normal")
+        Lance le jeu du pendu.
+    • paper_scissor_game()
+        Lance le jeu du papier-ciseaux avec capacité de triche.
+    • number_guess_game(minimum=0, maximum=100)
+        Lance le jeu du nombre à deviner avec capa de triche.
+    • code_names_game()
+        Lance le jeu du code names.
+    • pile_face_game(load=True)
+        Just pile/face game! great animation and cheat capa->J
+    • word_guess_game(mode="nul", lenght_word_min=6, max_guesses=10)
+        The word_guess_game were you input word and make color on letter -> /help
+    • dice(face=6, n=1)
+        Simule n lances de dés à n_faces faces.
+    • Tictac_toe_game()
+        Simule le jeu du morpion avec diff styles de jeux.
+    • Red_or_Black_game(mode="normal", cheat=True)
+        red or black game of gambling
+    • Roulette_game(animationn=True, cheat=True)
+        roulette game of gambling
+    • menu_game()
+        Lance le menu de jeux.
 
---- Outils Spécifiques au Projet ---
+    -------------------------------------------------------------------------------
 
-• trouver_nom(objet)
-    Recherche le nom global associé à un objet.
+    --- Outils Spécifiques au Projet ---
 
-• fonct_mots()
-    Permet de rechercher et d'ajouter des mots à la liste mots_921.
+    • trouver_nom(objet)
+        Recherche le nom global associé à un objet.
 
-• kanekicount(number, base)
-    Soustrait une valeur de base jusqu'à atteindre zéro.
+    • fonct_mots()
+        Permet de rechercher et d'ajouter des mots à la liste mots_921.
 
-• def match_color(color):
-    Renvoie la couleur ANSI correspondante à un nom donné.
+    • kanekicount(number, base)
+        Soustrait une valeur de base jusqu'à atteindre zéro.
 
+    • def match_color(color):
+        Renvoie la couleur ANSI correspondante à un nom donné.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------
 
---- Executables ---
+    --- Executables ---
 
-• clear()
+    • clear()
 
-• loading_bar(0.4, symbol="*", lenght=10, exe=True)
+    • loading_bar(0.4, symbol="*", lenght=10, exe=True)
 
-• start_timer()
+    • start_timer()
 
+    -------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    --- Divers ---
 
---- Divers ---
-
-•
-===============================================================================
+    ===============================================================================
