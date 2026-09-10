@@ -2605,134 +2605,153 @@ def typing_speed_game():
     input('')
 
 
-def menu_game():
+def menu_game(fast_game :str = False):
     """Le menu des jeux organisé par catégories."""
-    while True:
-        categorie = menu_options(
-            [
-                "1. Jeux de Mots",
-                "2. Classiques & Stratégie",
-                "3. Hasard & Nombres",
-                "4. Casino & Argent",
-                "5. Exit",
-            ],
-            "Games Menu",
-        )
+    if not fast_game:
+        while True:
+            categorie = menu_options(
+                [
+                    "1. Jeux de Mots",
+                    "2. Classiques & Stratégie",
+                    "3. Hasard & Nombres",
+                    "4. Casino & Argent",
+                    "5. Exit",
+                ],
+                "Games Menu",
+            )
 
-        match categorie:
-            case "1. Jeux de Mots":
-                choix = menu_options(
-                    [
-                        "1. Pendu Game",
-                        "2. Code Names Game",
-                        "3. Word guessing Game",
-                        "4. Typing speed Game",
-                        "5. Retour",
-                    ],
-                    "Jeux de Mots Menu",
-                )
-                match choix:
-                    case "1. Pendu Game":
-                        mode = menu_options(
-                            [
-                                "1. Normal",
-                                "2. Facile",
-                                "3. Très Facile",
-                                "4. Difficile",
-                                "5. Debug",
-                                "6. Exit",
-                            ]
-                        )
-                        match mode:
-                            case "1. Normal":
-                                pendu_game("normal")
-                            case "2. Facile":
-                                pendu_game("facile")
-                            case "3. Très Facile":
-                                pendu_game("tr_facile")
-                            case "4. Difficile":
-                                pendu_game("difficile")
-                            case "5. Debug":
-                                pendu_game("debug")
-                    case "2. Code Names Game":
-                        code_names_game()
-                    case "3. Word guessing Game":
-                        word_guess_game()
-                    case "4. Typing speed Game":
-                        typing_speed_game()
-            case "2. Classiques & Stratégie":
-                choix = menu_options(
-                    [
-                        "1. Rock, Paper, Scissor Game",
-                        "2. Tic Tac Toe Game",
-                        "3. Retour",
-                    ],
-                    "Classiques & Stratégie Menu",
-                )
-                match choix:
-                    case "1. Rock, Paper, Scissor Game":
-                        paper_scissor_game()
-                    case "2. Tic Tac Toe Game":
-                        tictactoe_game()
-            case "3. Hasard & Nombres":
-                choix = menu_options(
-                    [
-                        "1. Number Guessing Game",
-                        "2. Pile ou Face Game",
-                        "3. Dice simulator Game",
-                        "4. Retour",
-                    ],
-                    "Hasard & Nombres Menu",
-                )
-                match choix:
-                    case "1. Number Guessing Game":
-                        number_guess_game()
-                    case "2. Pile ou Face Game":
-                        pile_face_game()
-                    case "3. Dice simulator Game":
-                        face, dices = input("How many face (6 by def):    "), input(
-                            "How many dice? (1 by def):    "
-                        )
-                        face, dices = int(face) if face else 6, (
-                            int(dices) if dices else 1
-                        )
-                        dice(face, dices)
-            case "4. Casino & Argent":
-                choix = menu_options(
-                    ["1. Red or Black game", "2. Roulette_game", "3. Dice gambling game", "4. Retour"], "Casino & Argent"
-                )
-                match choix:
-                    case "1. Red or Black game":
-                        while True:
-                            parameter = menu_options(
+            match categorie:
+                case "1. Jeux de Mots":
+                    choix = menu_options(
+                        [
+                            "1. Pendu Game",
+                            "2. Code Names Game",
+                            "3. Word guessing Game",
+                            "4. Typing speed Game",
+                            "5. Retour",
+                        ],
+                        "Jeux de Mots Menu",
+                    )
+                    match choix:
+                        case "1. Pendu Game":
+                            mode = menu_options(
                                 [
                                     "1. Normal",
-                                    "2. +50",
-                                    "3. Easy",
-                                    "4. Hard",
-                                    "5. Exit",
-                                ],
-                                "Red or Black GAME",
+                                    "2. Facile",
+                                    "3. Très Facile",
+                                    "4. Difficile",
+                                    "5. Debug",
+                                    "6. Exit",
+                                ]
                             )
-                            match parameter:
+                            match mode:
                                 case "1. Normal":
-                                    mode = "normal"
-                                case "2. +50":
-                                    mode = "+50"
-                                case "3. Easy":
-                                    mode = "easy"
-                                case "4. Hard":
-                                    mode = "hard"
-                                case "5. Exit":
-                                    break
+                                    pendu_game("normal")
+                                case "2. Facile":
+                                    pendu_game("facile")
+                                case "3. Très Facile":
+                                    pendu_game("tr_facile")
+                                case "4. Difficile":
+                                    pendu_game("difficile")
+                                case "5. Debug":
+                                    pendu_game("debug")
+                        case "2. Code Names Game":
+                            code_names_game()
+                        case "3. Word guessing Game":
+                            word_guess_game()
+                        case "4. Typing speed Game":
+                            typing_speed_game()
+                case "2. Classiques & Stratégie":
+                    choix = menu_options(
+                        [
+                            "1. Rock, Paper, Scissor Game",
+                            "2. Tic Tac Toe Game",
+                            "3. Retour",
+                        ],
+                        "Classiques & Stratégie Menu",
+                    )
+                    match choix:
+                        case "1. Rock, Paper, Scissor Game":
+                            paper_scissor_game()
+                        case "2. Tic Tac Toe Game":
+                            tictactoe_game()
+                case "3. Hasard & Nombres":
+                    choix = menu_options(
+                        [
+                            "1. Number Guessing Game",
+                            "2. Pile ou Face Game",
+                            "3. Dice simulator Game",
+                            "4. Retour",
+                        ],
+                        "Hasard & Nombres Menu",
+                    )
+                    match choix:
+                        case "1. Number Guessing Game":
+                            number_guess_game()
+                        case "2. Pile ou Face Game":
+                            pile_face_game()
+                        case "3. Dice simulator Game":
+                            face, dices = input("How many face (6 by def):    "), input(
+                                "How many dice? (1 by def):    "
+                            )
+                            face, dices = int(face) if face else 6, (
+                                int(dices) if dices else 1
+                            )
+                            dice(face, dices)
+                case "4. Casino & Argent":
+                    choix = menu_options(
+                        ["1. Red or Black game", "2. Roulette_game", "3. Dice gambling game", "4. Retour"], "Casino & Argent"
+                    )
+                    match choix:
+                        case "1. Red or Black game":
+                            while True:
+                                parameter = menu_options(
+                                    [
+                                        "1. Normal",
+                                        "2. +50",
+                                        "3. Easy",
+                                        "4. Hard",
+                                        "5. Exit",
+                                    ],
+                                    "Red or Black GAME",
+                                )
+                                match parameter:
+                                    case "1. Normal":
+                                        mode = "normal"
+                                    case "2. +50":
+                                        mode = "+50"
+                                    case "3. Easy":
+                                        mode = "easy"
+                                    case "4. Hard":
+                                        mode = "hard"
+                                    case "5. Exit":
+                                        break
 
-                            Red_or_Black_game(mode)
-                    case "2. Roulette_game":
-                        roulette_game()
-                    case "3. Dice gambling game":
-                        dice_gambling_game()
-            case "5. Exit":
-                return
+                                Red_or_Black_game(mode)
+                        case "2. Roulette_game":
+                            roulette_game()
+                        case "3. Dice gambling game":
+                            dice_gambling_game()
+                case "5. Exit":
+                    return
+    else:
+        jeux = {
+            "pendu_game": pendu_game,
+            "code_names_game": code_names_game,
+            "word_guess_game": word_guess_game,
+            "typing_speed_game": typing_speed_game,
+            "paper_scissor_game": paper_scissor_game,
+            "tictactoe_game": tictactoe_game,
+            "number_guess_game": number_guess_game,
+            "pile_face_game": pile_face_game,
+            "dice": dice,
+            "Red_or_Black_game": Red_or_Black_game,
+            "roulette_game": roulette_game,
+            "dice_gambling_game": dice_gambling_game,
+        }
+
+        launch = jeux[fast_game] if fast_game in jeux else None
+        launch() if launch else cprint(f"Game {fast_game} not found", ERROR)
 
 if __name__ == "__main__":
     menu_game()
