@@ -173,8 +173,8 @@ families = ("♣", "♠", "♦", "♥")
 values = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
 deck_of_cards = [f"{value}{color}" for color in families for value in values]
 
-base_sold_value = config['sold']
-
+# base_sold_value = config['sold']
+base_sold_value = 200
 
 # -------------------------------------------------------------------------------
 # 4. DONNÉES
@@ -4321,3 +4321,4 @@ def menu_game(fast_game :str = False):
         launch = jeux[fast_game] if fast_game in jeux else None
         launch() if launch else cprint(f"Game {fast_game} not found", ERROR)
 
+# menu_game(fast_game = "tictactoe_game")
