@@ -264,6 +264,10 @@ mots_921
 • fibonacci()
     Répète la sequ de fibonacci et offre des options de séléctions de données.
 
+• btw_nb(nb: float, min: float, max: float)
+    include min but not max,  return True if btwn the two
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- Jeux ---
@@ -528,7 +532,7 @@ def clear():
 
 
 def cprint(texte, color):
-    """Affiche texte coloré puis réinitialise style."""
+    """Affiche texte coloré puis réinitialise style. §/!"""
     if "§" in texte and "!" in texte:  # balises de repère
         texte = texte.replace("§", color).replace("!", RESET, count=1)
         print(texte)
@@ -1512,6 +1516,36 @@ def fibonacci():
         elif choice == "3. Quit":
             return
 
+def btw_nb(nb: float, min: float, max: float):
+    '''include min but not max,  return True if btwn the two'''
+    if nb >= max or nb < min:
+        return False
+    return True
+
+def calc(normal=True):
+    if normal:
+        operateur = menu_options(['+', '-', '*', '/'])
+    else:
+        operateur = input('enter the operator:  ').strip()
+        if not operateur in '+ - * /'.split():
+            return None
+    nb1, nb2 = float(input('enter the first number:  ')), float(input('enter the second number: '))
+    return nb1 + nb2 if operateur == '+' else nb1 - nb2 if operateur == '-' else nb1 * nb2 if operateur == '*' else nb1 / nb2
+
+
+def convert_base(nb: int, base_originale: int, base_sortie: int):
+    nb_sortie = []
+
+    if nb == 0:
+        return [0]
+
+    while nb > 0:
+        nb_sortie.append(nb % base_sortie)
+        nb //= base_sortie
+
+    nb_sortie.reverse()
+    return nb_sortie
+
 
 # -------------------------------------------------------------------------------
 
@@ -1571,11 +1605,11 @@ def fonct_mots():
                 print(f"ligne: {65 +  index_debut // 10}")
 
 
-def kanekicount(number, base):
+def kanekicount(number=1000, base=7):
     n = 0
     while number > base:
         number, n = number - base, n + 1
-        print(f"{number}    {n}")
+        print(f"{n:<5} {number}")
 
 
 def match_color(color):
