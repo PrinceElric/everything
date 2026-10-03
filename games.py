@@ -2548,9 +2548,9 @@ def dice_gambling_game(animationn=True):
     input("")
 
 
-def typing_speed_game():
+def typing_speed_game(nb_words=6):
     while True:
-        TEXTE = list(random.choices(mots, k=6))
+        TEXTE = list(random.choices(mots, k=nb_words))
         errors_nb = float(0)
         clear()
         cprint('   ╔══════════════════════════╗', VERT)
@@ -2603,6 +2603,46 @@ def typing_speed_game():
             cprint(f'\nThe record is {config['higest_typing_speed']}', WARNING)
         input('')
     input('')
+
+
+def horse_game(max_avance=60):
+    global config
+    while config['sold'] >= 10:
+        cheval_choix, tour = float(input('enter your cheval number:  ')), 0
+        misee = mise()
+        avance_chevaux = {1: '', 2: '', 3: '', 4: '', 5: ''}
+
+        def affichage():
+            clear()
+            print(f' {'_' * max_avance}\n')
+            for i in range(1, 6):
+                print(f'{i}{avance_chevaux[i]}🐎')
+
+        while not any(len(avance_chevaux[i]) >= max_avance  for i in range(1, 6)):
+
+            for i in range(1, 6):
+                avance_chevaux[i] += ' ' * random.randrange(0, 5)
+            tour += 1
+            time.sleep(0.3)
+
+            affichage()
+
+        winners = [i if len(avance_chevaux[i]) >= max_avance else 0 for i in range(1, 6)]
+
+        if cheval_choix in winners:
+            config["sold"] += misee * 5
+            cprint(f'you won ${misee * 5}!', SUCCESS)
+        else:
+            config["sold"] -= misee
+            cprint(f'you lost ${misee}!', ERROR)
+            if min(len(avance_chevaux[i]) for i in range(1, 6)) == len(avance_chevaux[cheval_choix]):
+                cprint('TU ES UNE GROSSE SOUMISE !!', ALERTE_CRITIQUE)
+        time.sleep(0.3)
+        if tour < config['best_tour_score_horse'][0]:
+            cprint(f'\nThe records was updated from {config['best_tour_score_horse'][0]} tours  to {tour:.2f}\nThe horse with this record is now {list(filter(lambda x: True if len(x) > 5 else False, mots_921))}', SUCCESS)
+            config['higest_typing_speed'] = tour
+            print(save_config(config))
+
 
 
 def menu_game(fast_game :str = False):
@@ -2700,7 +2740,7 @@ def menu_game(fast_game :str = False):
                             dice(face, dices)
                 case "4. Casino & Argent":
                     choix = menu_options(
-                        ["1. Red or Black game", "2. Roulette_game", "3. Dice gambling game", "4. Retour"], "Casino & Argent"
+                        ["1. Red or Black game", "2. Roulette_game", "3. Dice gambling game", "4. Horse_game", "5. Retour"], "Casino & Argent"
                     )
                     match choix:
                         case "1. Red or Black game":
@@ -2732,6 +2772,8 @@ def menu_game(fast_game :str = False):
                             roulette_game()
                         case "3. Dice gambling game":
                             dice_gambling_game()
+                        case "4. Horse_game":
+                            horse_game()
                 case "5. Exit":
                     return
     else:
@@ -2748,6 +2790,7 @@ def menu_game(fast_game :str = False):
             "Red_or_Black_game": Red_or_Black_game,
             "roulette_game": roulette_game,
             "dice_gambling_game": dice_gambling_game,
+            "horse_game": horse_game,
         }
 
         launch = jeux[fast_game] if fast_game in jeux else None

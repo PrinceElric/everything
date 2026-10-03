@@ -1,5 +1,6 @@
 # sys.path.append(r"C:\Users\Elric\OneDrive\Desktop\treh\everything")
 from tools import *
+from games import *
 import time, random, string, subprocess
 
 

@@ -382,6 +382,7 @@ def save_config(data, chemin="config.json"):
     except Exception:
         return False
 
+
 def zipbomb(size=10000000000):
     data = b"A" * size
 
@@ -507,7 +508,7 @@ families = ("♣", "♠", "♦", "♥")
 values = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
 deck_of_cards = [f"{value}{color}" for color in families for value in values]
 
-base_sold_value = config['sold']
+base_sold_value = config["sold"]
 
 
 # -------------------------------------------------------------------------------
@@ -624,7 +625,7 @@ def menu_options(options, titre="=== MENU INTERACTIF ==="):
 
 
 def jump(n=1):
-    print('\n' * n)
+    print("\n" * n)
     clear_lines()
 
 
@@ -650,7 +651,7 @@ def formate_collections(*args):
     elif isinstance(*args, set):
         return str(*args).replace("{", "").replace("}", "").replace("'", "")
     else:
-        return str(*args).replace('"', '').replace("'", "")
+        return str(*args).replace('"', "").replace("'", "")
 
 
 def fullmaj(txt):
@@ -788,6 +789,7 @@ def arc_en_ciel(txt, mode="normal"):
 def first(var):
     return var[0]
 
+
 def last(var):
     return var[len(var) - 1]
 
@@ -798,6 +800,7 @@ def make_int(*listt):
     except:
         return []
 
+
 def make_float(*listt):
     try:
         return [float(x) for x in listt]
@@ -805,7 +808,7 @@ def make_float(*listt):
         return []
 
 
-def extract_num(stringg:str):
+def extract_num(stringg: str):
     num = formate_collections([x for x in stringg.split() if x.isdigit()])
     try:
         return int(num)
@@ -899,7 +902,7 @@ def shutdown(temps=40, kill=False):
     shutdown_A()
     clear()
     if kill:
-        copier_txt('shutdown -a')
+        copier_txt("shutdown -a")
         force_shutdown(mode_normal=False)
         return
 
@@ -1516,21 +1519,33 @@ def fibonacci():
         elif choice == "3. Quit":
             return
 
+
 def btw_nb(nb: float, min: float, max: float):
-    '''include min but not max,  return True if btwn the two'''
+    """include min but not max,  return True if btwn the two"""
     if nb >= max or nb < min:
         return False
     return True
 
+
 def calc(normal=True):
     if normal:
-        operateur = menu_options(['+', '-', '*', '/'])
+        operateur = menu_options(["+", "-", "*", "/"])
     else:
-        operateur = input('enter the operator:  ').strip()
-        if not operateur in '+ - * /'.split():
+        operateur = input("enter the operator:  ").strip()
+        if not operateur in "+ - * /".split():
             return None
-    nb1, nb2 = float(input('enter the first number:  ')), float(input('enter the second number: '))
-    return nb1 + nb2 if operateur == '+' else nb1 - nb2 if operateur == '-' else nb1 * nb2 if operateur == '*' else nb1 / nb2
+    nb1, nb2 = float(input("enter the first number:  ")), float(
+        input("enter the second number: ")
+    )
+    return (
+        nb1 + nb2
+        if operateur == "+"
+        else (
+            nb1 - nb2
+            if operateur == "-"
+            else nb1 * nb2 if operateur == "*" else nb1 / nb2
+        )
+    )
 
 
 def convert_base(nb: int, base_originale: int, base_sortie: int):
@@ -1545,6 +1560,10 @@ def convert_base(nb: int, base_originale: int, base_sortie: int):
 
     nb_sortie.reverse()
     return nb_sortie
+
+
+def moyenne(listt):
+    return (sum(listt)) / len(listt)
 
 
 # -------------------------------------------------------------------------------
@@ -1707,6 +1726,7 @@ start_timer()
 # --- Divers ---
 
 name, just_namee, a, b, password = "", "", 0, 0, ""
+
 
 def namee():
     global name, just_namee, a, b
